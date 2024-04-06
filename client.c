@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <time.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include <sys/time.h>
 
 /*  Global constant: string buffer size */
 #define BUFFER_SIZE 1024
@@ -32,7 +34,7 @@ void cleanup(void);
 
 /* Global variables: values used across all functions */
 int fd;                          // Socket file descriptor
-char *hostname;                  // IP address of the Gopher server
+char *address;                  // IP address of the Gopher server
 int port;                        // Port of the Gopher server
 struct sockaddr_in server_addr;  // Address and port information
 struct item *list = NULL;        // Linked list of indexed directories and files
@@ -44,10 +46,10 @@ struct item *last_node = NULL;   // Last item in the linked list
 int main(int argc, char* argv[]) {
     // Parse the command input
     if (argc != 3) {
-        fprintf(stderr, "Usage: %s <hostname> <port>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <server address> <port>\n", argv[0]);
         exit(0);
     }
-    hostname = argv[1];
+    address = argv[1];
     port = atoi(argv[2]);
     
     // Begin the indexing process, starting with the root directory
@@ -73,13 +75,16 @@ int main(int argc, char* argv[]) {
 /**
  * Establish a connection with the Gopher server.
  * 
- * @param hostname IP address of the Gopher server
+ * @param address IP address of the Gopher server
  * @param port port of the Gopher server
  * @param func function handling response from the Gopher server
  * @param request request to be send to the Gopher server
  * @return the output from the function handling response
  */
 ssize_t gopher_connect(ssize_t (*func)(char *), char *path) {
+    // Timestamping
+    struct timeval tv;
+
     // Create the socket
     fd = socket(AF_INET, SOCK_STREAM, 0);
     if (fd == -1) {
@@ -90,8 +95,8 @@ ssize_t gopher_connect(ssize_t (*func)(char *), char *path) {
     // Specify the IP address and the port for connection
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
-    if (inet_pton(AF_INET, hostname, &server_addr.sin_addr) <= 0) {
-        fprintf(stderr, "Error: Invalid address %s\n", hostname);
+    if (inet_pton(AF_INET, address, &server_addr.sin_addr) <= 0) {
+        fprintf(stderr, "Error: Invalid address %s\n", address);
         exit(1);
     }
 
@@ -112,7 +117,11 @@ ssize_t gopher_connect(ssize_t (*func)(char *), char *path) {
 
     // Send a request for the directory index to the server
     send(fd, request, path_length + 2, 0);
-    fprintf(stdout, "Sending request: %s", request);
+    gettimeofday(&tv, NULL);
+    struct tm *timeinfo = localtime(&tv.tv_sec);
+    char timeString[BUFFER_SIZE];
+    strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", timeinfo);
+    fprintf(stdout, "Request sent at %s: %s", timeString, request);
 
     int output = (*func)(request);
 
