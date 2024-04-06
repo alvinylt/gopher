@@ -1,3 +1,4 @@
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -91,6 +92,15 @@ ssize_t gopher_connect(ssize_t (*func)(char *), char *path) {
         fprintf(stderr, "Error: Socket creation failed\n");
         exit(1);
     }
+
+    // Configure timeout limit
+    struct timeval timeout;
+    timeout.tv_sec = 10;
+    timeout.tv_usec = 0;
+    if (setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0) {
+        fprintf(stderr, "Error: Timeout configuration failed\n");
+        exit(1);
+    }
     
     // Specify the IP address and the port for connection
     server_addr.sin_family = AF_INET;
@@ -144,6 +154,13 @@ ssize_t indexing(char *request) {
     // Buffer for strings read from the server
     char buffer[BUFFER_SIZE];
     ssize_t bytes_received = recv(fd, buffer, BUFFER_SIZE, 0);
+
+    if (bytes_received == -1) {
+        if (errno == EWOULDBLOCK || errno == EAGAIN)
+            fprintf(stderr, "Error: Server response timeout\n");
+        else
+            fprintf(stderr, "Error: Unable to receive server response\n");
+    }
 
     // Handle the lack of response from the server
     if (bytes_received == 0) {
@@ -209,6 +226,13 @@ ssize_t evaluate_file_size(char *request) {
     ssize_t size = 0;
     ssize_t bytes_received = recv(fd, buffer, BUFFER_SIZE, 0);
 
+    if (bytes_received == -1) {
+        if (errno == EWOULDBLOCK || errno == EAGAIN)
+            fprintf(stderr, "Error: Server response timeout\n");
+        else
+            fprintf(stderr, "Error: Unable to receive server response\n");
+    }
+
     if (bytes_received == 0) {
         fprintf(stdout, "No response from the server\n");
         return size;
@@ -233,6 +257,13 @@ ssize_t print_response(char *request) {
     // Buffer for strings read from the server
     char buffer[BUFFER_SIZE];
     ssize_t bytes_received = recv(fd, buffer, BUFFER_SIZE, 0);
+
+    if (bytes_received == -1) {
+        if (errno == EWOULDBLOCK || errno == EAGAIN)
+            fprintf(stderr, "Error: Server response timeout\n");
+        else
+            fprintf(stderr, "Error: Unable to receive server response\n");
+    }
 
     if (bytes_received == 0) {
         fprintf(stdout, "No response from the server\n");
