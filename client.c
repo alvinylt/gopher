@@ -26,8 +26,9 @@ int gopher_connect(int (*func)(char *), char *path);
 int index(char *request);
 void add_item(item *new_item);
 void evaluate(void);
-int evaluate_file_size(char *request);
-int print_response(char *request);
+int evaluate_file_size(void);
+int print_response(void);
+void cleanup(void);
 
 /* Global variables: values used across all functions */
 int fd;                          // Socket file descriptor
@@ -60,13 +61,11 @@ int main(int argc, char* argv[]) {
         c = c->next;
     }
 
-    // TEST
-    gopher_connect(index, "invalid");
-    gopher_connect(index, "invalid2");
-    gopher_connect(index, "invalid");
-
     // Analyse the information of the indexed items and print info
     evaluate();
+
+    // Clean up before returning the function
+    cleanup();
 
     return 0;
 }
@@ -106,7 +105,7 @@ int gopher_connect(int (*func)(char *), char *path) {
     // Append "\r\n" to the end of the path to form a request line
     int path_length = strlen(path);
     char request[path_length + 3];
-    strcpy(request, path);
+    strncpy(request, path, path_length + 3);
     request[path_length] = '\r';
     request[path_length + 1] = '\n';
     request[path_length + 2] = '\0';
@@ -150,9 +149,11 @@ int index(char *request) {
                 if (line[0] == '1') item_type = DIRECTORY;
                 else if (line[0] == '0') item_type = TEXT;
                 else if (line[0] == '3') {
+                    // Add the error to the linked list, recording the request
                     item_type = ERROR;
                     item *new_item = (item *)malloc(sizeof(item));
-                    strcpy(new_item->path, request);
+                    strncpy(new_item->path, request, BUFFER_SIZE);
+                    new_item->path[strlen(request)] = '\0';
                     new_item->item_type = item_type;
                     new_item->next = NULL;
                     add_item(new_item);
@@ -160,9 +161,11 @@ int index(char *request) {
                 else if (line[0] != 'i') item_type = BINARY;
             }
             else if (column == 1 && item_type != ERROR) {
+                // Index the directory/file
                 fprintf(stdout, "Indexed: %s\n", line);
                 item *new_item = (item *)malloc(sizeof(item));
-                strcpy(new_item->path, line);
+                strncpy(new_item->path, line, BUFFER_SIZE);
+                new_item->path[strlen(line)] = '\0';
                 new_item->item_type = item_type;
                 new_item->next = NULL;
                 add_item(new_item);
@@ -281,7 +284,7 @@ void evaluate(void) {
  * 
  * @return size of the requested file
  */
-int evaluate_file_size(char *request) {
+int evaluate_file_size(void) {
     // Buffer for strings read from the server
     char buffer[BUFFER_SIZE];
     int size = 0;
@@ -299,7 +302,7 @@ int evaluate_file_size(char *request) {
  * Upon sending a request to the Gopher server for the smallest text file,
  * print the entire content to the terminal.
  */
-int print_response(char *request) {
+int print_response(void) {
     // Buffer for strings read from the server
     char buffer[BUFFER_SIZE];
     int bytes_received;
@@ -312,4 +315,17 @@ int print_response(char *request) {
     }
     
     return 0;
+}
+
+/**
+ * Free the heap memory occupied by the linked list of indexed items before
+ * the main() function returns.
+ */
+void cleanup(void) {
+    item *c = list;
+    while (c != NULL) {
+        item *next = c->next;
+        free(c);
+        c = next;
+    }
 }

@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99
+CFLAGS = -Wall -Wextra -Wno-incompatible-pointer-types -std=c99
 TARGET = client
 SRCS = client.c
 
