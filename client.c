@@ -26,6 +26,7 @@ int index(void);
 void add_item(item *new_item);
 void evaluate(void);
 int evaluate_file_size(void);
+int print_response(char *request);
 
 /* Global variables: values used across all functions */
 int fd;                          // Socket file descriptor
@@ -228,6 +229,7 @@ void evaluate(void) {
     fprintf(stdout, "Number of directories: %d\n", num_of_directories);
     fprintf(stdout, "Number of text files: %d\n", num_of_text_files);
     fprintf(stdout, "Number of binary files: %d\n", num_of_binary_files);
+    gopher_connect(print_response, smallest_text_file);
     fprintf(stdout, "Size of the smallest text file: %d\n", size_of_smallest_text_file);
     fprintf(stdout, "Size of the largest text file: %d\n", size_of_largest_text_file);
     fprintf(stdout, "Size of the smallest binary file: %d\n", size_of_smallest_binary_file);
@@ -248,4 +250,20 @@ int evaluate_file_size(void) {
     free(buffer);
 
     return size;
+}
+
+int print_response(char *request) {
+    // Buffer for strings read from the server
+    char *buffer = malloc(BUFFER_SIZE);
+    int bytes_received;
+
+    fprintf(stdout, "Content of the smallest text file:\n");
+    // Read the directory index from the server
+    while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0) {
+        buffer[bytes_received] = '\0';
+        fprintf(stdout, "%s", buffer);
+    }
+    
+    free(buffer);
+    return 0;
 }
