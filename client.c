@@ -5,11 +5,16 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 
-// Global variables
+// Global constant: string buffer size
 #define BUFFER_SIZE 1024
 
-void interact(int fd, struct sockaddr_in server_addr, int port);
+// Helper functions
+void gopher_connect(void);
 void index(char *path);
+
+// Global variables: values used across all functions
+int fd;                          // Socket file descriptor
+struct sockaddr_in server_addr;  // Address and port information
 
 /**
  * The Internet Gopher client indexing files.
@@ -24,14 +29,13 @@ int main(int argc, char* argv[]) {
     int port = atoi(argv[2]);
     
     // Create the socket
-    int fd = socket(AF_INET, SOCK_STREAM, 0);
+    fd = socket(AF_INET, SOCK_STREAM, 0);
     if (fd == -1) {
         fprintf(stderr, "Error: Socket creation failed\n");
         exit(1);
     }
     
     // Specify the IP address and the port for connection
-    struct sockaddr_in server_addr;
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
     if (inet_pton(AF_INET, hostname, &server_addr.sin_addr) <= 0) {
@@ -40,20 +44,27 @@ int main(int argc, char* argv[]) {
     }
 
     // Interact with the server
-    interact(fd, server_addr, port);
+    gopher_connect();
 
     return 0;
 }
 
-void interact(int fd, struct sockaddr_in server_addr, int port) {
+void gopher_connect(void) {
     // Initiate the connection
     int connect_status = connect(fd, (struct sockaddr *)&server_addr, sizeof(server_addr));
     if (connect_status == -1) {
-        fprintf(stderr, "Error: Connection to port %d failed\n", port);
+        fprintf(stderr, "Error: Connection failed\n");
         exit(1);
     }
     printf("Connected to server!\n");
 
+    index("\r\n");
+
+    // Terminate the connection and release the socket
+    close(fd);
+}
+
+void index(char *path) {
     // Buffer for strings read from the server
     char *buffer = malloc(BUFFER_SIZE);
     int bytes_received;
@@ -80,12 +91,6 @@ void interact(int fd, struct sockaddr_in server_addr, int port) {
             index = (index + 1) % 4;
         }
     }
-
+    
     free(buffer);
-    // Terminate the connection and release the socket
-    close(fd);
-}
-
-void index(char *path) {
-
 }
