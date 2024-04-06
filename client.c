@@ -9,7 +9,7 @@
 #define BUFFER_SIZE 1024
 
 // Helper functions
-void gopher_connect(void);
+void gopher_connect(char *request);
 void index(char *path);
 
 // Global variables: values used across all functions
@@ -44,12 +44,12 @@ int main(int argc, char* argv[]) {
     }
 
     // Interact with the server
-    gopher_connect();
+    gopher_connect("\r\n");
 
     return 0;
 }
 
-void gopher_connect(void) {
+void gopher_connect(char *request) {
     // Initiate the connection
     int connect_status = connect(fd, (struct sockaddr *)&server_addr, sizeof(server_addr));
     if (connect_status == -1) {
@@ -58,37 +58,37 @@ void gopher_connect(void) {
     }
     printf("Connected to server!\n");
 
-    index("\r\n");
+    index(request);
 
     // Terminate the connection and release the socket
     close(fd);
 }
 
-void index(char *path) {
+void index(char *request) {
     // Buffer for strings read from the server
     char *buffer = malloc(BUFFER_SIZE);
     int bytes_received;
 
     // Send a request for the directory index to the server
-    send(fd, "\r\n", 2, 0);
+    send(fd, request, strlen(request), 0);
     fprintf(stdout, "Sending request: %s", "\r\n");
 
     // Read the directory index from the server
     while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0) {
         buffer[bytes_received] = '\0';
         char *line = strtok(buffer, "\t\r\n");
-        int index = 0;
+        int item = 0;
         while (line != NULL) {
-            if (index == 0) {
+            if (item == 0) {
                 // Index subdirectory recursively
                 if (line[0] == '1') {
                     fprintf(stdout, "Directory found: ");
                 }
             }
-            if (index == 1)
+            if (item == 1)
                 fprintf(stdout, "%s\n", line);
             line = strtok(NULL, "\t\r\n");
-            index = (index + 1) % 4;
+            item = (item + 1) % 4;
         }
     }
     
