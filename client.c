@@ -12,20 +12,21 @@
 #define DIRECTORY 0  // Directory
 #define TEXT 1       // Text (non-binary) file
 #define BINARY 2     // Binary file
+#define ERROR 3      // Error message
 
-/* Struct containing information of an indexed directory/file */
+/* Linked list struct containing information of an indexed directory/file */
 typedef struct item {
-    char path[BUFFER_SIZE];
-    int item_type;
-    struct item *next;
+    char path[BUFFER_SIZE];  // Pathname of the file
+    int item_type;           // Type of the file (directory, text, binary or error)
+    struct item *next;       // Linked list: pointer to the next item
 } item;
 
 /* Helper functions */
-int gopher_connect(int (*func)(void), char *path);
-int index(void);
+int gopher_connect(int (*func)(char *), char *path);
+int index(char *request);
 void add_item(item *new_item);
 void evaluate(void);
-int evaluate_file_size(void);
+int evaluate_file_size(char *request);
 int print_response(char *request);
 
 /* Global variables: values used across all functions */
@@ -51,13 +52,18 @@ int main(int argc, char* argv[]) {
     // Begin the indexing process, starting with the root directory
     gopher_connect(index, "");
 
-    // Go through the linked list of indexed items and index subdirectories
+    // Iterate through the linked list of indexed items to index subdirectories
     item *c = list;
     while (c != NULL) {
         if (c->item_type == DIRECTORY)
             gopher_connect(index, c->path);
         c = c->next;
     }
+
+    // TEST
+    gopher_connect(index, "invalid");
+    gopher_connect(index, "invalid2");
+    gopher_connect(index, "invalid");
 
     // Analyse the information of the indexed items and print info
     evaluate();
@@ -72,8 +78,9 @@ int main(int argc, char* argv[]) {
  * @param port port of the Gopher server
  * @param func function handling response from the Gopher server
  * @param request request to be send to the Gopher server
+ * @return the output from the function handling response
  */
-int gopher_connect(int (*func)(void), char *path) {
+int gopher_connect(int (*func)(char *), char *path) {
     // Create the socket
     fd = socket(AF_INET, SOCK_STREAM, 0);
     if (fd == -1) {
@@ -105,19 +112,29 @@ int gopher_connect(int (*func)(void), char *path) {
     request[path_length + 2] = '\0';
 
     // Send a request for the directory index to the server
-    int bytes = send(fd, request, path_length + 2, 0);
-    fprintf(stdout, "Sending request: %s", bytes == 2 ? "Root directory\n" : request);
+    send(fd, request, path_length + 2, 0);
+    fprintf(stdout, "Sending request: %s", request);
 
-    int output = (*func)();
+    int output = (*func)(request);
 
     // Terminate the connection and release the socket
     close(fd);
+
     return output;
 }
 
-int index(void) {
+/**
+ * Upon sending a request for a directory index, this function reads the
+ * response from the Gopher server and adds the indexed directories and files
+ * to the linked list.
+ * 
+ * Each line in the directory index has four columns of information, separated
+ * by tabs. The first column indicates the type of the directory/file; the
+ * second column indicates the pathname.
+ */
+int index(char *request) {
     // Buffer for strings read from the server
-    char *buffer = malloc(BUFFER_SIZE);
+    char buffer[BUFFER_SIZE];
     int bytes_received;
 
     // Read the directory index from the server
@@ -132,9 +149,17 @@ int index(void) {
                 // Determine the type of the indexed item
                 if (line[0] == '1') item_type = DIRECTORY;
                 else if (line[0] == '0') item_type = TEXT;
-                else item_type = BINARY;
+                else if (line[0] == '3') {
+                    item_type = ERROR;
+                    item *new_item = (item *)malloc(sizeof(item));
+                    strcpy(new_item->path, request);
+                    new_item->item_type = item_type;
+                    new_item->next = NULL;
+                    add_item(new_item);
+                }
+                else if (line[0] != 'i') item_type = BINARY;
             }
-            if (column == 1) {
+            else if (column == 1 && item_type != ERROR) {
                 fprintf(stdout, "Indexed: %s\n", line);
                 item *new_item = (item *)malloc(sizeof(item));
                 strcpy(new_item->path, line);
@@ -148,13 +173,13 @@ int index(void) {
         }
     }
     
-    free(buffer);
     return 0;
 }
 
 /**
  * Add a new item to the linked list of indexed items.
- * Requires O(1) time.
+ * Requires O(1) time for adding directories, text files and binary files.
+ * Requires O(n) time for adding an invalid request (to ensure uniqueness).
  * 
  * @param new_item pointer to the new indexed item
  */
@@ -166,23 +191,34 @@ void add_item(item *new_item) {
         return;
     }
 
+    // If the invalid reference is already requested previously, do not add
+    if (new_item->item_type == ERROR) {
+        item *c = list;
+        while (c != NULL) {
+            if (c->item_type == ERROR && strcmp(c->path, new_item->path) == 0) {
+                free(new_item);
+                return;
+            }
+            c = c->next;
+        }
+    }
+
     // Otherwise, append the new item to the end of the linked list
     last_node->next = new_item;
     last_node = new_item;
 }
 
 /**
- * Evaluate and print out the number of directories, text files and binaries.
- * The contents of the smallest text file.
- * The size of the largest text file.
- * The size of the smallest and the largest binary files.
- * The size of the smallest and the largest binary files.
- * The number of unique invalid references (those with an “error” type)
+ * Evaluate and print out:
+ *     1. Number of directories, text files, binaries and invalid references
+ *     2. Sizes of the smallest/largest text/binary files
+ *     3. Content of the smallest text file
  */
 void evaluate(void) {
     int num_of_directories = 0;
     int num_of_text_files = 0;
     int num_of_binary_files = 0;
+    int num_of_invalid_references = 0;
     char *smallest_text_file = NULL;
     int size_of_smallest_text_file = -1;
     int size_of_largest_text_file = -1;
@@ -222,6 +258,9 @@ void evaluate(void) {
                 }
 
                 break;
+            case ERROR:
+                num_of_invalid_references++;
+                break;
         }
         c = c->next;
     }
@@ -229,6 +268,7 @@ void evaluate(void) {
     fprintf(stdout, "Number of directories: %d\n", num_of_directories);
     fprintf(stdout, "Number of text files: %d\n", num_of_text_files);
     fprintf(stdout, "Number of binary files: %d\n", num_of_binary_files);
+    fprintf(stdout, "Number of invalid references: %d\n", num_of_invalid_references);
     gopher_connect(print_response, smallest_text_file);
     fprintf(stdout, "Size of the smallest text file: %d\n", size_of_smallest_text_file);
     fprintf(stdout, "Size of the largest text file: %d\n", size_of_largest_text_file);
@@ -236,9 +276,14 @@ void evaluate(void) {
     fprintf(stdout, "Size of the largest binary file: %d\n", size_of_largest_binary_file);
 }
 
-int evaluate_file_size(void) {
+/**
+ * Upon send a request to the Gopher server for a file, evaluate the file size.
+ * 
+ * @return size of the requested file
+ */
+int evaluate_file_size(char *request) {
     // Buffer for strings read from the server
-    char *buffer = malloc(BUFFER_SIZE);
+    char buffer[BUFFER_SIZE];
     int size = 0;
     int bytes_received;
 
@@ -247,14 +292,16 @@ int evaluate_file_size(void) {
         size += bytes_received;
     }
     
-    free(buffer);
-
     return size;
 }
 
+/**
+ * Upon sending a request to the Gopher server for the smallest text file,
+ * print the entire content to the terminal.
+ */
 int print_response(char *request) {
     // Buffer for strings read from the server
-    char *buffer = malloc(BUFFER_SIZE);
+    char buffer[BUFFER_SIZE];
     int bytes_received;
 
     fprintf(stdout, "Content of the smallest text file:\n");
@@ -264,6 +311,5 @@ int print_response(char *request) {
         fprintf(stdout, "%s", buffer);
     }
     
-    free(buffer);
     return 0;
 }
