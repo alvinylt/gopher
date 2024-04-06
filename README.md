@@ -1,7 +1,7 @@
 # Gopher Indexing Client
 
 This Internet Gopher client written in the C programming language indexes
-directories and files. It is implemented in accordence with
+directories and files. It is implemented in accordance with
 [RFC 1436](https://www.rfc-editor.org/rfc/rfc1436) for indexing directories
 and files.
 
@@ -35,15 +35,15 @@ the response from the server.
 
 Instantiations of `func()` include `indexing()`, `evaluate_file_size()` and
 `print_response()`. With reference to the protocol guidelines, the client
-listens for response until the server terminates the connection. Therefore,
-these three functions uses `recv()` provided by the Socket API in a while loop.
+listens for a response until the server terminates the connection. Therefore,
+these three functions use `recv()` provided by the Socket API in a while loop.
 
 ### Recording Indexed Files and Directories
 
 As long as the server adheres to the protocol's format, its response to a
 pathname is always the directory index with the first character of a row
 indicating the nature of the file. For instance, `0` indicates that the file
-is in (non-binary) text file whereas `1` refers to a subdirectory. The function
+is a (non-binary) text file whereas `1` refers to a subdirectory. The function
 `indexing()` uses this information to determine the type of the file/directory.
 A new entry is added to the linked list, including the item's pathname and type.
 
@@ -53,7 +53,7 @@ exist. This enables us to count the number of invalid references at a later
 stage.
 
 Any row in the response starting with the character `i` is a human-readable
-informational messages, thus ignored by the indexation process.
+informational message, thus ignored by the indexation process.
 
 ### Recursively Index Subdirectories
 
@@ -64,10 +64,10 @@ hosted on the Gopher server.
 
 ### Evaluation and Loading of File Content
 
-Upon indexation of all dircetories and files in the filesystem, `evaluate()` is
+Upon indexation of all directories and files in the filesystem, `evaluate()` is
 called to find the following information:
 1. Number of directories, text files and binary files
-2. Content of the smallest text file (the earliest one if multiple exists)
+2. Content of the smallest text file (the earliest one if multiple exist)
 3. Sizes of the smallest and the largest text files
 4. Sizes of the smallest and the largest binary files
 5. Number of invalid references (each unique invalid request is counted once)
@@ -91,7 +91,7 @@ malformed responses. For instance, the response is written to a string variable
 and is always explicitly terminated with the null terminator (`\0`). This
 avoids problems such as out-of-bound reading/writing.
 
-Safer built-in functions in C (such as `strncpy()` rather than `strcpy()`) is
+Safer built-in functions in C (such as `strncpy()` rather than `strcpy()`) are
 used to avoid unexpected behaviour that might possibly be the result of long
 requests or responses. Indexed records in the linked list, with memory allocated
 using `malloc()`, are cleaned up by `cleanup()` before `main()` terminates.
@@ -119,7 +119,7 @@ specifying the issue.
    https://www.rfc-editor.org/rfc/rfc1436
 2. Arkaitz Jimenez. Time stamp in the C programming language. Stack Overflow.
    https://stackoverflow.com/questions/1444428/time-stamp-in-the-c-programming-language#1444440
-3. Wikipedia contributors. Gopher (protocol). Wikpedia.
+3. Wikipedia contributors. Gopher (protocol). Wikipedia.
    https://en.wikipedia.org/wiki/Gopher_(protocol)
 4. dgookin. The `gettimeofday()` Function. C For Dummies Blog.
    https://c-for-dummies.com/blog/?p=4236
