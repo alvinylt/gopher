@@ -121,9 +121,12 @@ specifying the issue.
    https://stackoverflow.com/questions/1444428/time-stamp-in-the-c-programming-language#1444440
 3. dgookin. The `gettimeofday()` Function. *C For Dummies Blog*.
    https://c-for-dummies.com/blog/?p=4236
-4. Milan. How to convert string to IP address and vice versa. *Stack Overflow*.
+4. IEEE and The Open Group. `setsockopt`. *Linux man page*.
+   https://linux.die.net/man/3/setsockopt
+5. Milan. How to convert string to IP address and vice versa. *Stack Overflow*.
    https://stackoverflow.com/questions/5328070/how-to-convert-string-to-ip-address-and-vice-versa#5328184
-5. Wikipedia contributors. Gopher (protocol). *Wikipedia*.
+6. Wikipedia contributors. Gopher (protocol). *Wikipedia*.
    https://en.wikipedia.org/wiki/Gopher_(protocol)
+
 
 Last update: 2024-04-06
