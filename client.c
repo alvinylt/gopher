@@ -22,12 +22,15 @@ typedef struct item {
 } item;
 
 /* Helper functions */
-void gopher_connect(char *hostname, int port, char *request);
-void index(char *path);
+void gopher_connect(void (*func)(void), char *request);
+void index(void);
 void add_item(item *new_item);
+void evaluate(void);
 
 /* Global variables: values used across all functions */
 int fd;                          // Socket file descriptor
+char *hostname;                  // IP address of the Gopher server
+int port;                        // Port of the Gopher server
 struct sockaddr_in server_addr;  // Address and port information
 struct item *list = NULL;        // Linked list of indexed directories and files
 struct item *last_node = NULL;   // Last item in the linked list
@@ -41,11 +44,11 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "Usage: %s <hostname> <port>\n", argv[0]);
         exit(0);
     }
-    char *hostname = argv[1];
-    int port = atoi(argv[2]);
+    hostname = argv[1];
+    port = atoi(argv[2]);
     
     // Begin the indexing process, starting with the root directory
-    gopher_connect(hostname, port, "\r\n");
+    gopher_connect(index, "\r\n");
 
     // Go through the linked list of indexed items and index subdirectories
     item *c = list;
@@ -54,20 +57,27 @@ int main(int argc, char* argv[]) {
             int path_len = strlen(c->path);
             char *request = malloc(path_len + 3);
             strcpy(request, c->path);
-            request[path_len] = '\r';
-            request[path_len + 1] = '\n';
-            request[path_len + 2] = '\0';
-            gopher_connect(hostname, port, request);
+            strcpy(request + path_len, "\r\n");
+            gopher_connect(index, request);
         }
         c = c->next;
     }
 
     // Analyse the information of the indexed items and print info
+    evaluate();
 
     return 0;
 }
 
-void gopher_connect(char *hostname, int port, char *request) {
+/**
+ * Establish a connection with the Gopher server.
+ * 
+ * @param hostname IP address of the Gopher server
+ * @param port port of the Gopher server
+ * @param func function handling response from the Gopher server
+ * @param request request to be send to the Gopher server
+ */
+void gopher_connect(void (*func)(void), char *request) {
     // Create the socket
     fd = socket(AF_INET, SOCK_STREAM, 0);
     if (fd == -1) {
@@ -90,20 +100,20 @@ void gopher_connect(char *hostname, int port, char *request) {
         exit(1);
     }
 
-    index(request);
+    // Send a request for the directory index to the server
+    int bytes = send(fd, request, strlen(request), 0);
+    fprintf(stdout, "Sending request: %s", bytes == 2 ? "Root directory\n" : request);
+
+    (*func)();
 
     // Terminate the connection and release the socket
     close(fd);
 }
 
-void index(char *request) {
+void index(void) {
     // Buffer for strings read from the server
     char *buffer = malloc(BUFFER_SIZE);
     int bytes_received;
-
-    // Send a request for the directory index to the server
-    int bytes = send(fd, request, strlen(request), 0);
-    fprintf(stdout, "Sending request: %s", bytes == 2 ? "Root directory\n" : request);
 
     // Read the directory index from the server
     while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0) {
@@ -153,4 +163,43 @@ void add_item(item *new_item) {
     // Otherwise, append the new item to the end of the linked list
     last_node->next = new_item;
     last_node = new_item;
+}
+
+/**
+ * Evaluate and print out the number of directories, text files and binaries.
+ * The contents of the smallest text file.
+ * The size of the largest text file.
+ * The size of the smallest and the largest binary files.
+ * The size of the smallest and the largest binary files.
+ * The number of unique invalid references (those with an “error” type)
+ */
+void evaluate(void) {
+    int num_of_directories = 0;
+    int num_of_text_files = 0;
+    int num_of_binary_files = 0;
+    char *smallest_text_file = NULL;
+    int size_of_largest_text_file = -1;
+    int size_of_smallest_binary_file = -1;
+    int size_of_largest_binary_file = -1;
+
+    item *c = list;
+    while (c != NULL) {
+        switch (c->item_type) {
+        case DIRECTORY:
+            num_of_directories++;
+            break;
+        case TEXT:
+            num_of_text_files++;
+            break;
+        default:
+            num_of_binary_files++;
+            break;
+        }
+
+        c = c->next;
+    }
+
+    fprintf(stdout, "Number of directories: %d\n", num_of_directories);
+    fprintf(stdout, "Number of text files: %d\n", num_of_text_files);
+    fprintf(stdout, "Number of binary files: %d\n", num_of_binary_files);
 }
