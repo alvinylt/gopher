@@ -102,7 +102,8 @@ circumstances. However, to optimise the client's handling of edge cases,
 terminates the connection without any response.
 
 Servers may be busy or unresponsive at times. Timeout is implemented to prevent
-the program from getting stuck indefinitely.
+the program from getting stuck indefinitely using `setsockopt()`, a built-in
+feature in the Socket API, and the `timeval` struct.
 
 Unicode was not published at the time the Gopher protocol was publicised.
 We assume that pathnames contain only ASCII characters, or else converted into
