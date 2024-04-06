@@ -115,15 +115,15 @@ specifying the issue.
 
 ## References
 
-1. Anklesaria et al. RFC 1436: The Internet Gopher Protocol. The RFC Series.
+1. Anklesaria et al. RFC 1436: The Internet Gopher Protocol. *The RFC Series*.
    https://www.rfc-editor.org/rfc/rfc1436
-2. Arkaitz Jimenez. Time stamp in the C programming language. Stack Overflow.
+2. Arkaitz Jimenez. Time stamp in the C programming language. *Stack Overflow*.
    https://stackoverflow.com/questions/1444428/time-stamp-in-the-c-programming-language#1444440
-3. Wikipedia contributors. Gopher (protocol). Wikipedia.
-   https://en.wikipedia.org/wiki/Gopher_(protocol)
-4. dgookin. The `gettimeofday()` Function. C For Dummies Blog.
+3. dgookin. The `gettimeofday()` Function. *C For Dummies Blog*.
    https://c-for-dummies.com/blog/?p=4236
-5. Milan. How to convert string to IP address and vice versa. Stack Overflow.
+4. Milan. How to convert string to IP address and vice versa. *Stack Overflow*.
    https://stackoverflow.com/questions/5328070/how-to-convert-string-to-ip-address-and-vice-versa#5328184
+5. Wikipedia contributors. Gopher (protocol). *Wikipedia*.
+   https://en.wikipedia.org/wiki/Gopher_(protocol)
 
 Last update: 2024-04-06

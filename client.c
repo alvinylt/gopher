@@ -143,10 +143,16 @@ ssize_t gopher_connect(ssize_t (*func)(char *), char *path) {
 ssize_t indexing(char *request) {
     // Buffer for strings read from the server
     char buffer[BUFFER_SIZE];
-    ssize_t bytes_received;
+    ssize_t bytes_received = recv(fd, buffer, BUFFER_SIZE, 0);
+
+    // Handle the lack of response from the server
+    if (bytes_received == 0) {
+        fprintf(stdout, "No response from the server\n");
+        return 0;
+    }
 
     // Read the directory index from the server
-    while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0) {
+    do {
         buffer[bytes_received] = '\0';
         char *line = strtok(buffer, "\t\r\n");
         // Each line in the response contains four columns, separated by tab
@@ -183,7 +189,7 @@ ssize_t indexing(char *request) {
             line = strtok(NULL, "\t\r\n");
             column = (column + 1) % 4;
         }
-    }
+    } while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0);
     
     return 0;
 }
@@ -201,12 +207,17 @@ ssize_t evaluate_file_size(char *request) {
     // Buffer for strings read from the server
     char buffer[BUFFER_SIZE];
     ssize_t size = 0;
-    ssize_t bytes_received;
+    ssize_t bytes_received = recv(fd, buffer, BUFFER_SIZE, 0);
+
+    if (bytes_received == 0) {
+        fprintf(stdout, "No response from the server\n");
+        return size;
+    }
 
     // Read the directory index from the server
-    while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0) {
+    do {
         size += bytes_received;
-    }
+    } while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0);
     
     return size;
 }
@@ -221,14 +232,19 @@ ssize_t print_response(char *request) {
 
     // Buffer for strings read from the server
     char buffer[BUFFER_SIZE];
-    ssize_t bytes_received;
+    ssize_t bytes_received = recv(fd, buffer, BUFFER_SIZE, 0);
+
+    if (bytes_received == 0) {
+        fprintf(stdout, "No response from the server\n");
+        return 0;
+    }
 
     fprintf(stdout, "Content of the smallest text file:\n");
     // Read the directory index from the server
-    while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0) {
+    do {
         buffer[bytes_received] = '\0';
         fprintf(stdout, "%s", buffer);
-    }
+    } while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0);
     
     return 0;
 }
