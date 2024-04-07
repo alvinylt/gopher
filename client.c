@@ -1,4 +1,5 @@
 #include <errno.h>
+#include <fcntl.h>
 #include <netdb.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -7,6 +8,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <arpa/inet.h>
+#include <sys/select.h>
 #include <sys/socket.h>
 #include <sys/time.h>
 
@@ -534,6 +536,16 @@ void evaluate(void) {
     }
     if (!external_server_exists)
         fprintf(stdout, "No reference to any external server indexed\n");
+    
+    // List all invalid references
+    fprintf(stdout, "\nInvalid references:\n");
+    c = list;
+    while (c != NULL) {
+        if (c->item_type == ERROR) {
+            fprintf(stdout, "%s", c->path);
+        }
+        c = c->next;
+    }
 }
 
 /**
@@ -554,10 +566,15 @@ void test_external_servers(entry *item) {
         exit(EXIT_FAILURE);
     }
 
+    fcntl(external_fd, F_SETFL, O_NONBLOCK);
+
     // Configure timeout limit
     struct timeval timeout;
+    fd_set fdset;
     timeout.tv_sec = 3;
     timeout.tv_usec = 0;
+    FD_ZERO(&fdset);
+    FD_SET(external_fd, &fdset);
     if (setsockopt(external_fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0) {
         fprintf(stderr, "Error: Timeout configuration failed\n");
         exit(EXIT_FAILURE);
@@ -572,9 +589,15 @@ void test_external_servers(entry *item) {
         memcpy(&external_server_addr.sin_addr.s_addr, external_server->h_addr_list[0], external_server->h_length);
         
         // Attempt the connection
-        int connect_status = connect(external_fd, (struct sockaddr *)&external_server_addr, sizeof(external_server_addr));
-        if (connect_status == 0) {
-            connectivity = true;
+        connect(external_fd, (struct sockaddr *)&external_server_addr, sizeof(external_server_addr));
+
+        if (select(external_fd + 1, NULL, &fdset, NULL, &timeout) == 1) {
+            int so_error;
+            socklen_t len = sizeof so_error;
+            getsockopt(external_fd, SOL_SOCKET, SO_ERROR, &so_error, &len);
+            if (so_error == 0) {
+                connectivity = true;
+            }
         }
     }
     

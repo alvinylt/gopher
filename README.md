@@ -130,15 +130,17 @@ specifying the issue.
    https://www.rfc-editor.org/rfc/rfc1436
 2. Arkaitz Jimenez. Time stamp in the C programming language. *Stack Overflow*.
    https://stackoverflow.com/questions/1444428/time-stamp-in-the-c-programming-language#1444440
-3. dgookin. The `gettimeofday()` Function. *C For Dummies Blog*.
+3. caf. C: socket connection timeout. *Stack Overflow*.
+   https://stackoverflow.com/questions/2597608/c-socket-connection-timeout
+4. dgookin. The `gettimeofday()` Function. *C For Dummies Blog*.
    https://c-for-dummies.com/blog/?p=4236
-4. Foobar. Client in C++, use gethostbyname or getaddrinfo. *Stack Overflow*.
+5. Foobar. Client in C++, use gethostbyname or getaddrinfo. *Stack Overflow*.
    https://stackoverflow.com/questions/52727565/client-in-c-use-gethostbyname-or-getaddrinfo
-5. IEEE and The Open Group. `setsockopt`. *Linux man page*.
+6. IEEE and The Open Group. `setsockopt`. *Linux man page*.
    https://linux.die.net/man/3/setsockopt
-6. Milan. How to convert string to IP address and vice versa. *Stack Overflow*.
+7. Milan. How to convert string to IP address and vice versa. *Stack Overflow*.
    https://stackoverflow.com/questions/5328070/how-to-convert-string-to-ip-address-and-vice-versa#5328184
-7. Wikipedia contributors. Gopher (protocol). *Wikipedia*.
+8. Wikipedia contributors. Gopher (protocol). *Wikipedia*.
    https://en.wikipedia.org/wiki/Gopher_(protocol)
 
 Last update: 2024-04-07
