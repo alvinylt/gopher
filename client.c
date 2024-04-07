@@ -177,6 +177,9 @@ ssize_t indexing(char *request) {
     do {
         buffer[bytes_received] = '\0';
         char *line = buffer;
+
+        // fprintf(stdout, "\nBuffer::: %s\n", buffer);
+
         do {
             char *next_line = cut_line(line);
             index_line(line, request);
@@ -239,8 +242,7 @@ void index_line(char *line, char *request) {
     if (item_type != ERROR) {
         char *pathname = extract_pathname(line);
         // Index the directory/file
-        if (pathname[0] != '\0') {
-            fprintf(stdout, "Indexed: %s\n", pathname);
+        if (pathname[0] == '/') {
             item *new_item = (item *)malloc(sizeof(item));
             strncpy(new_item->path, pathname, BUFFER_SIZE - 1);
             new_item->path[strlen(pathname)] = '\0';
@@ -379,18 +381,17 @@ void add_item(item *new_item) {
     }
 
     // If the invalid reference is already requested previously, do not add
-    if (new_item->item_type == ERROR) {
-        item *c = list;
-        while (c != NULL) {
-            if (c->item_type == ERROR && strcmp(c->path, new_item->path) == 0) {
-                free(new_item);
-                return;
-            }
-            c = c->next;
+    item *c = list;
+    while (c != NULL) {
+        if (strcmp(c->path, new_item->path) == 0) {
+            free(new_item);
+            return;
         }
+        c = c->next;
     }
 
     // Otherwise, append the new item to the end of the linked list
+    fprintf(stdout, "Indexed: %s\n", new_item->path);
     last_node->next = new_item;
     last_node = new_item;
 }
