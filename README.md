@@ -105,6 +105,11 @@ Servers may be busy or unresponsive at times. Timeout is implemented to prevent
 the program from getting stuck indefinitely using `setsockopt()`, a built-in
 feature in the Socket API, and the `timeval` struct.
 
+A well-implemented server's directory index response should include four pieces
+of information, separated by tab characters. In case a line therein is
+malformed, the program handles it gracefully to avoid indexing invalid things.
+It is also designed to handle long responses from the server.
+
 Unicode was not published at the time the Gopher protocol was publicised.
 We assume that pathnames contain only ASCII characters, or else converted into
 ASCII representations on the server side (as it is in Motsognir). For example,
@@ -130,4 +135,4 @@ specifying the issue.
    https://en.wikipedia.org/wiki/Gopher_(protocol)
 
 
-Last update: 2024-04-06
+Last update: 2024-04-07

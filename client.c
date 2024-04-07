@@ -8,41 +8,42 @@
 #include <sys/socket.h>
 #include <sys/time.h>
 
-/*  Global constant: string buffer size */
+/* Global constant: buffer size for receiving content from the server */
 #define BUFFER_SIZE 4096
 
-/* Global constant: file types */
+/* Global constants: file types */
 #define DIRECTORY 0  // Directory
 #define TEXT 1       // Text (non-binary) file
 #define BINARY 2     // Binary file
 #define ERROR 3      // Error message
+#define EXTERNAL 4   // External server
 
-/* Linked list struct containing information of an indexed directory/file */
-typedef struct item {
-    char *path;              // Pathname of the file
-    int item_type;           // Type of the file (directory, text, binary or error)
-    struct item *next;       // Linked list: pointer to the next item
-} item;
+/* Linked list entry containing information of an indexed item */
+typedef struct entry {
+    char *path;          // Pathname, error message or external server
+    int item_type;       // Type of the item (directory, file, error, etc.)
+    struct entry *next;  // Linked list pointer to the next item
+} entry;
 
 /* Helper functions */
 ssize_t gopher_connect(ssize_t (*func)(char *), char *path);
 ssize_t indexing(char *request);
 void index_line(char *line, char *request);
-char *cut_line(char *ptr);
+char *find_next_line(char *ptr);
 char *extract_pathname(char *line);
 ssize_t evaluate_file_size(char *request);
 ssize_t print_response(char *request);
-void add_item(item *new_item);
+void add_item(entry *new_item);
 void evaluate(void);
 void cleanup(void);
 
 /* Global variables: values used across all functions */
 int fd;                          // Socket file descriptor
-char *address;                  // IP address of the Gopher server
+char *address;                   // IP address of the Gopher server
 int port;                        // Port of the Gopher server
 struct sockaddr_in server_addr;  // Address and port information
-struct item *list = NULL;        // Linked list of indexed directories and files
-struct item *last_node = NULL;   // Last item in the linked list
+struct entry *list = NULL;       // Linked list of indexed directories and files
+struct entry *last_node = NULL;  // Last item in the linked list
 
 /**
  * The Internet Gopher client indexing files.
@@ -60,7 +61,7 @@ int main(int argc, char* argv[]) {
     gopher_connect(indexing, "");
 
     // Iterate through the linked list of indexed items to index subdirectories
-    item *c = list;
+    entry *c = list;
     while (c != NULL) {
         if (c->item_type == DIRECTORY)
             gopher_connect(indexing, c->path);
@@ -86,7 +87,7 @@ int main(int argc, char* argv[]) {
  * @return the output from the function handling response
  */
 ssize_t gopher_connect(ssize_t (*func)(char *), char *path) {
-    // Timestamping
+    // Timestamping for logging sent requests
     struct timeval tv;
 
     // Create the socket
@@ -136,6 +137,7 @@ ssize_t gopher_connect(ssize_t (*func)(char *), char *path) {
     strftime(time, sizeof(time), "%Y-%m-%d %H:%M:%S", timeinfo);
     fprintf(stdout, "Request sent at %s: %s", time, request);
 
+    // Execute the function that receives and handles server's response
     int output = (*func)(request);
 
     // Terminate the connection and release the socket
@@ -177,11 +179,8 @@ ssize_t indexing(char *request) {
     do {
         buffer[bytes_received] = '\0';
         char *line = buffer;
-
-        // fprintf(stdout, "\nBuffer::: %s\n", buffer);
-
         do {
-            char *next_line = cut_line(line);
+            char *next_line = find_next_line(line);
             index_line(line, request);
             line = next_line;
         } while (line != NULL);
@@ -191,12 +190,13 @@ ssize_t indexing(char *request) {
 }
 
 /**
- * A function resembling strtok().
+ * A function resembling strtok() using "\r\n" combined (rather than "\r" or
+ * "\n") as the delimiter.
  * 
  * @param ptr pointer to a string supposed to end with "\r\n"
- * @return pointer to the character after "\r\n", NULL if not found or out-of-bounds
+ * @return pointer to the string after "\r\n", NULL if not found or out-of-bounds
  */
-char *cut_line(char *ptr) {
+char *find_next_line(char *ptr) {
     for (char *i = ptr; *i != '\0'; i++) {
         if (*i == '\r' && *(i + 1) == '\n') {
             *i = '\0';
@@ -219,10 +219,11 @@ void index_line(char *line, char *request) {
     int item_type = ERROR;
     if (line[0] == '3') {
         // Add the invalid reference to the linked list
-        item *new_item = (item *)malloc(sizeof(item));
-        new_item->path = (char *)malloc(strlen(request) + 1);
-        strncpy(new_item->path, request, strlen(request));
-        new_item->path[strlen(request)] = '\0';
+        entry *new_item = (entry *)malloc(sizeof(entry));
+        size_t request_len = strlen(request);
+        new_item->path = (char *)malloc(request_len + 1);
+        strncpy(new_item->path, request, request_len + 1);
+        new_item->path[request_len] = '\0';
         new_item->item_type = item_type;
         new_item->next = NULL;
         add_item(new_item);
@@ -242,10 +243,11 @@ void index_line(char *line, char *request) {
         char *pathname = extract_pathname(line);
         // Index the directory/file
         if (pathname[0] == '/') {
-            item *new_item = (item *)malloc(sizeof(item));
-            new_item->path = (char *)malloc(strlen(pathname) + 1);
-            strncpy(new_item->path, pathname, strlen(pathname));
-            new_item->path[strlen(pathname)] = '\0';
+            entry *new_item = (entry *)malloc(sizeof(entry));
+            size_t pathname_len = strlen(pathname);
+            new_item->path = (char *)malloc(pathname_len + 1);
+            strncpy(new_item->path, pathname, pathname_len + 1);
+            new_item->path[pathname_len] = '\0';
             new_item->item_type = item_type;
             new_item->next = NULL;
             add_item(new_item);
@@ -311,9 +313,8 @@ ssize_t evaluate_file_size(char *request) {
     }
 
     // Read the directory index from the server
-    do {
-        size += bytes_received;
-    } while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0);
+    do size += bytes_received;
+    while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0);
     
     return size;
 }
@@ -359,9 +360,9 @@ ssize_t print_response(char *request) {
  * the main() function returns.
  */
 void cleanup(void) {
-    item *c = list;
+    entry *c = list;
     while (c != NULL) {
-        item *next = c->next;
+        entry *next = c->next;
         free(c->path);
         free(c);
         c = next;
@@ -375,7 +376,7 @@ void cleanup(void) {
  * 
  * @param new_item pointer to the new indexed item
  */
-void add_item(item *new_item) {
+void add_item(entry *new_item) {
     // If the linked list is empty, let the new item be the initial item
     if (list == NULL) {
         list = new_item;
@@ -384,7 +385,7 @@ void add_item(item *new_item) {
     }
 
     // If the invalid reference is already requested previously, do not add
-    item *c = list;
+    entry *c = list;
     while (c != NULL) {
         if (strcmp(c->path, new_item->path) == 0) {
             free(new_item->path);
@@ -417,7 +418,7 @@ void evaluate(void) {
     int size_of_smallest_binary_file = -1;
     int size_of_largest_binary_file = -1;
 
-    item *c = list;
+    entry *c = list;
     ssize_t file_size;
     while (c != NULL) {
         switch (c->item_type) {
