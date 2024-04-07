@@ -458,9 +458,9 @@ void add_item(entry *new_item) {
         // For optimising visualisation
         fprintf(stdout, "Indexed %s: %s", item_type, new_item->path);
     else if (new_item->item_type == TIMEOUT)
-        fprintf(stdout, "Transmission %s: %s", item_type, new_item->path);
+        fprintf(stderr, "Transmission %s: %s", item_type, new_item->path);
     else if (new_item->item_type == TOO_LARGE)
-        fprintf(stdout, "File %s: %s\n", item_type, new_item->path);
+        fprintf(stderr, "File %s: %s\n", item_type, new_item->path);
     else
         fprintf(stdout, "Indexed %s: %s\n", item_type, new_item->path);
     last_node->next = new_item;
