@@ -110,6 +110,11 @@ of information, separated by tab characters. In case a line therein is
 malformed, the program handles it gracefully to avoid indexing invalid things.
 It is also designed to handle long responses from the server.
 
+A server's response should end with a line containing `.\r\n`. This client
+program is aware of the end of file. However, if the server does not follow
+the standard protocol to the full extent, and terminates transmission with
+`.\r\n`, the program still handles the response gracefully.
+
 Unicode was not published at the time the Gopher protocol was publicised.
 We assume that pathnames contain only ASCII characters, or else converted into
 ASCII representations on the server side (as it is in Motsognir). For example,
