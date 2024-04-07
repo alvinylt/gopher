@@ -1,0 +1,156 @@
+Request sent at 2024-04-08 00:18:09: 
+Indexed external server: gopher.floodgap.com    70
+Indexed directory: /acme
+Indexed directory: /maze/17
+Indexed directory: /misc
+Indexed external server: comp3310.ddns.net      71
+Request sent at 2024-04-08 00:18:09: /acme
+Indexed text file: /acme/about
+Indexed directory: /acme/products
+Indexed text file: /acme/contact
+Request sent at 2024-04-08 00:18:09: /maze/17
+Indexed directory: /maze/18
+Indexed external server: comp3310.ddns.net      70
+Request sent at 2024-04-08 00:18:10: /misc
+Indexed directory: /misc/empty
+Indexed text file: /misc/empty.txt
+Indexed directory: /misc/nesta
+Indexed directory: /misc/nonexistent
+Indexed binary file: /misc/binary
+Indexed binary file: /misc/encabulator.jpeg
+Indexed text file: /misc/loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong
+Indexed directory: /misc/more
+Request sent at 2024-04-08 00:18:10: /acme/products
+Indexed text file: /acme/products/anvils
+Indexed text file: /acme/products/pianos
+Indexed text file: /acme/products/paint
+Indexed directory: /acme/products/traps
+Request sent at 2024-04-08 00:18:10: /maze/18
+Indexed directory: /maze/19
+Request sent at 2024-04-08 00:18:11: /misc/empty
+Request sent at 2024-04-08 00:18:11: /misc/nesta
+Indexed directory: /misc/nestb
+Request sent at 2024-04-08 00:18:11: /misc/nonexistent
+Indexed invalid request: /misc/nonexistent
+Request sent at 2024-04-08 00:18:11: /misc/more
+Indexed directory: /misc/malformed1
+Indexed text file: /misc/malformed2
+Indexed text file: /misc/firehose
+Indexed text file: /misc/tarpit
+Indexed text file: /misc/godot
+Request sent at 2024-04-08 00:18:11: /acme/products/traps
+Indexed invalid request: /acme/products/traps
+Request sent at 2024-04-08 00:18:12: /maze/19
+Indexed text file: /maze/statuette
+Indexed text file: /maze/floppy
+Indexed directory: /maze/20
+Request sent at 2024-04-08 00:18:12: /misc/nestb
+Indexed directory: /misc/nestc
+Request sent at 2024-04-08 00:18:12: /misc/malformed1
+Indexed directory: /misc/malformed1/file
+Request sent at 2024-04-08 00:18:12: /maze/20
+Indexed directory: /maze/21
+Request sent at 2024-04-08 00:18:12: /misc/nestc
+Indexed directory: /misc/nestd
+Request sent at 2024-04-08 00:18:13: /misc/malformed1/file
+Indexed invalid request: /misc/malformed1/file
+Request sent at 2024-04-08 00:18:13: /maze/21
+Indexed directory: /maze/22
+Request sent at 2024-04-08 00:18:13: /misc/nestd
+Indexed directory: /misc/neste
+Request sent at 2024-04-08 00:18:13: /maze/22
+Indexed directory: /maze/23
+Request sent at 2024-04-08 00:18:14: /misc/neste
+Indexed directory: /misc/nestf
+Request sent at 2024-04-08 00:18:14: /maze/23
+Request sent at 2024-04-08 00:18:15: /misc/nestf
+Indexed directory: /misc/nestg
+Request sent at 2024-04-08 00:18:15: /misc/nestg
+Indexed directory: /misc/nesth
+Request sent at 2024-04-08 00:18:15: /misc/nesth
+Indexed directory: /misc/nesti
+Request sent at 2024-04-08 00:18:15: /misc/nesti
+Indexed directory: /misc/nestj
+Request sent at 2024-04-08 00:18:15: /misc/nestj
+Indexed directory: /misc/nestk
+Request sent at 2024-04-08 00:18:16: /misc/nestk
+Indexed directory: /misc/nestl
+Request sent at 2024-04-08 00:18:16: /misc/nestl
+Indexed directory: /misc/nestm
+Request sent at 2024-04-08 00:18:16: /misc/nestm
+Indexed directory: /misc/nestn
+Request sent at 2024-04-08 00:18:16: /misc/nestn
+Indexed directory: /misc/nesto
+Request sent at 2024-04-08 00:18:16: /misc/nesto
+Indexed directory: /misc/nestp
+Request sent at 2024-04-08 00:18:16: /misc/nestp
+Indexed directory: /misc/nestq
+Request sent at 2024-04-08 00:18:17: /misc/nestq
+Indexed directory: /misc/nestr
+Request sent at 2024-04-08 00:18:17: /misc/nestr
+Indexed directory: /misc/nests
+Request sent at 2024-04-08 00:18:17: /misc/nests
+Indexed directory: /misc/nestt
+Request sent at 2024-04-08 00:18:18: /misc/nestt
+Indexed directory: /misc/nestu
+Request sent at 2024-04-08 00:18:18: /misc/nestu
+Indexed directory: /misc/nestv
+Request sent at 2024-04-08 00:18:19: /misc/nestv
+Indexed directory: /misc/nestw
+Request sent at 2024-04-08 00:18:19: /misc/nestw
+Indexed directory: /misc/nestx
+Request sent at 2024-04-08 00:18:19: /misc/nestx
+Indexed directory: /misc/nesty
+Request sent at 2024-04-08 00:18:19: /misc/nesty
+Indexed text file: /misc/nestz
+
+Indexation complete. Now analysing the files.
+Request sent at 2024-04-08 00:18:19: /rfc1436.txt
+Request sent at 2024-04-08 00:18:19: /acme/about
+Request sent at 2024-04-08 00:18:20: /acme/contact
+Request sent at 2024-04-08 00:18:20: /misc/empty.txt
+Request sent at 2024-04-08 00:18:20: /misc/binary
+Request sent at 2024-04-08 00:18:20: /misc/encabulator.jpeg
+Request sent at 2024-04-08 00:18:20: /misc/loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong
+Request sent at 2024-04-08 00:18:21: /acme/products/anvils
+Request sent at 2024-04-08 00:18:21: /acme/products/pianos
+Request sent at 2024-04-08 00:18:22: /acme/products/paint
+Request sent at 2024-04-08 00:18:22: /misc/malformed2
+Request sent at 2024-04-08 00:18:22: /misc/firehose
+The file /misc/firehose is too large
+File too large: /misc/firehose
+Request sent at 2024-04-08 00:18:22: /misc/tarpit
+Request sent at 2024-04-08 00:19:17: /misc/godot
+Error: Server response timeout
+Transmission timeout: /misc/godot
+The file /misc/godot is too large
+File too large: /misc/godot
+Request sent at 2024-04-08 00:19:38: /maze/statuette
+Request sent at 2024-04-08 00:19:38: /maze/floppy
+Request sent at 2024-04-08 00:19:38: /misc/nestz
+
+Number of directories: 41
+Number of text files: 15
+Number of binary files: 2
+Number of invalid references: 3
+
+Request sent at 2024-04-08 00:19:38: /misc/empty.txt
+Content of the smallest text file:
+
+Size of the smallest text file: 3
+Size of the largest text file: 3
+Size of the smallest binary file: 253
+Size of the largest binary file: 45584
+
+Connectivity to external servers:
+Server gopher.floodgap.com at port 70 is up
+Server comp3310.ddns.net at port 71 is down
+Server comp3310.ddns.net at port 70 is up
+
+References with issues/errors:
+(Invalid reference) /misc/nonexistent
+(Invalid reference) /acme/products/traps
+(Invalid reference) /misc/malformed1/file
+(File too large) /misc/firehose
+(Timeout) /misc/godot
+(File too large) /misc/godot

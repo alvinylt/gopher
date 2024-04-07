@@ -52,8 +52,23 @@ case, a new entry is added to the linked list if and only if it does not already
 exist. This enables us to count the number of invalid references at a later
 stage.
 
+With reference to RFC 1436, the canonical type `9` refers to binary files.
+However, actual server implementations sometimes have more specific types.
+In this client program, files that are not in plain text are considered binary.
+
+Classification               | File types
+-----------------------------|------------
+Directory                    | `1`
+Reference to external server | `1`
+Text file                    | `0`
+Binary file                  | `4` (BinHex-encoded file), `5` (DOS file), `6` (uuencoded file), `9` (Binary file), `g` (GIF file), `I` (Image file), `:` (Bitmap image), `;` (Movie file), `<` (Sound file), `d` (Document), `h` (HTML file), `p` (PNG file), `r` (RTF), `s` (Sound file), `P` (PDF), `X` (XML)
+Error                        | `3`
+
 Any row in the response starting with the character `i` is a human-readable
-informational message, thus ignored by the indexation process.
+informational message, thus ignored by the indexation process. Other references
+such as Telnet (`8` and `T`), CCSO nameserver (`2`) and mirror (`+`) do not fall
+within any of the above categories. These types are therefore disregarded in
+the indexation process.
 
 ### Recursively Index Subdirectories
 
@@ -71,17 +86,21 @@ called to find the following information:
 3. Sizes of the smallest and the largest text files
 4. Sizes of the smallest and the largest binary files
 5. Number of invalid references (each unique invalid request is counted once)
-
-The list of external servers and references with “issues/errors” are yet to be
-implemented.
+6. Connectivity to external servers
+7. List of references causing issues/errors
 
 ### Terminal Output
 
 The terminal outputs are in the following formats.
 - `Request sent at <timestamp>: <request>`
-- `Indexed: <pathname of newly indexed item>`
+- `Indexed <item type>: <pathname of newly indexed item>`
 - `Number of <directories/text files/binary files/invalid references>: <number>`
 - `Size of the <smallest/largest text/binary file>: <number>`
+
+Issues and errors are printed to the terminal in the following formats:
+- `File too large: <pathname>`
+- `Error: <error message>`
+- `Transmission timeout: <pathname>`
 
 ### Minimising Errors and Maximising Security
 
@@ -123,6 +142,11 @@ a file named "ɡoʊfər" is detected as "%C9%A1o%CA%8Af%C9%99r".
 At the beginning of `gopher_connect()`, the program is terminated if the
 connection cannot be established. An error message is printed to `stderr`
 specifying the issue.
+
+## Testing
+
+1. The client's [output](assets/output1.txt) with `./client comp3310.ddns.net 70`.
+2. The client's [output](assets/output2.txt) with `./client localhost 70`, using Motsognir.
 
 ## References
 
