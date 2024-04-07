@@ -27,6 +27,8 @@ typedef struct item {
 /* Helper functions */
 ssize_t gopher_connect(ssize_t (*func)(char *), char *path);
 ssize_t indexing(char *request);
+void index_line(char *line, char *request);
+char *extract_pathname(char *line);
 ssize_t evaluate_file_size(char *request);
 ssize_t print_response(char *request);
 void add_item(item *new_item);
@@ -168,47 +170,77 @@ ssize_t indexing(char *request) {
         return 0;
     }
 
-    // Read the directory index from the server
+    // Read the directory index from the server line by line
     do {
         buffer[bytes_received] = '\0';
-        char *line = strtok(buffer, "\t\r\n");
-        // Each line in the response contains four columns, separated by tab
-        int column = 0;
-        int item_type = ERROR;
+        char *line = strtok(buffer, "\r\n");
+
         while (line != NULL) {
-            if (column == 0) {
-                // Determine the type of the indexed item
-                if (line[0] == '1') item_type = DIRECTORY;
-                else if (line[0] == '0') item_type = TEXT;
-                else if (line[0] == '3') {
-                    // Add the error to the linked list, recording the request
-                    item_type = ERROR;
-                    item *new_item = (item *)malloc(sizeof(item));
-                    strncpy(new_item->path, request, BUFFER_SIZE - 1);
-                    new_item->path[strlen(request)] = '\0';
-                    new_item->item_type = item_type;
-                    new_item->next = NULL;
-                    add_item(new_item);
-                }
-                else if (line[0] != 'i') item_type = BINARY;
-            }
-            else if (column == 1 && item_type != ERROR) {
-                // Index the directory/file
-                fprintf(stdout, "Indexed: %s\n", line);
-                item *new_item = (item *)malloc(sizeof(item));
-                strncpy(new_item->path, line, BUFFER_SIZE - 1);
-                new_item->path[strlen(line)] = '\0';
-                new_item->item_type = item_type;
-                new_item->next = NULL;
-                add_item(new_item);
-            }
-            // Read the next column in the line or the next line
-            line = strtok(NULL, "\t\r\n");
-            column = (column + 1) % 4;
+            index_line(line, request);
+            line = strtok(NULL, "\r\n");
         }
     } while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0);
     
     return 0;
+}
+
+void index_line(char *line, char *request) {
+    int item_type = ERROR;
+    if (line[0] == '3') {
+        item *new_item = (item *)malloc(sizeof(item));
+        strncpy(new_item->path, request, BUFFER_SIZE - 1);
+        new_item->path[strlen(request)] = '\0';
+        new_item->item_type = item_type;
+        new_item->next = NULL;
+        add_item(new_item);
+    }
+    else if (line[0] == '1')
+        item_type = DIRECTORY;
+    else if (line[0] == '0')
+        item_type = TEXT;
+    else if (line[0] == 'i')
+        ;
+    else if (line[0] == '.')
+        return;
+    else
+        item_type = BINARY;
+
+    if (item_type != ERROR && line[0] != 'i') {
+        char *pathname = extract_pathname(line);
+        // Index the directory/file
+        fprintf(stdout, "Indexed: %s\n", pathname);
+        item *new_item = (item *)malloc(sizeof(item));
+        strncpy(new_item->path, pathname, BUFFER_SIZE - 1);
+        new_item->path[strlen(pathname)] = '\0';
+        new_item->item_type = item_type;
+        new_item->next = NULL;
+        add_item(new_item);
+    }
+}
+
+/**
+ * Given a line of directory index response, extract the pathname.
+ */
+char *extract_pathname(char *line) {
+    char *start = NULL;
+
+    // First tab character in the line found: pathname follows
+    for (int i = 0; line[i] != '\0'; i++) {
+        if (line[i] == '\t') {
+            start = &line[i + 1];
+            break;
+        }
+    }
+
+    // Find the second tab character or the end of line
+    for (char *i = start; *i != '\0'; i++) {
+        if (*i == '\t' || *i == '\r' || *i == '\n') {
+            *i = '\0';
+            break;
+        }
+    }
+
+    return start;
 }
 
 /**
