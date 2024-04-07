@@ -435,7 +435,11 @@ void add_item(entry *new_item) {
     else if (new_item->item_type == EXTERNAL) item_type = "external server";
 
     // Otherwise, append the new item to the end of the linked list
-    fprintf(stdout, "Indexed %s: %s\n", item_type, new_item->path);
+    if (new_item->item_type == ERROR)
+        // For optimising visualisation
+        fprintf(stdout, "Indexed %s: %s", item_type, new_item->path);
+    else
+        fprintf(stdout, "Indexed %s: %s\n", item_type, new_item->path);
     last_node->next = new_item;
     last_node = new_item;
 }
@@ -447,6 +451,7 @@ void add_item(entry *new_item) {
  *     3. Content of the smallest text file
  */
 void evaluate(void) {
+    fprintf(stdout, "\nIndexation complete. Now analysing the files.\n");
     int num_of_directories = 0;
     int num_of_text_files = 0;
     int num_of_binary_files = 0;
@@ -498,12 +503,12 @@ void evaluate(void) {
         c = c->next;
     }
 
-    fprintf(stdout, "Number of directories: %d\n", num_of_directories);
+    fprintf(stdout, "\nNumber of directories: %d\n", num_of_directories);
     fprintf(stdout, "Number of text files: %d\n", num_of_text_files);
     fprintf(stdout, "Number of binary files: %d\n", num_of_binary_files);
-    fprintf(stdout, "Number of invalid references: %d\n", num_of_invalid_references);
+    fprintf(stdout, "Number of invalid references: %d\n\n", num_of_invalid_references);
     gopher_connect(print_response, smallest_text_file);
-    fprintf(stdout, "Size of the smallest text file: %d\n", size_of_smallest_text_file);
+    fprintf(stdout, "\nSize of the smallest text file: %d\n", size_of_smallest_text_file);
     fprintf(stdout, "Size of the largest text file: %d\n", size_of_largest_text_file);
     fprintf(stdout, "Size of the smallest binary file: %d\n", size_of_smallest_binary_file);
     fprintf(stdout, "Size of the largest binary file: %d\n", size_of_largest_binary_file);
