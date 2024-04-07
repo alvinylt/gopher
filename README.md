@@ -91,7 +91,7 @@ called to find the following information:
 7. List of references causing issues/errors
 
 References to external servers are recorded in the linked list. The helper
-function `test_external_servers()` attempts connection to those servers.
+function `test_external_servers()` attempts a connection to those servers.
 All other information is recorded in the linked list.
 
 ### Terminal Output
@@ -141,7 +141,7 @@ malformed, the program handles it gracefully to avoid indexing invalid things.
 It is also designed to handle long responses from the server.
 
 A server's response should end with a line containing `.\r\n`. This client
-program is aware of the end of file. However, if the server does not follow
+program is aware of the end of the file. However, if the server does not follow
 the standard protocol to the full extent, and terminates transmission with
 `.\r\n`, the program still handles the response gracefully.
 
@@ -150,14 +150,14 @@ We assume that pathnames contain only ASCII characters, or else converted into
 ASCII representations on the server side (as it is in Motsognir). For example,
 a file named "ɡoʊfər" is detected as "%C9%A1o%CA%8Af%C9%99r".
 
-Other malformed response may omit the hostname and the port in an entry of the
+Other malformed responses may omit the hostname and the port in an entry of the
 directory index. This client still attempts to index the file. If the file does
 not exist in the server, the pathname is regarded as an invalid reference.
 
 ### Handling Edge Cases: Exceptionally Large Files
 
-During the evaluation stage, the client has to download the files for analysing
-their properties, such as their size. The files may sometimes be unexpectedly
+During the evaluation stage, the client has to download the files for analysis
+of their properties, such as their size. The files may sometimes be unexpectedly
 large. The global constant `FILE_LIMIT` specifies the maximum file size that
 the client accepts. This ensures that the client will not be flooded with
 infinite/unacceptable network traffic.
@@ -168,7 +168,7 @@ by `evaluate()`.
 ## Testing
 
 The client program is tested with the class server and a local Motsognir server.
-The logs are included for record:
+The logs are included for the record:
 - [Example 1](assets/output1.txt)
 - [Example 2](assets/output2.txt)
 
