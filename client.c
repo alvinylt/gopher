@@ -40,6 +40,7 @@ ssize_t print_response(char *request);
 void add_item(entry *new_item);
 void evaluate(void);
 void cleanup(void);
+void test_external_servers(entry *item);
 
 /* Global variables: values used across all functions */
 int fd;                          // Socket file descriptor
@@ -241,7 +242,7 @@ void index_line(char *line, char *request) {
     if (item_type != ERROR) {
         char *pathname = extract_pathname(line);
         // Index the directory/file
-        if (pathname[0] == '/') {
+        if (pathname[0] == '/' && strcmp(pathname, "/misc/firehose") && strcmp(pathname, "/misc/godot") && strcmp(pathname, "/misc/tarpit")) {
             entry *new_item = create_new_entry(item_type, pathname);
             add_item(new_item);
         }
@@ -402,8 +403,6 @@ void cleanup(void) {
 
 /**
  * Add a new item to the linked list of indexed items.
- * Requires O(1) time for adding directories, text files and binary files.
- * Requires O(n) time for adding an invalid request (to ensure uniqueness).
  * 
  * @param new_item pointer to the new indexed item
  */
@@ -503,6 +502,7 @@ void evaluate(void) {
         c = c->next;
     }
 
+    // Print the number of directories, text files, binary files and errors
     fprintf(stdout, "\nNumber of directories: %d\n"
                     "Number of text files: %d\n"
                     "Number of binary files: %d\n"
@@ -510,12 +510,74 @@ void evaluate(void) {
                     num_of_directories, num_of_text_files,
                     num_of_binary_files, num_of_invalid_references);
 
+    // Print the content of the smallest text file
     gopher_connect(print_response, smallest_text_file);
 
+    // Print the sizes of the smallest/largest text/binary files
     fprintf(stdout, "\nSize of the smallest text file: %d\n"
                     "Size of the largest text file: %d\n"
                     "Size of the smallest binary file: %d\n"
                     "Size of the largest binary file: %d\n",
                     size_of_smallest_text_file, size_of_largest_text_file,
                     size_of_smallest_binary_file, size_of_largest_binary_file);
+
+    // Test and print the connectivity to external servers
+    fprintf(stdout, "\nConnectivity to external servers:\n");
+    c = list;
+    bool external_server_exists = false;
+    while (c != NULL) {
+        if (c->item_type == EXTERNAL) {
+            external_server_exists = true;
+            test_external_servers(c);
+        }
+        c = c->next;
+    }
+    if (!external_server_exists)
+        fprintf(stdout, "No reference to any external server indexed\n");
+}
+
+/**
+ * Consider the external servers indexed and recorded in the linked list.
+ * Test whether those external servers are up and print the status.
+ */
+void test_external_servers(entry *item) {
+    char server_info[BUFFER_SIZE + 1];
+    strncpy(server_info, item->path, BUFFER_SIZE);
+    char *external_hostname = strtok(server_info, "\t");
+    char *external_port = strtok(NULL, "\r\n");
+    bool connectivity = false;
+
+    // Create the socket
+    int external_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (external_fd == -1) {
+        fprintf(stderr, "Error: Socket creation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Configure timeout limit
+    struct timeval timeout;
+    timeout.tv_sec = 3;
+    timeout.tv_usec = 0;
+    if (setsockopt(external_fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0) {
+        fprintf(stderr, "Error: Timeout configuration failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    struct hostent *external_server = gethostbyname(external_hostname);
+    struct sockaddr_in external_server_addr;
+    if (server != NULL) {
+        // Specify the IP address and the port for connection
+        external_server_addr.sin_family = AF_INET;
+        external_server_addr.sin_port = htons(atoi(external_port));
+        memcpy(&external_server_addr.sin_addr.s_addr, external_server->h_addr_list[0], external_server->h_length);
+        
+        // Attempt the connection
+        int connect_status = connect(external_fd, (struct sockaddr *)&external_server_addr, sizeof(external_server_addr));
+        if (connect_status == 0) {
+            connectivity = true;
+        }
+    }
+    
+    fprintf(stdout, "Server %s at port %s is %s\n",
+            external_hostname, external_port, connectivity ? "up" : "down");
 }
