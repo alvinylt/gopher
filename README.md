@@ -53,21 +53,22 @@ exist. This enables us to count the number of invalid references at a later
 stage.
 
 With reference to RFC 1436, the canonical type `9` refers to binary files.
-However, actual server implementations sometimes have more specific types.
+Actual server implementations often have more specific types and non-canonical
+types that gained popularity after RFC 1436 was published.
 In this client program, files that are not in plain text are considered binary.
 
-Classification               | File types
+**Classification**           | **File types**
 -----------------------------|------------
 Directory                    | `1`
 Reference to external server | `1`
 Text file                    | `0`
-Binary file                  | `4` (BinHex-encoded file), `5` (DOS file), `6` (uuencoded file), `9` (Binary file), `g` (GIF file), `I` (Image file), `:` (Bitmap image), `;` (Movie file), `<` (Sound file), `d` (Document), `h` (HTML file), `p` (PNG file), `r` (RTF), `s` (Sound file), `P` (PDF), `X` (XML)
+Binary file                  | `4` (BinHex-encoded file), `5` (DOS file), `6` (uuencoded file), `9` (Binary file), `g` (GIF), `I` (Image), `:` (Bitmap), `;` (Movie), `<` (Audio), `d` (Document), `h` (HTML), `p` (PNG), `r` (RTF), `s` (Sound), `P` (PDF), `X` (XML)
 Error                        | `3`
 
 Any row in the response starting with the character `i` is a human-readable
 informational message, thus ignored by the indexation process. Other references
 such as Telnet (`8` and `T`), CCSO nameserver (`2`) and mirror (`+`) do not fall
-within any of the above categories. These types are therefore disregarded in
+within any of the categories above. These types are therefore disregarded in
 the indexation process.
 
 ### Recursively Index Subdirectories
@@ -89,6 +90,10 @@ called to find the following information:
 6. Connectivity to external servers
 7. List of references causing issues/errors
 
+References to external servers are recorded in the linked list. The helper
+function `test_external_servers()` attempts connection to those servers.
+All other information is recorded in the linked list.
+
 ### Terminal Output
 
 The terminal outputs are in the following formats.
@@ -97,9 +102,9 @@ The terminal outputs are in the following formats.
 - `Number of <directories/text files/binary files/invalid references>: <number>`
 - `Size of the <smallest/largest text/binary file>: <number>`
 
-Issues and errors are printed to the terminal in the following formats:
-- `File too large: <pathname>`
+Issues and errors are printed to the terminal:
 - `Error: <error message>`
+- `File too large: <pathname>`
 - `Transmission timeout: <pathname>`
 
 ### Minimising Errors and Maximising Security
@@ -124,6 +129,12 @@ Servers may be busy or unresponsive at times. Timeout is implemented to prevent
 the program from getting stuck indefinitely using `setsockopt()`, a built-in
 feature in the Socket API, and the `timeval` struct.
 
+At the beginning of `gopher_connect()`, the program is terminated if the
+connection cannot be established. An error message is printed to `stderr`
+specifying the issue.
+
+### Handling Edge Cases: Malformed or Non-Standard Responses
+
 A well-implemented server's directory index response should include four pieces
 of information, separated by tab characters. In case a line therein is
 malformed, the program handles it gracefully to avoid indexing invalid things.
@@ -139,14 +150,27 @@ We assume that pathnames contain only ASCII characters, or else converted into
 ASCII representations on the server side (as it is in Motsognir). For example,
 a file named "ɡoʊfər" is detected as "%C9%A1o%CA%8Af%C9%99r".
 
-At the beginning of `gopher_connect()`, the program is terminated if the
-connection cannot be established. An error message is printed to `stderr`
-specifying the issue.
+Other malformed response may omit the hostname and the port in an entry of the
+directory index. This client still attempts to index the file. If the file does
+not exist in the server, the pathname is regarded as an invalid reference.
+
+### Handling Edge Cases: Exceptionally Large Files
+
+During the evaluation stage, the client has to download the files for analysing
+their properties, such as their size. The files may sometimes be unexpectedly
+large. The global constant `FILE_LIMIT` specifies the maximum file size that
+the client accepts. This ensures that the client will not be flooded with
+infinite/unacceptable network traffic.
+
+Files exceeding the size limit are not considered in the statistics evaluated
+by `evaluate()`.
 
 ## Testing
 
-1. The client's [output](assets/output1.txt) with `./client comp3310.ddns.net 70`.
-2. The client's [output](assets/output2.txt) with `./client localhost 70`, using Motsognir.
+The client program is tested with the class server and a local Motsognir server.
+The logs are included for record:
+- [Example 1](assets/output1.txt)
+- [Example 2](assets/output2.txt)
 
 ## References
 

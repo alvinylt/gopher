@@ -13,15 +13,15 @@
 #include <sys/time.h>
 
 /* Global constant: buffer size and limit for receiving server content */
-#define BUFFER_SIZE 4096
-#define FILE_LIMIT 65536
+#define BUFFER_SIZE 4096  // String buffer size
+#define FILE_LIMIT 65536  // Size limit for downloading files
 
-/* Global constants: file types */
+/* Global constants: file types and error types */
 #define DIRECTORY 0  // Directory
 #define TEXT 1       // Text (non-binary) file
 #define BINARY 2     // Binary file
 #define ERROR 3      // Error message
-#define EXTERNAL 4   // External server
+#define EXTERNAL 4   // Reference to external server
 #define TIMEOUT 5    // Access timeout
 #define TOO_LARGE 6  // File size is too large
 
