@@ -107,11 +107,11 @@ called to find the following information:
 3. Sizes of the smallest and the largest text files
 4. Sizes of the smallest and the largest binary files
 5. Number of invalid references (each unique invalid request is counted once)
-6. List of external servers references (hostname and port) and their connectivity
+6. List of external server references (hostname and port) and their connectivity
 7. List of references causing issues/errors
 
 The helper function `test_external_servers()` checks the connectivity to
-external servers by attemptingg to establsih a connection. A server is
+external servers by attempting to establish a connection. A server is
 considered "up" if it accepts the connection in a few seconds. Otherwise, it is
 marked as "down".
 
@@ -148,9 +148,9 @@ At the beginning of `gopher_connect()`, the program is terminated if the
 connection cannot be established. An error message is printed to `stderr`
 specifying the issue.
 
-A correctly-implemented server should respond with some content under all
+A correctly implemented server should respond with some content under all
 circumstances. "Empty response from the server" is printed to the terminal if
-the server terminates the connection without any response. This claries to the
+the server terminates the connection without any response. This clarifies to the
 user whether the connection is terminated or the client is still waiting for a
 response.
 
@@ -166,7 +166,7 @@ malformed, the program handles it gracefully to avoid indexing invalid things.
 It is also designed to handle long responses from the server.
 
 Motsognir, for example, ensures that every line including errors and
-informational messages include three tab characters as separators.
+informational messages includes three tab characters as separators.
 ```
 3error fake fake 0
 iInformational fake fake 0
@@ -183,7 +183,7 @@ different servers.
 A server's response should end with a line containing `.\r\n` followed by the
 null terminator. However, if the server does not follow the standard protocol
 to the full extent and terminates transmission without `.\r\n`, the program
-still handles the response gracefully. The client program perceive a server's
+still handles the response gracefully. The client program perceives a server's
 termination of the connection as the end of data transmission. An example is
 `/misc/malformed2` on the class server.
 
@@ -209,7 +209,7 @@ in the statistics (*e.g.*, sizes of largest files) evaluated by `evaluate()`.
 
 Currently, `FILE_LIMIT` is set as 65536 bytes, considering that most files on
 `comp3310.ddns.net` do not exceed this limit. In realistic situations, users
-of this client should know the size scale of files which the target server
+of this client should know the size scale of files that the target server
 hosts. This global constant can be adjusted accordingly. Files exceeding the
 file limit are logged and printed before the client program execution ends.
 
@@ -221,7 +221,7 @@ The logs are included for reference:
 - [Example Log 2](assets/output2.txt)
 
 Wireshark is used for monitoring the network traffic. The initial request is
-detected as "Request: [Directory List]". There are occassionally retransmission
+detected as "Request: [Directory List]". There are occassional retransmissions
 of TCP packets and spurious acknowledgement (ACK) signals.
 
 ![Wireshark](assets/wireshark.png)
