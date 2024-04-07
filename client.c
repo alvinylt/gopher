@@ -28,6 +28,7 @@ typedef struct item {
 ssize_t gopher_connect(ssize_t (*func)(char *), char *path);
 ssize_t indexing(char *request);
 void index_line(char *line, char *request);
+char *cut_line(char *ptr);
 char *extract_pathname(char *line);
 ssize_t evaluate_file_size(char *request);
 ssize_t print_response(char *request);
@@ -175,15 +176,32 @@ ssize_t indexing(char *request) {
     // Read the directory index from the server line by line
     do {
         buffer[bytes_received] = '\0';
-        char *line = strtok(buffer, "\r\n");
-
-        while (line != NULL) {
+        char *line = buffer;
+        do {
+            char *next_line = cut_line(line);
             index_line(line, request);
-            line = strtok(NULL, "\r\n");
-        }
+            line = next_line;
+        } while (line != NULL);
     } while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0);
     
     return 0;
+}
+
+/**
+ * A function resembling strtok().
+ * 
+ * @param ptr pointer to a string supposed to end with "\r\n"
+ * @return pointer to the character after "\r\n", NULL if not found or out-of-bounds
+ */
+char *cut_line(char *ptr) {
+    for (char *i = ptr; *i != '\0'; i++) {
+        if (*i == '\r' && *(i + 1) == '\n') {
+            *i = '\0';
+            return *(i + 2) == '\0' ? NULL : i + 2;
+        }
+    }
+
+    return NULL;
 }
 
 /**
@@ -194,6 +212,8 @@ ssize_t indexing(char *request) {
  * @param request pointer to the string of the request
  */
 void index_line(char *line, char *request) {
+    // fprintf(stdout, "\nLINE::: %s\n", line);
+
     // Determine the type of that line with reference to the first character
     int item_type = ERROR;
     if (line[0] == '3') {
