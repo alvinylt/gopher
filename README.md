@@ -2,17 +2,17 @@
 
 This Internet Gopher client written in the C programming language indexes
 directories and files. It is implemented in accordance with
-[RFC 1436](https://www.rfc-editor.org/rfc/rfc1436) for indexing directories
-and files.
+[RFC 1436](https://www.rfc-editor.org/rfc/rfc1436).
 
 ## Initialisation
 
 The program is intended for Linux machines with GCC installed. The standard
-C library is sufficient. Simply execute the command
-`./client <server address> <port>` to run the program. For example,
-if the Gopher server is hosted locally at port 70, `./client 127.0.0.1 70` can
-be executed. Use the command `make` to compile the program with the
-[source code](client.c).
+C library is sufficient for compilation. Use the command `make` to compile the
+program with the [source code](client.c). Simply execute the command
+`./client <hostname> <port>` to run the program. For example,
+if the Gopher server is hosted locally at port 70, `./client localhost 70` can
+be executed. Alternatively, an IP address can be used instead of the hostname.
+The command `./client 127.0.0.1 70` is also valid.
 
 For local testing, a local Gopher server can be started using
 [Motsognir](https://github.com/unisx/motsognir) with the command
@@ -143,4 +143,4 @@ specifying the issue.
 8. Wikipedia contributors. Gopher (protocol). *Wikipedia*.
    https://en.wikipedia.org/wiki/Gopher_(protocol)
 
-Last update: 2024-04-07
+Last update: 2024-04-08

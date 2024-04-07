@@ -12,8 +12,9 @@
 #include <sys/socket.h>
 #include <sys/time.h>
 
-/* Global constant: buffer size for receiving content from the server */
+/* Global constant: buffer size and limit for receiving server content */
 #define BUFFER_SIZE 4096
+#define FILE_LIMIT 65536
 
 /* Global constants: file types */
 #define DIRECTORY 0  // Directory
@@ -21,6 +22,8 @@
 #define BINARY 2     // Binary file
 #define ERROR 3      // Error message
 #define EXTERNAL 4   // External server
+#define TIMEOUT 5    // Access timeout
+#define TOO_LARGE 6  // File size is too large
 
 /* Linked list entry containing information of an indexed item */
 typedef struct entry {
@@ -172,8 +175,11 @@ ssize_t indexing(char *request) {
     ssize_t bytes_received = recv(fd, buffer, BUFFER_SIZE, 0);
 
     if (bytes_received == -1) {
-        if (errno == EWOULDBLOCK || errno == EAGAIN)
+        if (errno == EWOULDBLOCK || errno == EAGAIN) {
             fprintf(stderr, "Error: Server response timeout\n");
+            entry *new_item = create_new_entry(TIMEOUT, request);
+            add_item(new_item);
+        }
         else
             fprintf(stderr, "Error: Unable to receive server response\n");
     }
@@ -244,7 +250,7 @@ void index_line(char *line, char *request) {
     if (item_type != ERROR) {
         char *pathname = extract_pathname(line);
         // Index the directory/file
-        if (pathname[0] == '/' && strcmp(pathname, "/misc/firehose") && strcmp(pathname, "/misc/godot") && strcmp(pathname, "/misc/tarpit")) {
+        if (pathname[0] == '/') {
             entry *new_item = create_new_entry(item_type, pathname);
             add_item(new_item);
         }
@@ -335,8 +341,11 @@ ssize_t evaluate_file_size(char *request) {
     ssize_t bytes_received = recv(fd, buffer, BUFFER_SIZE, 0);
 
     if (bytes_received == -1) {
-        if (errno == EWOULDBLOCK || errno == EAGAIN)
+        if (errno == EWOULDBLOCK || errno == EAGAIN) {
             fprintf(stderr, "Error: Server response timeout\n");
+            entry *new_item = create_new_entry(TIMEOUT, request);
+            add_item(new_item);
+        }
         else
             fprintf(stderr, "Error: Unable to receive server response\n");
     }
@@ -347,7 +356,11 @@ ssize_t evaluate_file_size(char *request) {
     }
 
     // Read the directory index from the server
-    do size += bytes_received;
+    do {
+        size += bytes_received;
+        // Stop evaluation if file is too large
+        if (size >= FILE_LIMIT) return -1;
+    }
     while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0);
     
     return size;
@@ -366,8 +379,11 @@ ssize_t print_response(char *request) {
     ssize_t bytes_received = recv(fd, buffer, BUFFER_SIZE, 0);
 
     if (bytes_received == -1) {
-        if (errno == EWOULDBLOCK || errno == EAGAIN)
+        if (errno == EWOULDBLOCK || errno == EAGAIN) {
             fprintf(stderr, "Error: Server response timeout\n");
+            entry *new_item = create_new_entry(TIMEOUT, request);
+            add_item(new_item);
+        }
         else
             fprintf(stderr, "Error: Unable to receive server response\n");
     }
@@ -434,11 +450,17 @@ void add_item(entry *new_item) {
     else if (new_item->item_type == BINARY) item_type = "binary file";
     else if (new_item->item_type == ERROR) item_type = "invalid request";
     else if (new_item->item_type == EXTERNAL) item_type = "external server";
+    else if (new_item->item_type == TIMEOUT) item_type = "timeout";
+    else if (new_item->item_type == TOO_LARGE) item_type = "too large";
 
     // Otherwise, append the new item to the end of the linked list
     if (new_item->item_type == ERROR)
         // For optimising visualisation
         fprintf(stdout, "Indexed %s: %s", item_type, new_item->path);
+    else if (new_item->item_type == TIMEOUT)
+        fprintf(stdout, "Transmission %s: %s", item_type, new_item->path);
+    else if (new_item->item_type == TOO_LARGE)
+        fprintf(stdout, "File %s: %s\n", item_type, new_item->path);
     else
         fprintf(stdout, "Indexed %s: %s\n", item_type, new_item->path);
     last_node->next = new_item;
@@ -475,6 +497,12 @@ void evaluate(void) {
 
                 // Evaluate the size of the file
                 file_size = gopher_connect(evaluate_file_size, c->path);
+                if (file_size == -1) {
+                    fprintf(stderr, "The file %s is too large\n", c->path);
+                    entry *new_item = create_new_entry(TOO_LARGE, c->path);
+                    add_item(new_item);
+                    break;
+                }
                 if (size_of_smallest_text_file == -1 || file_size < size_of_smallest_text_file) {
                     size_of_smallest_text_file = file_size;
                     smallest_text_file = c->path;
@@ -489,6 +517,10 @@ void evaluate(void) {
 
                 // Evaluate the size of the file
                 file_size = gopher_connect(evaluate_file_size, c->path);
+                if (file_size == -1) {
+                    fprintf(stderr, "The file %s is too large\n", c->path);
+                    break;
+                }
                 if (size_of_smallest_binary_file == -1 || file_size < size_of_smallest_binary_file) {
                     size_of_smallest_binary_file = file_size;
                 }
@@ -537,15 +569,23 @@ void evaluate(void) {
     if (!external_server_exists)
         fprintf(stdout, "No reference to any external server indexed\n");
     
-    // List all invalid references
-    fprintf(stdout, "\nInvalid references:\n");
+    // List all references with issues/errors
+    fprintf(stdout, "\nReferences with issues/errors:\n");
     c = list;
+    bool issues_exists = false;
     while (c != NULL) {
-        if (c->item_type == ERROR) {
-            fprintf(stdout, "%s", c->path);
+        if (c->item_type == ERROR || c->item_type == TIMEOUT || c->item_type == TOO_LARGE) {
+            issues_exists = true;
+            char *issue_type = "Invalid reference";
+            if (c->item_type == TIMEOUT) issue_type = "Timeout";
+            else if (c->item_type == TOO_LARGE) issue_type = "File too large";
+            fprintf(stdout, "(%s) %s%s", issue_type, c->path,
+                    c->item_type != TOO_LARGE ? "" : "\n");
         }
         c = c->next;
     }
+    if (!issues_exists)
+        fprintf(stdout, "No reference with issue/error found\n");
 }
 
 /**
