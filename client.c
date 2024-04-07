@@ -151,6 +151,8 @@ ssize_t gopher_connect(ssize_t (*func)(char *), char *path) {
  * Each line in the directory index has four columns of information, separated
  * by tabs. The first column indicates the type of the directory/file; the
  * second column indicates the pathname.
+ * 
+ * @param request the request line sent to the server
  */
 ssize_t indexing(char *request) {
     // Buffer for strings read from the server
@@ -184,28 +186,37 @@ ssize_t indexing(char *request) {
     return 0;
 }
 
+/**
+ * Given a line of a directory index as a string, index the item by adding it
+ * to the linked list.
+ * 
+ * @param line pointer to the string of the directory index entry
+ * @param request pointer to the string of the request
+ */
 void index_line(char *line, char *request) {
+    // Determine the type of that line with reference to the first character
     int item_type = ERROR;
     if (line[0] == '3') {
+        // Add the invalid reference to the linked list
         item *new_item = (item *)malloc(sizeof(item));
         strncpy(new_item->path, request, BUFFER_SIZE - 1);
         new_item->path[strlen(request)] = '\0';
         new_item->item_type = item_type;
         new_item->next = NULL;
         add_item(new_item);
+        return;
     }
     else if (line[0] == '1')
         item_type = DIRECTORY;
     else if (line[0] == '0')
         item_type = TEXT;
-    else if (line[0] == 'i')
-        ;
-    else if (line[0] == '.')
+    else if (line[0] == 'i' || line[0] == '.')
         return;
     else
         item_type = BINARY;
 
-    if (item_type != ERROR && line[0] != 'i') {
+    // Add the file/directory to the linked list
+    if (item_type != ERROR) {
         char *pathname = extract_pathname(line);
         // Index the directory/file
         fprintf(stdout, "Indexed: %s\n", pathname);
@@ -219,7 +230,12 @@ void index_line(char *line, char *request) {
 }
 
 /**
- * Given a line of directory index response, extract the pathname.
+ * A line in a directory index uses tab characters to separate different
+ * pieces of information. This function extracts the pathname corresponding
+ * to a line, replacing the tab character that follows with a null terminator.
+ * 
+ * @param line pointer to the string of the directory index line
+ * @return pointer to the pathname, NULL if it does not exist
  */
 char *extract_pathname(char *line) {
     char *start = NULL;
