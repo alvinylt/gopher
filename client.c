@@ -1,4 +1,5 @@
 #include <errno.h>
+#include <netdb.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,7 +40,7 @@ void cleanup(void);
 
 /* Global variables: values used across all functions */
 int fd;                          // Socket file descriptor
-char *address;                   // IP address of the Gopher server
+struct hostent *server;          // Hostname or IP address of the Gopher server
 int port;                        // Port of the Gopher server
 struct sockaddr_in server_addr;  // Address and port information
 struct entry *list = NULL;       // Linked list of indexed directories and files
@@ -51,10 +52,15 @@ struct entry *last_node = NULL;  // Last item in the linked list
 int main(int argc, char* argv[]) {
     // Parse the command input
     if (argc != 3) {
-        fprintf(stderr, "Usage: %s <server address> <port>\n", argv[0]);
-        exit(0);
+        fprintf(stderr, "Usage: %s <hostname> <port>\n", argv[0]);
+        exit(EXIT_SUCCESS);
     }
-    address = argv[1];
+    
+    server = gethostbyname(argv[1]);
+    if (server == NULL) {
+        fprintf(stderr, "Error: unable to connect to host %s\n", argv[1]);
+        exit(EXIT_FAILURE);
+    }
     port = atoi(argv[2]);
     
     // Begin the indexing process, starting with the root directory
@@ -80,7 +86,7 @@ int main(int argc, char* argv[]) {
 /**
  * Establish a connection with the Gopher server.
  * 
- * @param address IP address of the Gopher server
+ * @param address Hostname or IP address of the Gopher server
  * @param port port of the Gopher server
  * @param func function handling response from the Gopher server
  * @param request request to be send to the Gopher server
@@ -94,7 +100,7 @@ ssize_t gopher_connect(ssize_t (*func)(char *), char *path) {
     fd = socket(AF_INET, SOCK_STREAM, 0);
     if (fd == -1) {
         fprintf(stderr, "Error: Socket creation failed\n");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     // Configure timeout limit
@@ -103,22 +109,19 @@ ssize_t gopher_connect(ssize_t (*func)(char *), char *path) {
     timeout.tv_usec = 0;
     if (setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0) {
         fprintf(stderr, "Error: Timeout configuration failed\n");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
     
     // Specify the IP address and the port for connection
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
-    if (inet_pton(AF_INET, address, &server_addr.sin_addr) <= 0) {
-        fprintf(stderr, "Error: Invalid address %s\n", address);
-        exit(1);
-    }
-
+    memcpy(&server_addr.sin_addr.s_addr, server->h_addr_list[0], server->h_length);
+    
     // Initiate the connection
     int connect_status = connect(fd, (struct sockaddr *)&server_addr, sizeof(server_addr));
     if (connect_status == -1) {
         fprintf(stderr, "Error: Connection failed\n");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     // Append "\r\n" to the end of the path to form a request line
