@@ -167,9 +167,9 @@ ssize_t indexing(char *request) {
             fprintf(stderr, "Error: Unable to receive server response\n");
     }
 
-    // Handle the lack of response from the server
+    // Handle an empty string response from the server
     if (bytes_received == 0) {
-        fprintf(stdout, "No response from the server\n");
+        fprintf(stdout, "Empty response from the server\n");
         return 0;
     }
 
@@ -215,8 +215,6 @@ char *cut_line(char *ptr) {
  * @param request pointer to the string of the request
  */
 void index_line(char *line, char *request) {
-    // fprintf(stdout, "\nLINE: %s\n", line);
-
     // Determine the type of that line with reference to the first character
     int item_type = ERROR;
     if (line[0] == '3') {
@@ -340,7 +338,7 @@ ssize_t print_response(char *request) {
     }
 
     if (bytes_received == 0) {
-        fprintf(stdout, "No response from the server\n");
+        fprintf(stdout, "Empty response from the server\n");
         return 0;
     }
 
@@ -348,6 +346,8 @@ ssize_t print_response(char *request) {
     // Read the directory index from the server
     do {
         buffer[bytes_received] = '\0';
+        char *eof = strstr(buffer, ".\r\n\0");
+        if (eof != NULL) *eof = '\0';
         fprintf(stdout, "%s", buffer);
     } while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0);
     
