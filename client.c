@@ -31,6 +31,7 @@ typedef struct entry {
 ssize_t gopher_connect(ssize_t (*func)(char *), char *path);
 ssize_t indexing(char *request);
 void index_line(char *line, char *request);
+entry *create_new_entry(int item_type, char *path);
 bool is_binary_file(char type);
 char *find_next_line(char *ptr);
 char *extract_pathname(char *line);
@@ -222,45 +223,48 @@ char *find_next_line(char *ptr) {
 void index_line(char *line, char *request) {
     // Determine the type of that line with reference to the first character
     int item_type = ERROR;
-    fprintf(stdout, "\nLINE00000000: %c\n", line[0]);
     if (line[0] == '3') {
         // Add the invalid reference to the linked list
-        entry *new_item = (entry *)malloc(sizeof(entry));
-        size_t request_len = strlen(request);
-        new_item->path = (char *)malloc(request_len + 1);
-        strncpy(new_item->path, request, request_len + 1);
-        new_item->path[request_len] = '\0';
-        new_item->item_type = item_type;
-        new_item->next = NULL;
+        entry *new_item = create_new_entry(item_type, request);
         add_item(new_item);
         return;
     }
-    else if (line[0] == '1')
-        // Canonical type 1 refers to a directory or an external server
-        item_type = DIRECTORY;
-    else if (line[0] == '0')
-        // Canonical type 0 refers to a (non-binary) text file
-        item_type = TEXT;
-    else if (is_binary_file(line[0]))
-        item_type = BINARY;
-        // Disregard informational messages (type i) and end of response (.)
+    else if (line[0] == '1') item_type = DIRECTORY;
+    // Canonical type 1 refers to a directory or an external server    
+    else if (line[0] == '0') item_type = TEXT;
+    // Canonical type 0 refers to a (non-binary) text file
+    else if (is_binary_file(line[0])) item_type = BINARY;
+    // Disregard informational messages (type i) and end of response (.)
     else return;
-    
-    // Add the file/directory to the linked list
+
+    // Add the text/binary file to the linked list
     if (item_type != ERROR) {
         char *pathname = extract_pathname(line);
         // Index the directory/file
         if (pathname[0] == '/') {
-            entry *new_item = (entry *)malloc(sizeof(entry));
-            size_t pathname_len = strlen(pathname);
-            new_item->path = (char *)malloc(pathname_len + 1);
-            strncpy(new_item->path, pathname, pathname_len + 1);
-            new_item->path[pathname_len] = '\0';
-            new_item->item_type = item_type;
-            new_item->next = NULL;
+            entry *new_item = create_new_entry(item_type, pathname);
+            add_item(new_item);
+        }
+        else if (item_type == DIRECTORY && pathname[0] == '\0') {
+            item_type = EXTERNAL;
+            entry *new_item = create_new_entry(item_type, pathname + 1);
             add_item(new_item);
         }
     }
+}
+
+/**
+ * Create a new entry to be added to the linked list.
+ */
+entry *create_new_entry(int item_type, char *path) {
+    entry *new_item = (entry *)malloc(sizeof(entry));
+    size_t len = strlen(path);
+    new_item->path = (char *)malloc(len + 1);
+    strncpy(new_item->path, path, len + 1);
+    new_item->path[len] = '\0';
+    new_item->item_type = item_type;
+    new_item->next = NULL;
+    return new_item;
 }
 
 /**
@@ -414,7 +418,7 @@ void add_item(entry *new_item) {
     // If the invalid reference is already requested previously, do not add
     entry *c = list;
     while (c != NULL) {
-        if (strcmp(c->path, new_item->path) == 0) {
+        if (c->item_type == new_item->item_type && strcmp(c->path, new_item->path) == 0) {
             free(new_item->path);
             free(new_item);
             return;
@@ -422,8 +426,16 @@ void add_item(entry *new_item) {
         c = c->next;
     }
 
+    // For logging the type of item indexed
+    char *item_type = "item";
+    if (new_item->item_type == DIRECTORY) item_type = "directory";
+    else if (new_item->item_type == TEXT) item_type = "text file";
+    else if (new_item->item_type == BINARY) item_type = "binary file";
+    else if (new_item->item_type == ERROR) item_type = "invalid request";
+    else if (new_item->item_type == EXTERNAL) item_type = "external server";
+
     // Otherwise, append the new item to the end of the linked list
-    fprintf(stdout, "Indexed: %s\n", new_item->path);
+    fprintf(stdout, "Indexed %s: %s\n", item_type, new_item->path);
     last_node->next = new_item;
     last_node = new_item;
 }
