@@ -27,13 +27,13 @@
 
 /* Linked list entry containing information of an indexed item */
 typedef struct entry {
-    char *path;          // Pathname, error message or external server
+    char *record;          // Pathname, error message or external server
     int item_type;       // Type of the item (directory, file, error, etc.)
     struct entry *next;  // Linked list pointer to the next item
 } entry;
 
 /* Helper functions */
-ssize_t gopher_connect(ssize_t (*func)(char *), char *path);
+ssize_t gopher_connect(ssize_t (*func)(char *), char *request);
 ssize_t indexing(char *request);
 void index_line(char *line, char *request);
 entry *create_new_entry(int item_type, char *path);
@@ -65,11 +65,13 @@ int main(int argc, char* argv[]) {
         exit(EXIT_SUCCESS);
     }
     
+    // Convert hostname into IP address
     server = gethostbyname(argv[1]);
     if (server == NULL) {
         fprintf(stderr, "Error: unable to connect to host %s\n", argv[1]);
         exit(EXIT_FAILURE);
     }
+    // Convert the second argument (port number) into integer format
     port = atoi(argv[2]);
     
     // Begin the indexing process, starting with the root directory
@@ -79,7 +81,7 @@ int main(int argc, char* argv[]) {
     entry *c = list;
     while (c != NULL) {
         if (c->item_type == DIRECTORY)
-            gopher_connect(indexing, c->path);
+            gopher_connect(indexing, c->record);
         c = c->next;
     }
 
@@ -101,7 +103,7 @@ int main(int argc, char* argv[]) {
  * @param request request to be send to the Gopher server
  * @return the output from the function handling response
  */
-ssize_t gopher_connect(ssize_t (*func)(char *), char *path) {
+ssize_t gopher_connect(ssize_t (*func)(char *), char *request) {
     // Timestamping for logging sent requests
     struct timeval tv;
 
@@ -127,30 +129,31 @@ ssize_t gopher_connect(ssize_t (*func)(char *), char *path) {
     memcpy(&server_addr.sin_addr.s_addr, server->h_addr_list[0], server->h_length);
     
     // Initiate the connection
-    int connect_status = connect(fd, (struct sockaddr *)&server_addr, sizeof(server_addr));
+    int connect_status =
+        connect(fd, (struct sockaddr *)&server_addr, sizeof(server_addr));
     if (connect_status == -1) {
         fprintf(stderr, "Error: Connection failed\n");
         exit(EXIT_FAILURE);
     }
 
     // Append "\r\n" to the end of the path to form a request line
-    size_t path_length = strlen(path);
-    char request[path_length + 3];
-    strncpy(request, path, path_length + 2);
-    request[path_length] = '\r';
-    request[path_length + 1] = '\n';
-    request[path_length + 2] = '\0';
+    size_t path_length = strlen(request);
+    char new_request[path_length + 3];
+    strncpy(new_request, request, path_length + 2);
+    new_request[path_length] = '\r';
+    new_request[path_length + 1] = '\n';
+    new_request[path_length + 2] = '\0';
 
     // Send a request for the directory index to the server
-    send(fd, request, path_length + 2, 0);
+    send(fd, new_request, path_length + 2, 0);
     gettimeofday(&tv, NULL);
     struct tm *timeinfo = localtime(&tv.tv_sec);
     char time[32];
     strftime(time, sizeof(time), "%Y-%m-%d %H:%M:%S", timeinfo);
-    fprintf(stdout, "Request sent at %s: %s", time, request);
+    fprintf(stdout, "Request sent at %s: %s", time, new_request);
 
     // Execute the function that receives and handles server's response
-    int output = (*func)(request);
+    int output = (*func)(new_request);
 
     // Terminate the connection and release the socket
     close(fd);
@@ -163,9 +166,8 @@ ssize_t gopher_connect(ssize_t (*func)(char *), char *path) {
  * response from the Gopher server and adds the indexed directories and files
  * to the linked list.
  * 
- * Each line in the directory index has four columns of information, separated
- * by tabs. The first column indicates the type of the directory/file; the
- * second column indicates the pathname.
+ * Each line in the directory index is handled by the helper function
+ * index_line().
  * 
  * @param request the request line sent to the server
  */
@@ -174,14 +176,14 @@ ssize_t indexing(char *request) {
     char buffer[BUFFER_SIZE];
     ssize_t bytes_received = recv(fd, buffer, BUFFER_SIZE, 0);
 
+    // Handle failure in receiving server's response
     if (bytes_received == -1) {
         if (errno == EWOULDBLOCK || errno == EAGAIN) {
             fprintf(stderr, "Error: Server response timeout\n");
             entry *new_item = create_new_entry(TIMEOUT, request);
             add_item(new_item);
         }
-        else
-            fprintf(stderr, "Error: Unable to receive server response\n");
+        else fprintf(stderr, "Error: Unable to receive server response\n");
     }
 
     // Handle an empty string response from the server
@@ -209,7 +211,7 @@ ssize_t indexing(char *request) {
  * "\n") as the delimiter.
  * 
  * @param ptr pointer to a string supposed to end with "\r\n"
- * @return pointer to the string after "\r\n", NULL if not found or out-of-bounds
+ * @return pointer to the string after "\r\n", NULL if out-of-bounds
  */
 char *find_next_line(char *ptr) {
     for (char *i = ptr; *i != '\0'; i++) {
@@ -243,7 +245,7 @@ void index_line(char *line, char *request) {
     else if (line[0] == '0') item_type = TEXT;
     // Canonical type 0 refers to a (non-binary) text file
     else if (is_binary_file(line[0])) item_type = BINARY;
-    // Disregard informational messages (type i) and end of response (.)
+    // Disregard informational messages, end of response and irrelevant entries
     else return;
 
     // Add the text/binary file to the linked list
@@ -264,13 +266,17 @@ void index_line(char *line, char *request) {
 
 /**
  * Create a new entry to be added to the linked list.
+ * 
+ * @param item_type type of the record
+ * @param path pointer to the record string
+ * @return a linked list entry for the record
  */
 entry *create_new_entry(int item_type, char *path) {
     entry *new_item = (entry *)malloc(sizeof(entry));
     size_t len = strlen(path);
-    new_item->path = (char *)malloc(len + 1);
-    strncpy(new_item->path, path, len + 1);
-    new_item->path[len] = '\0';
+    new_item->record = (char *)malloc(len + 1);
+    strncpy(new_item->record, path, len + 1);
+    new_item->record[len] = '\0';
     new_item->item_type = item_type;
     new_item->next = NULL;
     return new_item;
@@ -279,9 +285,11 @@ entry *create_new_entry(int item_type, char *path) {
 /**
  * RFC 1436 specifies that the canonical type '9' refers to binary files.
  * Some servers make the types more specific, using 'I' for images, 'P' for
- * PDFs, and so on.
+ * PDFs, etc.
+ * 
  * In this client implementation, files that are not in plain text are all
  * considered binary files.
+ * 
  * Special features such as nameservers ('2'), Telnet ('8'/'T') and Gopher
  * full-text search ('7') are excluded.
  * 
@@ -328,8 +336,7 @@ char *extract_pathname(char *line) {
 /**
  * Upon send a request to the Gopher server for a file, evaluate the file size.
  * 
- * @param request not used
- * @return size of the requested file
+ * @return size of the requested file, -1 if the size exceeds limit
  */
 ssize_t evaluate_file_size(char *request) {
     // Unused parameter
@@ -340,6 +347,7 @@ ssize_t evaluate_file_size(char *request) {
     ssize_t size = 0;
     ssize_t bytes_received = recv(fd, buffer, BUFFER_SIZE, 0);
 
+    // Handle failure in receiving server's response
     if (bytes_received == -1) {
         if (errno == EWOULDBLOCK || errno == EAGAIN) {
             fprintf(stderr, "Error: Server response timeout\n");
@@ -378,6 +386,7 @@ ssize_t print_response(char *request) {
     char buffer[BUFFER_SIZE];
     ssize_t bytes_received = recv(fd, buffer, BUFFER_SIZE, 0);
 
+    // Handle failure in receiving server's response
     if (bytes_received == -1) {
         if (errno == EWOULDBLOCK || errno == EAGAIN) {
             fprintf(stderr, "Error: Server response timeout\n");
@@ -413,7 +422,7 @@ void cleanup(void) {
     entry *c = list;
     while (c != NULL) {
         entry *next = c->next;
-        free(c->path);
+        free(c->record);
         free(c);
         c = next;
     }
@@ -435,8 +444,8 @@ void add_item(entry *new_item) {
     // If the invalid reference is already requested previously, do not add
     entry *c = list;
     while (c != NULL) {
-        if (c->item_type == new_item->item_type && strcmp(c->path, new_item->path) == 0) {
-            free(new_item->path);
+        if (c->item_type == new_item->item_type && strcmp(c->record, new_item->record) == 0) {
+            free(new_item->record);
             free(new_item);
             return;
         }
@@ -456,19 +465,20 @@ void add_item(entry *new_item) {
     // Otherwise, append the new item to the end of the linked list
     if (new_item->item_type == ERROR)
         // For optimising visualisation
-        fprintf(stdout, "Indexed %s: %s", item_type, new_item->path);
+        fprintf(stdout, "Indexed %s: %s", item_type, new_item->record);
     else if (new_item->item_type == TIMEOUT)
-        fprintf(stderr, "Transmission %s: %s", item_type, new_item->path);
+        fprintf(stderr, "Transmission %s: %s", item_type, new_item->record);
     else if (new_item->item_type == TOO_LARGE)
-        fprintf(stderr, "File %s: %s\n", item_type, new_item->path);
+        fprintf(stderr, "File %s: %s\n", item_type, new_item->record);
     else
-        fprintf(stdout, "Indexed %s: %s\n", item_type, new_item->path);
+        fprintf(stdout, "Indexed %s: %s\n", item_type, new_item->record);
+
     last_node->next = new_item;
     last_node = new_item;
 }
 
 /**
- * Evaluate and print out:
+ * Evaluate and print to the terminal:
  *     1. Number of directories, text files, binaries and invalid references
  *     2. Sizes of the smallest/largest text/binary files
  *     3. Content of the smallest text file
@@ -485,6 +495,8 @@ void evaluate(void) {
     int size_of_smallest_binary_file = -1;
     int size_of_largest_binary_file = -1;
 
+    /* Find the number and sizes of directories, files and references */
+
     entry *c = list;
     ssize_t file_size;
     while (c != NULL) {
@@ -496,18 +508,21 @@ void evaluate(void) {
                 num_of_text_files++;
 
                 // Evaluate the size of the file
-                file_size = gopher_connect(evaluate_file_size, c->path);
+                file_size = gopher_connect(evaluate_file_size, c->record);
                 if (file_size == -1) {
-                    fprintf(stderr, "The file %s is too large\n", c->path);
-                    entry *new_item = create_new_entry(TOO_LARGE, c->path);
+                    fprintf(stderr, "The file %s is too large\n", c->record);
+                    entry *new_item = create_new_entry(TOO_LARGE, c->record);
                     add_item(new_item);
                     break;
                 }
-                if (size_of_smallest_text_file == -1 || file_size < size_of_smallest_text_file) {
+
+                if (size_of_smallest_text_file == -1
+                        || file_size < size_of_smallest_text_file) {
                     size_of_smallest_text_file = file_size;
-                    smallest_text_file = c->path;
+                    smallest_text_file = c->record;
                 }
-                if (size_of_largest_text_file == -1 || file_size > size_of_largest_binary_file) {
+                if (size_of_largest_text_file == -1
+                        || file_size > size_of_largest_binary_file) {
                     size_of_largest_text_file = file_size;
                 }
 
@@ -516,15 +531,18 @@ void evaluate(void) {
                 num_of_binary_files++;
 
                 // Evaluate the size of the file
-                file_size = gopher_connect(evaluate_file_size, c->path);
+                file_size = gopher_connect(evaluate_file_size, c->record);
                 if (file_size == -1) {
-                    fprintf(stderr, "The file %s is too large\n", c->path);
+                    fprintf(stderr, "The file %s is too large\n", c->record);
                     break;
                 }
-                if (size_of_smallest_binary_file == -1 || file_size < size_of_smallest_binary_file) {
+
+                if (size_of_smallest_binary_file == -1
+                        || file_size < size_of_smallest_binary_file) {
                     size_of_smallest_binary_file = file_size;
                 }
-                if (size_of_largest_binary_file == -1 || file_size > size_of_largest_binary_file) {
+                if (size_of_largest_binary_file == -1
+                        || file_size > size_of_largest_binary_file) {
                     size_of_largest_binary_file = file_size;
                 }
 
@@ -574,13 +592,14 @@ void evaluate(void) {
     c = list;
     bool issues_exists = false;
     while (c != NULL) {
-        if (c->item_type == ERROR || c->item_type == TIMEOUT || c->item_type == TOO_LARGE) {
+        int type = c->item_type;
+        if (type == ERROR || type == TIMEOUT || type == TOO_LARGE) {
             issues_exists = true;
             char *issue_type = "Invalid reference";
-            if (c->item_type == TIMEOUT) issue_type = "Timeout";
-            else if (c->item_type == TOO_LARGE) issue_type = "File too large";
-            fprintf(stdout, "(%s) %s%s", issue_type, c->path,
-                    c->item_type != TOO_LARGE ? "" : "\n");
+            if (type == TIMEOUT) issue_type = "Timeout";
+            else if (type == TOO_LARGE) issue_type = "File too large";
+            fprintf(stdout, "(%s) %s%s", issue_type, c->record,
+                    type != TOO_LARGE ? "" : "\n");
         }
         c = c->next;
     }
@@ -591,50 +610,59 @@ void evaluate(void) {
 /**
  * Consider the external servers indexed and recorded in the linked list.
  * Test whether those external servers are up and print the status.
+ * 
+ * @param item entry of type EXTERNAL
  */
 void test_external_servers(entry *item) {
+    // Only handle entries referring to an external server
+    if (item->item_type != EXTERNAL) {
+        fprintf(stderr, "Error: Entry not referring to an external server\n");
+        return;
+    }
+
+    // Extract the server's hostname and port from the entry
     char server_info[BUFFER_SIZE + 1];
-    strncpy(server_info, item->path, BUFFER_SIZE);
-    char *external_hostname = strtok(server_info, "\t");
-    char *external_port = strtok(NULL, "\r\n");
+    strncpy(server_info, item->record, BUFFER_SIZE);
+    char *ext_hostname = strtok(server_info, "\t");
+    char *ext_port = strtok(NULL, "\r\n");
     bool connectivity = false;
 
     // Create the socket
-    int external_fd = socket(AF_INET, SOCK_STREAM, 0);
-    if (external_fd == -1) {
+    int ext_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (ext_fd == -1) {
         fprintf(stderr, "Error: Socket creation failed\n");
         exit(EXIT_FAILURE);
     }
 
-    fcntl(external_fd, F_SETFL, O_NONBLOCK);
-
-    // Configure timeout limit
+    // Configure timeout limit and disable blocking by the socket
+    fcntl(ext_fd, F_SETFL, O_NONBLOCK);
     struct timeval timeout;
     fd_set fdset;
     timeout.tv_sec = 3;
     timeout.tv_usec = 0;
     FD_ZERO(&fdset);
-    FD_SET(external_fd, &fdset);
-    if (setsockopt(external_fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0) {
+    FD_SET(ext_fd, &fdset);
+    if (setsockopt(ext_fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0) {
         fprintf(stderr, "Error: Timeout configuration failed\n");
         exit(EXIT_FAILURE);
     }
 
-    struct hostent *external_server = gethostbyname(external_hostname);
-    struct sockaddr_in external_server_addr;
+    struct hostent *ext_server = gethostbyname(ext_hostname);
+    struct sockaddr_in ext_server_addr;
     if (server != NULL) {
         // Specify the IP address and the port for connection
-        external_server_addr.sin_family = AF_INET;
-        external_server_addr.sin_port = htons(atoi(external_port));
-        memcpy(&external_server_addr.sin_addr.s_addr, external_server->h_addr_list[0], external_server->h_length);
+        ext_server_addr.sin_family = AF_INET;
+        ext_server_addr.sin_port = htons(atoi(ext_port));
+        memcpy(&ext_server_addr.sin_addr.s_addr,
+                ext_server->h_addr_list[0], ext_server->h_length);
         
         // Attempt the connection
-        connect(external_fd, (struct sockaddr *)&external_server_addr, sizeof(external_server_addr));
+        connect(ext_fd, (struct sockaddr *)&ext_server_addr, sizeof(ext_server_addr));
 
-        if (select(external_fd + 1, NULL, &fdset, NULL, &timeout) == 1) {
+        if (select(ext_fd + 1, NULL, &fdset, NULL, &timeout) == 1) {
             int so_error;
             socklen_t len = sizeof so_error;
-            getsockopt(external_fd, SOL_SOCKET, SO_ERROR, &so_error, &len);
+            getsockopt(ext_fd, SOL_SOCKET, SO_ERROR, &so_error, &len);
             if (so_error == 0) {
                 connectivity = true;
             }
@@ -642,5 +670,5 @@ void test_external_servers(entry *item) {
     }
     
     fprintf(stdout, "Server %s at port %s is %s\n",
-            external_hostname, external_port, connectivity ? "up" : "down");
+            ext_hostname, ext_port, connectivity ? "up" : "down");
 }

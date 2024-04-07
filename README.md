@@ -26,12 +26,12 @@ command `sudo lsof -i :70`.
 The overall design relies on performing a breadth-first search (BFS) of the
 filesystem hosted on the Gopher server. The indexed files and directories are
 recorded in a linked list implemented using the `entry` struct. Each `entry`
-contains the type of the record (`item_type`), the record itself (`path`).
+contains the type of the record (`item_type`), the record itself (`record`).
 The pointer `next` directs to the next entry in the linked list.
 
 There are six types of records.
 
-Entry type (`item_type`) | Record (`path`)
+Entry type (`item_type`) | Record (`record`)
 -------------------------|----------------
 `DIRECTORY`              | Pathname to the directory
 `TEXT`                   | Pathname to the text file
@@ -45,7 +45,7 @@ Since the protocol is stateless and the connection is terminated once the server
 has responded, the function `gopher_connect()` establishes and closes a
 connection every time a new request is made. The function `gopher_connect()`
 appends `\r\n` to the request which is passed as the parameter
-`path`. It sends the request line to the server. The function `func()`,
+`request`. It sends the request line to the server. The function `func()`,
 passed as another argument to `gopher_connect()`, is responsible for receiving
 the response from the server.
 
