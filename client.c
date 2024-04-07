@@ -503,13 +503,19 @@ void evaluate(void) {
         c = c->next;
     }
 
-    fprintf(stdout, "\nNumber of directories: %d\n", num_of_directories);
-    fprintf(stdout, "Number of text files: %d\n", num_of_text_files);
-    fprintf(stdout, "Number of binary files: %d\n", num_of_binary_files);
-    fprintf(stdout, "Number of invalid references: %d\n\n", num_of_invalid_references);
+    fprintf(stdout, "\nNumber of directories: %d\n"
+                    "Number of text files: %d\n"
+                    "Number of binary files: %d\n"
+                    "Number of invalid references: %d\n\n",
+                    num_of_directories, num_of_text_files,
+                    num_of_binary_files, num_of_invalid_references);
+
     gopher_connect(print_response, smallest_text_file);
-    fprintf(stdout, "\nSize of the smallest text file: %d\n", size_of_smallest_text_file);
-    fprintf(stdout, "Size of the largest text file: %d\n", size_of_largest_text_file);
-    fprintf(stdout, "Size of the smallest binary file: %d\n", size_of_smallest_binary_file);
-    fprintf(stdout, "Size of the largest binary file: %d\n", size_of_largest_binary_file);
+
+    fprintf(stdout, "\nSize of the smallest text file: %d\n"
+                    "Size of the largest text file: %d\n"
+                    "Size of the smallest binary file: %d\n"
+                    "Size of the largest binary file: %d\n",
+                    size_of_smallest_text_file, size_of_largest_text_file,
+                    size_of_smallest_binary_file, size_of_largest_binary_file);
 }
