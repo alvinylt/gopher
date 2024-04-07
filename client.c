@@ -1,5 +1,6 @@
 #include <errno.h>
 #include <netdb.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,6 +31,7 @@ typedef struct entry {
 ssize_t gopher_connect(ssize_t (*func)(char *), char *path);
 ssize_t indexing(char *request);
 void index_line(char *line, char *request);
+bool is_binary_file(char type);
 char *find_next_line(char *ptr);
 char *extract_pathname(char *line);
 ssize_t evaluate_file_size(char *request);
@@ -220,6 +222,7 @@ char *find_next_line(char *ptr) {
 void index_line(char *line, char *request) {
     // Determine the type of that line with reference to the first character
     int item_type = ERROR;
+    fprintf(stdout, "\nLINE00000000: %c\n", line[0]);
     if (line[0] == '3') {
         // Add the invalid reference to the linked list
         entry *new_item = (entry *)malloc(sizeof(entry));
@@ -233,14 +236,16 @@ void index_line(char *line, char *request) {
         return;
     }
     else if (line[0] == '1')
+        // Canonical type 1 refers to a directory or an external server
         item_type = DIRECTORY;
     else if (line[0] == '0')
+        // Canonical type 0 refers to a (non-binary) text file
         item_type = TEXT;
-    else if (line[0] == 'i' || line[0] == '.')
-        return;
-    else
+    else if (is_binary_file(line[0]))
         item_type = BINARY;
-
+        // Disregard informational messages (type i) and end of response (.)
+    else return;
+    
     // Add the file/directory to the linked list
     if (item_type != ERROR) {
         char *pathname = extract_pathname(line);
@@ -256,6 +261,25 @@ void index_line(char *line, char *request) {
             add_item(new_item);
         }
     }
+}
+
+/**
+ * RFC 1436 specifies that the canonical type '9' refers to binary files.
+ * Some servers make the types more specific, using 'I' for images, 'P' for
+ * PDFs, and so on.
+ * In this client implementation, files that are not in plain text are all
+ * considered binary files.
+ * Special features such as nameservers ('2'), Telnet ('8'/'T') and Gopher
+ * full-text search ('7') are excluded.
+ * 
+ * @param type character representing the type
+ * @return whether the type refers to a file that is not in plain text format
+ */
+bool is_binary_file(char type) {
+    return type == '9' || type == '4' || type == '5' || type == '6'
+            || type == 'g' || type == 'I' || type == ':' || type == ';'
+            || type == '<' || type == 'd' || type == 'h' || type == 'p'
+            || type == 'r' || type == 's' || type == 'P' || type == 'X';
 }
 
 /**
