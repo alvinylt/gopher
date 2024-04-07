@@ -9,7 +9,7 @@
 #include <sys/time.h>
 
 /*  Global constant: string buffer size */
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 4096
 
 /* Global constant: file types */
 #define DIRECTORY 0  // Directory
@@ -19,7 +19,7 @@
 
 /* Linked list struct containing information of an indexed directory/file */
 typedef struct item {
-    char path[BUFFER_SIZE];  // Pathname of the file
+    char *path;              // Pathname of the file
     int item_type;           // Type of the file (directory, text, binary or error)
     struct item *next;       // Linked list: pointer to the next item
 } item;
@@ -132,9 +132,9 @@ ssize_t gopher_connect(ssize_t (*func)(char *), char *path) {
     send(fd, request, path_length + 2, 0);
     gettimeofday(&tv, NULL);
     struct tm *timeinfo = localtime(&tv.tv_sec);
-    char timeString[BUFFER_SIZE];
-    strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", timeinfo);
-    fprintf(stdout, "Request sent at %s: %s", timeString, request);
+    char time[32];
+    strftime(time, sizeof(time), "%Y-%m-%d %H:%M:%S", timeinfo);
+    fprintf(stdout, "Request sent at %s: %s", time, request);
 
     int output = (*func)(request);
 
@@ -222,7 +222,8 @@ void index_line(char *line, char *request) {
     if (line[0] == '3') {
         // Add the invalid reference to the linked list
         item *new_item = (item *)malloc(sizeof(item));
-        strncpy(new_item->path, request, BUFFER_SIZE - 1);
+        new_item->path = (char *)malloc(strlen(request) + 1);
+        strncpy(new_item->path, request, strlen(request));
         new_item->path[strlen(request)] = '\0';
         new_item->item_type = item_type;
         new_item->next = NULL;
@@ -244,7 +245,8 @@ void index_line(char *line, char *request) {
         // Index the directory/file
         if (pathname[0] == '/') {
             item *new_item = (item *)malloc(sizeof(item));
-            strncpy(new_item->path, pathname, BUFFER_SIZE - 1);
+            new_item->path = (char *)malloc(strlen(pathname) + 1);
+            strncpy(new_item->path, pathname, strlen(pathname));
             new_item->path[strlen(pathname)] = '\0';
             new_item->item_type = item_type;
             new_item->next = NULL;
@@ -360,6 +362,7 @@ void cleanup(void) {
     item *c = list;
     while (c != NULL) {
         item *next = c->next;
+        free(c->path);
         free(c);
         c = next;
     }
@@ -384,6 +387,7 @@ void add_item(item *new_item) {
     item *c = list;
     while (c != NULL) {
         if (strcmp(c->path, new_item->path) == 0) {
+            free(new_item->path);
             free(new_item);
             return;
         }
