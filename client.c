@@ -212,7 +212,7 @@ char *cut_line(char *ptr) {
  * @param request pointer to the string of the request
  */
 void index_line(char *line, char *request) {
-    // fprintf(stdout, "\nLINE::: %s\n", line);
+    // fprintf(stdout, "\nLINE: %s\n", line);
 
     // Determine the type of that line with reference to the first character
     int item_type = ERROR;
@@ -239,13 +239,15 @@ void index_line(char *line, char *request) {
     if (item_type != ERROR) {
         char *pathname = extract_pathname(line);
         // Index the directory/file
-        fprintf(stdout, "Indexed: %s\n", pathname);
-        item *new_item = (item *)malloc(sizeof(item));
-        strncpy(new_item->path, pathname, BUFFER_SIZE - 1);
-        new_item->path[strlen(pathname)] = '\0';
-        new_item->item_type = item_type;
-        new_item->next = NULL;
-        add_item(new_item);
+        if (pathname[0] != '\0') {
+            fprintf(stdout, "Indexed: %s\n", pathname);
+            item *new_item = (item *)malloc(sizeof(item));
+            strncpy(new_item->path, pathname, BUFFER_SIZE - 1);
+            new_item->path[strlen(pathname)] = '\0';
+            new_item->item_type = item_type;
+            new_item->next = NULL;
+            add_item(new_item);
+        }
     }
 }
 
