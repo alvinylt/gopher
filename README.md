@@ -220,6 +220,12 @@ The logs are included for reference:
 - [Example Log 1](assets/output1.txt)
 - [Example Log 2](assets/output2.txt)
 
+Wireshark is used for monitoring the network traffic. The initial request is
+detected as "Request: [Directory List]". There are occassionally retransmission
+of TCP packets and spurious acknowledgement (ACK) signals.
+
+![Wireshark](assets/wireshark.png)
+
 ## References
 
 1. Anklesaria et al. (March 1993). RFC 1436: The Internet Gopher Protocol.
