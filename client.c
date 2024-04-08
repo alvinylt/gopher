@@ -360,8 +360,24 @@ static ssize_t evaluate_file_size(char *request) {
         return size;
     }
 
+    // Started response but timeout for taking too much time to finish
+    struct timeval timeout1;
+    timeout1.tv_sec = 5;
+    timeout1.tv_usec = 0;
+    fd_set read_fds;
+    FD_ZERO(&read_fds);
+    FD_SET(fd, &read_fds);
+    
     // Read the directory index from the server
     do {
+        int ready = select(fd + 1, &read_fds, NULL, NULL, &timeout1);
+        if (ready < 0) fprintf(stderr, "Error: Timeout configuration\n");
+        else if (ready == 0) {
+            fprintf(stderr, "Error: Server response timeout\n");
+            entry *new_item = create_new_entry(TIMEOUT, request);
+            add_item(new_item);
+            return -2;
+        }
         size += bytes_received;
         // Stop evaluation if file is too large
         if (size >= FILE_LIMIT) return -1;
