@@ -27,33 +27,33 @@
 
 /* Linked list entry containing information of an indexed item */
 typedef struct entry {
-    char *record;          // Pathname, error message or external server
+    char *record;        // Pathname, error message or external server
     int item_type;       // Type of the item (directory, file, error, etc.)
     struct entry *next;  // Linked list pointer to the next item
 } entry;
 
 /* Helper functions */
-ssize_t gopher_connect(ssize_t (*func)(char *), char *request);
-ssize_t indexing(char *request);
-void index_line(char *line, char *request);
-entry *create_new_entry(int item_type, char *path);
-bool is_binary_file(char type);
-char *find_next_line(char *ptr);
-char *extract_pathname(char *line);
-ssize_t evaluate_file_size(char *request);
-ssize_t print_response(char *request);
-void add_item(entry *new_item);
-void evaluate(void);
-void cleanup(void);
-void test_external_servers(entry *item);
+static ssize_t gopher_connect(ssize_t (*func)(char *), char *request);
+static ssize_t indexing(char *request);
+static void index_line(char *line, char *request);
+static entry *create_new_entry(int item_type, char *path);
+static bool is_binary_file(char type);
+static char *find_next_line(char *ptr);
+static char *extract_pathname(char *line);
+static ssize_t evaluate_file_size(char *request);
+static ssize_t print_response(char *request);
+static void add_item(entry *new_item);
+static void evaluate(void);
+static void cleanup(void);
+static void test_external_servers(entry *item);
 
 /* Global variables: values used across all functions */
-int fd;                          // Socket file descriptor
-struct hostent *server;          // Hostname or IP address of the Gopher server
-int port;                        // Port of the Gopher server
-struct sockaddr_in server_addr;  // Address and port information
-struct entry *list = NULL;       // Linked list of indexed directories and files
-struct entry *last_node = NULL;  // Last item in the linked list
+static int fd;                          // Socket file descriptor
+static struct hostent *server;          // Hostname/IP address of the server
+static int port;                        // Port of the Gopher server
+static struct sockaddr_in server_addr;  // Address and port information
+static struct entry *list = NULL;       // First item of the linked list
+static struct entry *last_node = NULL;  // Last item of the linked list
 
 /**
  * The Internet Gopher client indexing files.
@@ -97,16 +97,11 @@ int main(int argc, char* argv[]) {
 /**
  * Establish a connection with the Gopher server.
  * 
- * @param address Hostname or IP address of the Gopher server
- * @param port port of the Gopher server
  * @param func function handling response from the Gopher server
  * @param request request to be send to the Gopher server
  * @return the output from the function handling response
  */
-ssize_t gopher_connect(ssize_t (*func)(char *), char *request) {
-    // Timestamping for logging sent requests
-    struct timeval tv;
-
+static ssize_t gopher_connect(ssize_t (*func)(char *), char *request) {
     // Create the socket
     fd = socket(AF_INET, SOCK_STREAM, 0);
     if (fd == -1) {
@@ -146,6 +141,7 @@ ssize_t gopher_connect(ssize_t (*func)(char *), char *request) {
 
     // Send a request for the directory index to the server
     send(fd, new_request, path_length + 2, 0);
+    struct timeval tv;  // Timestamping for logging sent requests
     gettimeofday(&tv, NULL);
     struct tm *timeinfo = localtime(&tv.tv_sec);
     char time[32];
@@ -171,7 +167,7 @@ ssize_t gopher_connect(ssize_t (*func)(char *), char *request) {
  * 
  * @param request the request line sent to the server
  */
-ssize_t indexing(char *request) {
+static ssize_t indexing(char *request) {
     // Buffer for strings read from the server
     char buffer[BUFFER_SIZE];
     ssize_t bytes_received = recv(fd, buffer, BUFFER_SIZE, 0);
@@ -213,7 +209,7 @@ ssize_t indexing(char *request) {
  * @param ptr pointer to a string supposed to end with "\r\n"
  * @return pointer to the string after "\r\n", NULL if out-of-bounds
  */
-char *find_next_line(char *ptr) {
+static char *find_next_line(char *ptr) {
     for (char *i = ptr; *i != '\0'; i++) {
         if (*i == '\r' && *(i + 1) == '\n') {
             *i = '\0';
@@ -231,7 +227,7 @@ char *find_next_line(char *ptr) {
  * @param line pointer to the string of the directory index entry
  * @param request pointer to the string of the request
  */
-void index_line(char *line, char *request) {
+static void index_line(char *line, char *request) {
     // Determine the type of that line with reference to the first character
     int item_type = ERROR;
     if (line[0] == '3') {
@@ -271,7 +267,7 @@ void index_line(char *line, char *request) {
  * @param path pointer to the record string
  * @return a linked list entry for the record
  */
-entry *create_new_entry(int item_type, char *path) {
+static entry *create_new_entry(int item_type, char *path) {
     entry *new_item = (entry *)malloc(sizeof(entry));
     size_t len = strlen(path);
     new_item->record = (char *)malloc(len + 1);
@@ -296,7 +292,7 @@ entry *create_new_entry(int item_type, char *path) {
  * @param type character representing the type
  * @return whether the type refers to a file that is not in plain text format
  */
-bool is_binary_file(char type) {
+static bool is_binary_file(char type) {
     return type == '9' || type == '4' || type == '5' || type == '6'
             || type == 'g' || type == 'I' || type == ':' || type == ';'
             || type == '<' || type == 'd' || type == 'h' || type == 'p'
@@ -311,7 +307,7 @@ bool is_binary_file(char type) {
  * @param line pointer to the string of the directory index line
  * @return pointer to the pathname, NULL if it does not exist
  */
-char *extract_pathname(char *line) {
+static char *extract_pathname(char *line) {
     char *start = NULL;
 
     // First tab character in the line found: pathname follows
@@ -338,7 +334,7 @@ char *extract_pathname(char *line) {
  * 
  * @return size of the requested file, -1 if the size exceeds limit
  */
-ssize_t evaluate_file_size(char *request) {
+static ssize_t evaluate_file_size(char *request) {
     // Unused parameter
     (void)request;
 
@@ -356,6 +352,7 @@ ssize_t evaluate_file_size(char *request) {
         }
         else
             fprintf(stderr, "Error: Unable to receive server response\n");
+        return -2;
     }
 
     if (bytes_received == 0) {
@@ -378,7 +375,7 @@ ssize_t evaluate_file_size(char *request) {
  * Upon sending a request to the Gopher server for the smallest text file,
  * print the entire content to the terminal.
  */
-ssize_t print_response(char *request) {
+static ssize_t print_response(char *request) {
     // Unused parameter
     (void)request;
 
@@ -418,7 +415,7 @@ ssize_t print_response(char *request) {
  * Free the heap memory occupied by the linked list of indexed items before
  * the main() function returns.
  */
-void cleanup(void) {
+static void cleanup(void) {
     entry *c = list;
     while (c != NULL) {
         entry *next = c->next;
@@ -433,7 +430,7 @@ void cleanup(void) {
  * 
  * @param new_item pointer to the new indexed item
  */
-void add_item(entry *new_item) {
+static void add_item(entry *new_item) {
     // If the linked list is empty, let the new item be the initial item
     if (list == NULL) {
         list = new_item;
@@ -483,7 +480,7 @@ void add_item(entry *new_item) {
  *     2. Sizes of the smallest/largest text/binary files
  *     3. Content of the smallest text file
  */
-void evaluate(void) {
+static void evaluate(void) {
     fprintf(stdout, "\nIndexation complete. Now analysing the files.\n");
     int num_of_directories = 0;
     int num_of_text_files = 0;
@@ -515,6 +512,9 @@ void evaluate(void) {
                     add_item(new_item);
                     break;
                 }
+                else if (file_size == -2) {
+                    break;
+                }
 
                 if (size_of_smallest_text_file == -1
                         || file_size < size_of_smallest_text_file) {
@@ -534,6 +534,11 @@ void evaluate(void) {
                 file_size = gopher_connect(evaluate_file_size, c->record);
                 if (file_size == -1) {
                     fprintf(stderr, "The file %s is too large\n", c->record);
+                    entry *new_item = create_new_entry(TOO_LARGE, c->record);
+                    add_item(new_item);
+                    break;
+                }
+                else if (file_size == -2) {
                     break;
                 }
 
@@ -613,7 +618,7 @@ void evaluate(void) {
  * 
  * @param item entry of type EXTERNAL
  */
-void test_external_servers(entry *item) {
+static void test_external_servers(entry *item) {
     // Only handle entries referring to an external server
     if (item->item_type != EXTERNAL) {
         fprintf(stderr, "Error: Entry not referring to an external server\n");
