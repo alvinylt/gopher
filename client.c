@@ -361,16 +361,16 @@ static ssize_t evaluate_file_size(char *request) {
     }
 
     // Started response but timeout for taking too much time to finish
-    struct timeval timeout1;
-    timeout1.tv_sec = 5;
-    timeout1.tv_usec = 0;
+    struct timeval response_timeout;
+    response_timeout.tv_sec = 5;
+    response_timeout.tv_usec = 0;
     fd_set read_fds;
     FD_ZERO(&read_fds);
     FD_SET(fd, &read_fds);
     
     // Read the directory index from the server
     do {
-        int ready = select(fd + 1, &read_fds, NULL, NULL, &timeout1);
+        int ready = select(fd + 1, &read_fds, NULL, NULL, &response_timeout);
         if (ready < 0) fprintf(stderr, "Error: Timeout configuration\n");
         else if (ready == 0) {
             fprintf(stderr, "Error: Server response timeout\n");
@@ -414,10 +414,27 @@ static ssize_t print_response(char *request) {
         fprintf(stdout, "Empty response from the server\n");
         return 0;
     }
+    
+    // Started response but timeout for taking too much time to finish
+    struct timeval response_timeout;
+    response_timeout.tv_sec = 5;
+    response_timeout.tv_usec = 0;
+    fd_set read_fds;
+    FD_ZERO(&read_fds);
+    FD_SET(fd, &read_fds);
 
     fprintf(stdout, "Content of the smallest text file:\n");
     // Read the directory index from the server
     do {
+        int ready = select(fd + 1, &read_fds, NULL, NULL, &response_timeout);
+        if (ready < 0) fprintf(stderr, "Error: Timeout configuration\n");
+        else if (ready == 0) {
+            fprintf(stderr, "Error: Server response timeout\n");
+            entry *new_item = create_new_entry(TIMEOUT, request);
+            add_item(new_item);
+            return -1;
+        }
+
         buffer[bytes_received] = '\0';
         char *eof = strstr(buffer, ".\r\n\0");
         if (eof != NULL) *eof = '\0';
@@ -657,13 +674,13 @@ static void test_external_servers(entry *item) {
 
     // Configure timeout limit and disable blocking by the socket
     fcntl(ext_fd, F_SETFL, O_NONBLOCK);
-    struct timeval timeout;
+    struct timeval connection_timeout;
     fd_set fdset;
-    timeout.tv_sec = 3;
-    timeout.tv_usec = 0;
+    connection_timeout.tv_sec = 5;
+    connection_timeout.tv_usec = 0;
     FD_ZERO(&fdset);
     FD_SET(ext_fd, &fdset);
-    if (setsockopt(ext_fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0) {
+    if (setsockopt(ext_fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&connection_timeout, sizeof(connection_timeout)) < 0) {
         fprintf(stderr, "Error: Timeout configuration failed\n");
         exit(EXIT_FAILURE);
     }
@@ -680,7 +697,7 @@ static void test_external_servers(entry *item) {
         // Attempt the connection
         connect(ext_fd, (struct sockaddr *)&ext_server_addr, sizeof(ext_server_addr));
 
-        if (select(ext_fd + 1, NULL, &fdset, NULL, &timeout) == 1) {
+        if (select(ext_fd + 1, NULL, &fdset, NULL, &connection_timeout) == 1) {
             int so_error;
             socklen_t len = sizeof so_error;
             getsockopt(ext_fd, SOL_SOCKET, SO_ERROR, &so_error, &len);

@@ -148,15 +148,29 @@ At the beginning of `gopher_connect()`, the program is terminated if the
 connection cannot be established. An error message is printed to `stderr`
 specifying the issue.
 
+### Handling Empty Responses and Timeouts
+
 A correctly implemented server should respond with some content under all
 circumstances. "Empty response from the server" is printed to the terminal if
 the server terminates the connection without any response. This clarifies to the
 user whether the connection is terminated or the client is still waiting for a
 response.
 
-Servers may be busy or unresponsive at times. Timeout is implemented to prevent
-the program from getting stuck indefinitely using `setsockopt()`, a built-in
-feature in the Socket API, and the `timeval` struct.
+Servers may be busy or unresponsive at times. There are two types of timeouts.
+1. The server accepts connection but does not respond to a request.
+2. The server accepts connection, responds but it takes too much time.
+3. The server does not accept connection within the time limit.
+
+Timeout limit prevents the program from getting stuck indefinitely.
+The first situation is managed using `setsockopt()`, a built-in feature in the
+Socket API, and the `timeval` struct. The configuration is set by
+`gopher_connect()`. The limit is currently set as 10 seconds.
+
+The second situation is handled using `select()` and `fcntl()`. The
+configuration is set by the function responsible for receiving the response.
+The limit is currently defined as 5 seconds.
+
+The third situation applies in `test_external_servers()` with a 5-second limit.
 
 ### Handling Edge Cases: Malformed or Non-Standard Responses
 

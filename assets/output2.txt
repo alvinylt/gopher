@@ -1,4 +1,4 @@
-Request sent at 2024-04-08 00:21:23: 
+Request sent at 2024-04-08 13:14:37: 
 Indexed directory: /Videos
 Indexed binary file: /canberra.jpg
 Indexed binary file: /executable
@@ -6,58 +6,52 @@ Indexed text file: /hello.txt
 Indexed binary file: /notes.pdf
 Indexed text file: /small.txt
 Indexed binary file: /sunset.jpg
-Request sent at 2024-04-08 00:21:23: /Dir1
+Request sent at 2024-04-08 13:14:37: /Dir1
 Indexed directory: /Dir1/Subdir1
 Indexed directory: /Dir1/Subdir2
 Indexed binary file: /Dir1/results.ods
-Request sent at 2024-04-08 00:21:23: /Videos
+Request sent at 2024-04-08 13:14:37: /Videos
 Indexed binary file: /Videos/ducks.mp4
 Indexed text file: /Videos/file%20with%20space.txt
 Indexed binary file: /Videos/README
 Indexed binary file: /Videos/%C9%A1o%CA%8Af%C9%99r
-Request sent at 2024-04-08 00:21:23: /Dir1/Subdir1
+Request sent at 2024-04-08 13:14:37: /Dir1/Subdir1
 Indexed binary file: /Dir1/Subdir1/notes.pdf
 Indexed binary file: /Dir1/Subdir1/questions.pdf
-Request sent at 2024-04-08 00:21:23: /Dir1/Subdir2
+Request sent at 2024-04-08 13:14:37: /Dir1/Subdir2
 Indexed binary file: /Dir1/Subdir2/notes.tex
 Indexed binary file: /Dir1/Subdir2/scoresheet.ods
 
 Indexation complete. Now analysing the files.
-Request sent at 2024-04-08 00:21:23: /canberra.jpg
-The file /canberra.jpg is too large
-Request sent at 2024-04-08 00:21:23: /executable
-Request sent at 2024-04-08 00:21:23: /hello.txt
-Request sent at 2024-04-08 00:21:23: /notes.pdf
-The file /notes.pdf is too large
-Request sent at 2024-04-08 00:21:23: /small.txt
-Request sent at 2024-04-08 00:21:23: /sunset.jpg
-The file /sunset.jpg is too large
-Request sent at 2024-04-08 00:21:23: /Dir1/results.ods
-Request sent at 2024-04-08 00:21:23: /Videos/ducks.mp4
-The file /Videos/ducks.mp4 is too large
-Request sent at 2024-04-08 00:21:23: /Videos/file%20with%20space.txt
-Request sent at 2024-04-08 00:21:23: /Videos/README
-Request sent at 2024-04-08 00:21:23: /Videos/%C9%A1o%CA%8Af%C9%99r
-Request sent at 2024-04-08 00:21:23: /Dir1/Subdir1/notes.pdf
-The file /Dir1/Subdir1/notes.pdf is too large
-Request sent at 2024-04-08 00:21:23: /Dir1/Subdir1/questions.pdf
-The file /Dir1/Subdir1/questions.pdf is too large
-Request sent at 2024-04-08 00:21:23: /Dir1/Subdir2/notes.tex
-Request sent at 2024-04-08 00:21:23: /Dir1/Subdir2/scoresheet.ods
+Request sent at 2024-04-08 13:14:37: /canberra.jpg
+Request sent at 2024-04-08 13:14:37: /executable
+Request sent at 2024-04-08 13:14:37: /hello.txt
+Request sent at 2024-04-08 13:14:37: /notes.pdf
+Request sent at 2024-04-08 13:14:37: /small.txt
+Request sent at 2024-04-08 13:14:37: /sunset.jpg
+Request sent at 2024-04-08 13:14:37: /Dir1/results.ods
+Request sent at 2024-04-08 13:14:37: /Videos/ducks.mp4
+Request sent at 2024-04-08 13:14:37: /Videos/file%20with%20space.txt
+Request sent at 2024-04-08 13:14:37: /Videos/README
+Request sent at 2024-04-08 13:14:37: /Videos/%C9%A1o%CA%8Af%C9%99r
+Request sent at 2024-04-08 13:14:37: /Dir1/Subdir1/notes.pdf
+Request sent at 2024-04-08 13:14:37: /Dir1/Subdir1/questions.pdf
+Request sent at 2024-04-08 13:14:37: /Dir1/Subdir2/notes.tex
+Request sent at 2024-04-08 13:14:37: /Dir1/Subdir2/scoresheet.ods
 
 Number of directories: 4
 Number of text files: 3
 Number of binary files: 12
 Number of invalid references: 0
 
-Request sent at 2024-04-08 00:21:23: /small.txt
+Request sent at 2024-04-08 13:14:37: /small.txt
 Content of the smallest text file:
 Hello World
 
 Size of the smallest text file: 16
 Size of the largest text file: 54
 Size of the smallest binary file: 2
-Size of the largest binary file: 24185
+Size of the largest binary file: 9342506
 
 Connectivity to external servers:
 No reference to any external server indexed
