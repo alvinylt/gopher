@@ -157,11 +157,11 @@ user whether the connection is terminated or the client is still waiting for a
 response.
 
 Servers may be busy or unresponsive at times. There are two types of timeouts.
-1. The server accepts connection but does not respond to a request.
-2. The server accepts connection, responds but it takes too much time.
-3. The server does not accept connection within the time limit.
+1. The server accepts the connection but does not respond to a request.
+2. The server accepts the connection and responds but it takes too much time.
+3. The server does not accept the connection within the time limit.
 
-Timeout limit prevents the program from getting stuck indefinitely.
+Timeouts prevent the program from getting stuck indefinitely.
 The first situation is managed using `setsockopt()`, a built-in feature in the
 Socket API, and the `timeval` struct. The configuration is set by
 `gopher_connect()`. The limit is currently set as 10 seconds.
@@ -230,12 +230,12 @@ file limit are logged and printed before the client program execution ends.
 ## Testing
 
 The client program is tested with the class server and a local Motsognir server.
-The logs are included for reference:
-- [Example Log 1](assets/output1.txt)
-- [Example Log 2](assets/output2.txt)
+The terminal outputs are included for reference:
+- [Example log 1](assets/output1.txt) with a file size limit of 65536 bytes
+- [Example log 2](assets/output2.txt) with no file size limit
 
 Wireshark is used for monitoring the network traffic. The initial request is
-detected as "Request: [Directory List]". There are occassional retransmissions
+detected as "Request: [Directory List]". There are occasional retransmissions
 of TCP packets and spurious acknowledgement (ACK) signals.
 
 ![Wireshark](assets/wireshark.png)
@@ -246,17 +246,25 @@ of TCP packets and spurious acknowledgement (ACK) signals.
    *The RFC Series*. https://www.rfc-editor.org/rfc/rfc1436
 2. Arkaitz Jimenez. (September 2009). Time stamp in the C programming language.
    *Stack Overflow*. https://stackoverflow.com/a/1444440
-3. caf. (April 2010). C: socket connection timeout. *Stack Overflow*.
+3. Basile Starynkevitch. (September 2015). How to use `select()` on sockets
+   properly?. *Stack Overflow*.
+   https://stackoverflow.com/a/32711642
+4. caf. (April 2010). C: socket connection timeout. *Stack Overflow*.
    https://stackoverflow.com/a/2597774
-4. dgookin. (July 2020). The `gettimeofday()` Function. *C For Dummies Blog*.
+5. dgookin. (July 2020). The `gettimeofday()` Function. *C For Dummies Blog*.
    https://c-for-dummies.com/blog/?p=4236
-5. Foobar. (Oct 2018). Client in C++, use `gethostbyname` or `getaddrinfo`.
+6. Frédéric Hamidi. (October 2010). What does `EAGAIN` mean?. *Stack Overflow*.
+   https://stackoverflow.com/a/4058377
+7. Foobar. (Oct 2018). Client in C++, use `gethostbyname` or `getaddrinfo`.
    *Stack Overflow*. https://stackoverflow.com/q/52727565
-6. IEEE and The Open Group. (2003). `setsockopt`. *Linux man page*.
+8. IEEE and The Open Group. (2003). `setsockopt`. *Linux man page*.
    https://linux.die.net/man/3/setsockopt
-7. Milan. (Mar 2011). How to convert string to IP address and vice versa.
+9.  Milan. (Mar 2011). How to convert string to IP address and vice versa.
    *Stack Overflow*. https://stackoverflow.com/a/5328184
-8. Wikipedia contributors. Gopher (protocol). *Wikipedia*.
-   https://en.wikipedia.org/wiki/Gopher_(protocol)
+10. Tomek Szpakowicz. (December 2009). When to use static keyword before global
+    variables?. *Stack Overflow*.
+    https://stackoverflow.com/a/1856642
+11. Wikipedia contributors. Gopher (protocol). *Wikipedia*.
+    https://en.wikipedia.org/wiki/Gopher_(protocol)
 
 Last update: 2024-04-08
