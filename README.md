@@ -1,5 +1,7 @@
 # Gopher Indexing Client
 
+**Alvin Tang** (**u7447218**)
+
 This Internet Gopher client written in the C programming language indexes
 directories and files. It is implemented in accordance with
 [RFC 1436](https://www.rfc-editor.org/rfc/rfc1436). The overall design is to
@@ -44,7 +46,7 @@ Entry type (`item_type`) | Record (`record`)
 Since the protocol is stateless and the connection is terminated once the server
 has responded, the function `gopher_connect()` establishes and closes a
 connection every time a new request is made. The function `gopher_connect()`
-appends `\r\n` to the request which is passed as the parameter
+appends "`\r\n`" to the request which is passed as the parameter
 `request`. It sends the request line to the server. The function `func()`,
 passed as another argument to `gopher_connect()`, is responsible for receiving
 the response from the server.
@@ -82,8 +84,8 @@ In this client program, files that are not in plain text are considered binary.
 Directory                    | `1`
 Reference to external server | `1`
 Text file                    | `0`
-Binary file                  | `4` (BinHex-encoded file), `5` (DOS file), `6` (uuencoded file), `9` (Binary file), `g` (GIF), `I` (Image), `:` (Bitmap), `;` (Movie), `<` (Audio), `d` (Document), `h` (HTML), `p` (PNG), `r` (RTF), `s` (Sound), `P` (PDF), `X` (XML)
 Error                        | `3`
+Binary file                  | `4` (BinHex-encoded file), `5` (DOS file), `6` (uuencoded file), `9` (Binary file), `g` (GIF), `I` (Image), `:` (Bitmap), `;` (Movie), `<` (Audio), `d` (Document), `h` (HTML), `p` (PNG), `r` (RTF), `s` (Sound), `P` (PDF), `X` (XML)
 
 Any row in the response starting with the character `i` is a human-readable
 informational message, thus ignored by the indexation process. Other references
@@ -93,7 +95,7 @@ the indexation process.
 
 ### Recursively Index Subdirectories
 
-Following the indexation of the root directory using the request `\r\n`,
+Following the indexation of the root directory using the request "`\r\n`",
 `main()` goes through the linked list and calls `gopher_connect()` for every
 subdirectory. This effectively models a breadth-first search of the filesystem
 hosted on the Gopher server.
@@ -194,9 +196,9 @@ iInformation invalid 0
 The client program ensures correct handling of responses when interacting with
 different servers.
 
-A server's response should end with a line containing `.\r\n` followed by the
+A server's response should end with a line containing "`.\r\n`" followed by the
 null terminator. However, if the server does not follow the standard protocol
-to the full extent and terminates transmission without `.\r\n`, the program
+to the full extent and terminates transmission without "`.\r\n`", the program
 still handles the response gracefully. The client program perceives a server's
 termination of the connection as the end of data transmission. An example is
 `/misc/malformed2` on the class server.
@@ -231,8 +233,8 @@ file limit are logged and printed before the client program execution ends.
 
 The client program is tested with the class server and a local Motsognir server.
 The terminal outputs are included for reference:
-- [Example log 1](assets/output1.txt) with a file size limit of 65536 bytes
-- [Example log 2](assets/output2.txt) with no file size limit
+- [Class server, 65536-byte file size limit](assets/output1.txt)
+- [Local Motsognir server, no file size limit](assets/output2.txt)
 
 Wireshark is used for monitoring the network traffic. The initial request is
 detected as "Request: [Directory List]". There are occasional retransmissions
@@ -267,4 +269,4 @@ of TCP packets and spurious acknowledgement (ACK) signals.
 11. Wikipedia contributors. Gopher (protocol). *Wikipedia*.
     https://en.wikipedia.org/wiki/Gopher_(protocol)
 
-Last update: 2024-04-08
+Last update: 2024-04-11
