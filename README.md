@@ -183,6 +183,17 @@ The limit is currently defined as 5 seconds.
 
 The third situation applies in `test_external_servers()` with a 5-second limit.
 
+### Receiving Server's Response through Multiple Packets
+
+The built-in `recv()` function reads the responses from the server. The server
+might send it with multiple packets. In `indexing()`, for example, a while loop
+is used to read the response from the server and write it to the buffer until
+the server disconnects.
+
+We set `BUFFER_SIZE` is 65536 bytes as this is reasonable size limit for most
+directory indices on a Gopher server. It can be adjusted if the user of this
+program has specific needs.
+
 ### Handling Edge Cases: Malformed or Non-Standard Responses
 
 A well-implemented server's directory index response should include four pieces
@@ -245,7 +256,9 @@ The terminal outputs are included for reference:
 - [Class server, 65536-byte file size limit](assets/output1.txt)
 - [Local Motsognir server, no file size limit](assets/output2.txt)
 
-The program is also tested with `gopher.floodgap.com` at port 70.
+The program is also tested with `gopher.floodgap.com` at port 70. The first 1024
+lines of terminal output are included in
+[assets/output3.txt](assets/output3.txt) for information.
 
 Wireshark is used for monitoring the network traffic. The initial request is
 detected as "Request: [Directory List]". There are occasional retransmissions

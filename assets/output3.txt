@@ -1,0 +1,1024 @@
+Request sent at 2024-04-18 19:19:40: 
+Indexed text file: /responsible-bot
+Indexed external server: sdf.org	70
+Indexed directory: /gopher
+Indexed text file: /gopher/wbgopher
+Indexed directory: /overbite
+Indexed directory: /gopher/clients
+Indexed directory: /v2
+Indexed directory: /world
+Indexed directory: /new
+Indexed directory: /groundhog
+Indexed directory: /feeds
+Indexed directory: /feeds/latest
+Indexed directory: /archive
+Indexed directory: /fun
+Indexed directory: /users
+Indexed directory: /gophervr
+Indexed directory: /buck
+Indexed directory: /gstats
+Indexed text file: /ptloma
+Indexed directory: /ffsl
+Indexed text file: /whereis
+Indexed text file: /servertemps.txt
+Indexed text file: /recent
+Indexed text file: /umngone
+Request sent at 2024-04-18 19:19:41: /gopher
+Indexed directory: /
+Indexed text file: /gopher/welcome
+Indexed text file: /gopher/relevance.txt
+Indexed text file: /users/rbigelo/gopher.txt
+Indexed text file: /gopher/webisdead.txt
+Indexed text file: /gopher/StarTribune.txt
+Indexed external server: phlogosphere.org	70
+Indexed directory: /gopher/toybox
+Indexed directory: /gopher/shorten
+Indexed directory: /gopher/tech
+Indexed text file: /gopher/itbwtcl
+Request sent at 2024-04-18 19:19:42: /overbite
+Indexed directory: /overbite/ss
+Indexed directory: /overbite/install/android
+Indexed directory: /overbite/install
+Indexed directory: /overbite/files
+Request sent at 2024-04-18 19:19:42: /gopher/clients
+Indexed directory: /gopher/clients/win
+Indexed directory: /gopher/clients/mac
+Indexed directory: /gopher/clients/src
+Indexed directory: /gopher/clients/c64
+Indexed directory: /gopher/clients/vms
+Indexed directory: /archive/alpha-micro/gopher
+Indexed directory: /gopher/clients/ie6
+Request sent at 2024-04-18 19:19:43: /v2
+Indexed directory: /v2/help
+Indexed text file: /v2/help/indexer
+Indexed text file: /v2/vstat
+Request sent at 2024-04-18 19:19:44: /world
+Indexed directory: /world/last-hit
+Indexed directory: /world/search-hosts?com net info land org
+Indexed directory: /world/search-hosts?edu gov mil
+Indexed directory: /world/search-hosts?ca us gp
+Indexed directory: /world/search-hosts?ar co mx pe br
+Indexed directory: /world/search-hosts?at be ch cr cz de dk ee eu fi fr gr hr hu is it lt me nl es no pl pt ro ru se su ua uk
+Indexed directory: /world/search-hosts?au cn hk in io jp nz pw tk th tm tw cx za
+Indexed directory: /world/search-hosts?ac
+Indexed directory: /world/search-hosts?black club life moe name ninja online productions solutions space technology tips town works zone party engineering codes xyz
+Request sent at 2024-04-18 19:19:45: /new
+Indexed external server: privat.akfoerster.de	70
+Indexed external server: gopher1.ceddral.org	7070
+Indexed external server: redterminal.org	70
+Indexed external server: agon.gunstar.one	70
+Indexed external server: gopher.navan.dev	70
+Indexed external server: shibboleths.org	70
+Indexed external server: texto-plano.xyz	70
+Indexed external server: self.tastyfish.cz	70
+Indexed external server: 238c.org	70
+Indexed external server: si3t.ch	70
+Indexed external server: gopher.gnu.ca	70
+Indexed external server: yretek.com	70
+Indexed external server: gopher.flatline.ltd	70
+Indexed external server: damaniel.xyz	70
+Indexed external server: therandymon.com	70
+Indexed external server: texopher.com	70
+Indexed external server: gopher.unixwire.com	70
+Indexed external server: gopher.system7today.com	70
+Indexed external server: gopher.jonsharp.net	70
+Indexed external server: gopher.blackthorn.icu	70
+Indexed external server: jay.scot	70
+Indexed external server: danq.me	70
+Indexed external server: encw.xyz	70
+Indexed external server: gophernews.net	70
+Indexed external server: attic.spookbench.net	70
+Indexed external server: alexkarle.com	70
+Indexed external server: gopher.dxing.si	70
+Indexed external server: gopher.beastieboy.net	70
+Indexed external server: gopher.deadnet.se	70
+Indexed external server: dixieflatline.de	70
+Indexed external server: triapul.cz	70
+Indexed external server: dacav.org	70
+Indexed external server: fatelectron.net	70
+Indexed external server: sigkill.dk	70
+Indexed external server: bbs.beardy.se	8070
+Indexed external server: bobbynet.strangled.net	70
+Indexed external server: kalayaan.xyz	70
+Indexed external server: kd4wov.ddns.net	70
+Indexed external server: ageinghacker.net	70
+Indexed external server: gopher.almeida.uk.to	70
+Indexed external server: farragofiction.com	70
+Indexed external server: rak.ac	70
+Indexed external server: gopher.nkeck72.xyz	70
+Indexed external server: gopher.spacehippie.ca	70
+Indexed external server: isene.com	70
+Indexed external server: midnight.pub	70
+Indexed external server: port70.de	70
+Indexed external server: crn.hopto.org	70
+Indexed external server: gopher.aglemons.com	70
+Indexed external server: gopher.casperscupboard.com	70
+Indexed external server: dio9sys.fun	70
+Indexed external server: petermolnar.net	70
+Indexed external server: gopher.operationalsecurity.es	70
+Indexed external server: fripster.ydns.eu	70
+Indexed external server: gopher.pizza	70
+Indexed external server: gopher.magicmargin.net	70
+Indexed external server: gopher.zcrayfish.soy	70
+Indexed external server: mirrors.apple2.org.za	70
+Indexed external server: gopher.unixlore.net	70
+Indexed external server: blog.qartis.com	70
+Indexed external server: gopher.petergarner.net	70
+Indexed external server: gopher.lottalinuxlinks.com	70
+Indexed external server: gopher.gnarledthicket.net	70
+Indexed external server: gemeinde.zermatt.ch	70
+Indexed external server: adamsgaard.dk	70
+Indexed external server: gopher.linkerror.com	70
+Indexed external server: blizzardofzeros.com	70
+Indexed external server: gopher.canich.net	70
+Indexed external server: t3.at	70
+Indexed external server: gopherddit.com	70
+Indexed external server: thelambdalab.xyz	70
+Indexed external server: thinkmoult.com	70
+Indexed external server: verisimilitudes.net	70
+Indexed external server: medialab.freaknet.org	70
+Indexed external server: kagu-tsuchi.com	70
+Indexed external server: gopher.silentmessengers.org	70
+Indexed external server: raymii.org	70
+Indexed external server: invisibleup.com	70
+Indexed external server: infinitelyremote.com	70
+Indexed external server: tilde.team	70
+Indexed external server: gopher.black	70
+Indexed external server: cosmic.voyage	70
+Indexed external server: nz.xeroxirc.net	70
+Indexed external server: baud.baby	70
+Indexed external server: srjskam.iki.fi	70
+Indexed external server: circumlunar.space	70
+Indexed external server: tellus.strangled.net	70
+Indexed external server: gopher.endangeredsoft.org	70
+Indexed external server: first-monitor.ethz.ch	70
+Indexed external server: szabolcsszucs.com	70
+Indexed external server: cyber.dabamos.de	70
+Indexed external server: hngopher.com	70
+Indexed external server: rpod.leveck.us	70
+Indexed external server: home.quix.us	70
+Indexed external server: gopher.mtxdev.com	70
+Indexed external server: happymacs.ddns.net	70
+Indexed external server: gopher.ratthing.com	70
+Indexed external server: gopher.superglobalmegacorp.com	70
+Indexed external server: gopherblog.superglobalmegacorp.com	70
+Indexed external server: gopher.blog.benjojo.co.uk	70
+Indexed external server: dusted.dk	70
+Indexed external server: gopher.frog.tips	70
+Indexed external server: umaxx.net	70
+Indexed external server: kamalatta.ddnss.de	70
+Indexed external server: gopher.conman.org	70
+Indexed external server: gopher.metafilter.com	70
+Indexed external server: gopher4all.com	70
+Indexed external server: ftp.icm.edu.pl	70
+Indexed external server: tourism-bureau.seattle.wa.us	70
+Indexed external server: be9.ddns.net	70
+Indexed external server: pogemon.pw	70
+Indexed external server: gopherspace.de	70
+Indexed external server: xepb.org	70
+Indexed external server: maistre.uni.cx	70
+Indexed external server: gopher.johncave.co.nz	70
+Indexed external server: tyrfingr.is	70
+Indexed external server: salsa.net	70
+Indexed external server: devio.us	70
+Indexed external server: linuxlalala.no-ip.biz	70
+Indexed external server: xenotide.no-ip.org	70
+Indexed external server: whitemesa.net	70
+Indexed external server: 661.org	70
+Indexed external server: gopher.661.org	70
+Indexed external server: uninformativ.de	70
+Indexed external server: i-logout.cz	70
+Indexed external server: port70.dk	70
+Indexed external server: firien.helluin.org	70
+Indexed external server: gopher.info-underground.net	70
+Indexed external server: mirror.lug.udel.edu	70
+Indexed external server: jgw.mdns.org	70
+Indexed external server: www.terminalcore.net	70
+Indexed external server: pongonova.org	70
+Indexed external server: holviala.com	70
+Indexed external server: retro-net.org	70
+Indexed external server: home.aplu.fr	70
+Indexed external server: gopher.robsayers.com	70
+Indexed external server: glog.fosconetwork.org	70
+Indexed external server: port70.net	70
+Indexed external server: gopher.stauropygial.org	70
+Indexed external server: gopher.wensley.org.uk	70
+Indexed external server: isisunveiled.no-ip.org	70
+Indexed external server: bbsorillia.com	70
+Indexed external server: gopher.r-36.net	70
+Indexed external server: kkjrascher.dnsalias.net	70
+Indexed external server: gopher.386server.info	70
+Indexed external server: telefisk.org	70
+Indexed external server: freeshell.org	70
+Indexed external server: gopher.quux.org	70
+Request sent at 2024-04-18 19:19:46: /groundhog
+Indexed text file: /groundhog/benice
+Indexed text file: /groundhog/nobsg?i
+Indexed text file: /groundhog/nobsg?uw
+Indexed text file: /groundhog/nobsg?ue
+Indexed text file: /groundhog/nobsg?uc
+Indexed text file: /groundhog/ws
+Indexed directory: /groundhog/us/forecast
+Indexed directory: /groundhog/au/nforecast
+Indexed binary file: /groundhog/us/highmap
+Indexed binary file: /groundhog/us/lowmap
+Indexed directory: /groundhog/us/radar
+Request sent at 2024-04-18 19:19:47: /feeds
+Indexed text file: /feeds/suggest
+Indexed text file: /feeds/disclaimer
+Indexed directory: /feeds/today
+Indexed directory: /feeds/voaheadlines
+Indexed directory: /feeds/democracynow
+Indexed directory: /feeds/tidbits
+Indexed directory: /feeds/wikinews
+Indexed directory: /feeds/khn
+Request sent at 2024-04-18 19:19:48: /feeds/latest
+Indexed directory: /feeds/voaheadlines/2024/Apr/18
+Indexed directory: /feeds/tidbits/2024/Apr/17
+Indexed directory: /feeds/khn/2024/Apr/17
+Indexed directory: /feeds/democracynow/2024/Apr/17
+Indexed directory: /feeds/wikinews/2024/Apr/16
+Indexed directory: /feeds/p2pnet/2012/May/15
+Request sent at 2024-04-18 19:19:49: /archive
+Indexed directory: /archive/info-mac
+Indexed directory: /archive/userserve-ucsd-edu
+Indexed directory: /archive/umich-archive-mac
+Indexed directory: /archive/walnut-creek-cd-simtel
+Indexed directory: /archive/jagubox-gsfc-nasa-gov-aux
+Indexed directory: /archive/ans-aixpdslib-aix-4
+Indexed directory: /archive/ans-docs
+Indexed directory: /archive/aix-games
+Indexed directory: /archive/alpha-micro
+Indexed directory: /archive/be-power
+Indexed directory: /archive/sunos-4-solbourne-os-mp
+Indexed directory: /archive/tandy-pocket-computer-archive
+Indexed directory: /archive/dcs900
+Indexed directory: /archive/ppcp
+Indexed directory: /archive/by-request
+Request sent at 2024-04-18 19:19:50: /fun
+Indexed directory: /fun/xkcd
+Indexed directory: /fun/hdnr
+Indexed directory: /fun/figletgw
+Indexed text file: /fun/phoongw
+Indexed text file: /fun/fortunegw
+Request sent at 2024-04-18 19:19:50: /users
+Indexed directory: /users/ckaiser
+Request sent at 2024-04-18 19:19:51: /gophervr
+Indexed binary file: /gophervr/gophervr.png
+Indexed binary file: /gophervr/gopherhd.png
+Indexed text file: /gophervr/ChangeLog
+Indexed text file: /gophervr/AATODO
+Indexed binary file: /gophervr/gophervr-macosx.zip
+Indexed binary file: /gophervr/gophervr-irix.tar.gz
+Indexed binary file: /gophervr/gophervr-src.tar.gz
+Indexed binary file: /gophervr/all-versions/gophervr-0.2-src.tar.gz
+Indexed directory: /gophervr/all-versions/
+Request sent at 2024-04-18 19:19:52: /buck
+Indexed text file: /buck/clog
+Indexed directory: /buck/download
+Indexed directory: /buck/dbrowse?faqinst
+Indexed directory: /buck/dbrowse?faquse
+Indexed directory: /buck/dbrowse?glossary
+Indexed binary file: /gopher/toybox.zip
+Indexed text file: /Software/Gopher/Mailing List.txt
+Request sent at 2024-04-18 19:19:53: /gstats
+Indexed text file: /gstats/methods
+Indexed text file: /gstats/readme
+Indexed binary file: /gstats/trend.gif
+Indexed binary file: /gstats/2007-05.gif
+Indexed binary file: /gstats/2007-06.gif
+Indexed binary file: /gstats/2007-07.gif
+Indexed binary file: /gstats/2007-08.gif
+Indexed binary file: /gstats/2007-09.gif
+Indexed binary file: /gstats/2007-10.gif
+Indexed binary file: /gstats/2007-11.gif
+Indexed binary file: /gstats/2007-12.gif
+Indexed binary file: /gstats/2008-01.gif
+Indexed binary file: /gstats/2008-02.gif
+Indexed binary file: /gstats/2008-03.gif
+Indexed binary file: /gstats/2008-04.gif
+Indexed binary file: /gstats/2008-05.gif
+Indexed binary file: /gstats/2008-06.gif
+Indexed binary file: /gstats/2008-07.gif
+Indexed binary file: /gstats/2008-08.gif
+Indexed binary file: /gstats/2008-09.gif
+Indexed binary file: /gstats/2008-10.gif
+Indexed binary file: /gstats/2008-11.gif
+Indexed binary file: /gstats/2008-12.gif
+Indexed binary file: /gstats/2009-01.gif
+Indexed binary file: /gstats/2009-02.gif
+Indexed binary file: /gstats/2009-03.gif
+Indexed binary file: /gstats/2009-04.gif
+Indexed binary file: /gstats/2009-05.gif
+Indexed binary file: /gstats/2009-06.gif
+Indexed binary file: /gstats/2009-07.gif
+Indexed binary file: /gstats/2009-08.gif
+Indexed binary file: /gstats/2009-09.gif
+Indexed binary file: /gstats/2009-10.gif
+Indexed binary file: /gstats/2009-11.gif
+Indexed binary file: /gstats/2009-12.gif
+Indexed binary file: /gstats/2010-01.gif
+Indexed binary file: /gstats/2010-02.gif
+Indexed binary file: /gstats/2010-03.gif
+Indexed binary file: /gstats/2010-04.gif
+Indexed binary file: /gstats/2010-05.gif
+Indexed binary file: /gstats/2010-06.gif
+Indexed binary file: /gstats/2010-07.gif
+Indexed binary file: /gstats/2010-08.gif
+Indexed binary file: /gstats/2010-09.gif
+Indexed binary file: /gstats/2010-10.gif
+Indexed binary file: /gstats/2010-11.gif
+Indexed binary file: /gstats/2010-12.gif
+Indexed binary file: /gstats/2011-01.gif
+Indexed binary file: /gstats/2011-02.gif
+Indexed binary file: /gstats/2011-03.gif
+Indexed binary file: /gstats/2011-04.gif
+Indexed binary file: /gstats/2011-05.gif
+Indexed binary file: /gstats/2011-06.gif
+Indexed binary file: /gstats/2011-09.gif
+Indexed binary file: /gstats/2011-10.gif
+Indexed binary file: /gstats/2011-11.gif
+Indexed binary file: /gstats/2011-12.gif
+Indexed binary file: /gstats/2012-01.gif
+Indexed binary file: /gstats/2012-02.gif
+Indexed binary file: /gstats/2012-03.gif
+Indexed binary file: /gstats/2012-04.gif
+Indexed binary file: /gstats/2012-05.gif
+Indexed binary file: /gstats/2012-06.gif
+Indexed binary file: /gstats/2012-07.gif
+Indexed binary file: /gstats/2012-08.gif
+Indexed binary file: /gstats/2012-09.gif
+Indexed binary file: /gstats/2012-10.gif
+Indexed binary file: /gstats/2012-11.gif
+Indexed binary file: /gstats/2012-12.gif
+Indexed binary file: /gstats/2013-01.gif
+Indexed binary file: /gstats/2013-02.gif
+Indexed binary file: /gstats/2013-03.gif
+Indexed binary file: /gstats/2013-04.gif
+Indexed binary file: /gstats/2013-05.gif
+Indexed binary file: /gstats/2013-06.gif
+Indexed binary file: /gstats/2013-07.gif
+Indexed binary file: /gstats/2013-08.gif
+Indexed binary file: /gstats/2013-09.gif
+Indexed binary file: /gstats/2013-10.gif
+Indexed binary file: /gstats/2013-11.gif
+Indexed binary file: /gstats/2013-12.gif
+Indexed binary file: /gstats/2014-01.gif
+Indexed binary file: /gstats/2014-02.gif
+Indexed binary file: /gstats/2014-03.gif
+Indexed binary file: /gstats/2014-04.gif
+Indexed binary file: /gstats/2014-05.gif
+Indexed binary file: /gstats/2014-06.gif
+Indexed binary file: /gstats/2014-07.gif
+Indexed binary file: /gstats/2014-08.gif
+Indexed binary file: /gstats/2014-09.gif
+Indexed binary file: /gstats/2014-10.gif
+Indexed binary file: /gstats/2014-11.gif
+Indexed binary file: /gstats/2014-12.gif
+Indexed binary file: /gstats/2015-01.gif
+Indexed binary file: /gstats/2015-02.gif
+Indexed binary file: /gstats/2015-03.gif
+Indexed binary file: /gstats/2015-04.gif
+Indexed binary file: /gstats/2015-05.gif
+Indexed binary file: /gstats/2015-06.gif
+Indexed binary file: /gstats/2015-07.gif
+Indexed binary file: /gstats/2015-08.gif
+Indexed binary file: /gstats/2015-09.gif
+Indexed binary file: /gstats/2015-10.gif
+Indexed binary file: /gstats/2015-11.gif
+Indexed binary file: /gstats/2015-12.gif
+Indexed binary file: /gstats/2016-01.gif
+Indexed binary file: /gstats/2016-02.gif
+Indexed binary file: /gstats/2016-03.gif
+Indexed binary file: /gstats/2016-04.gif
+Indexed binary file: /gstats/2016-05.gif
+Indexed binary file: /gstats/2016-06.gif
+Indexed binary file: /gstats/2016-07.gif
+Indexed binary file: /gstats/2016-08.gif
+Indexed binary file: /gstats/2016-09.gif
+Indexed binary file: /gstats/2016-10.gif
+Indexed binary file: /gstats/2016-11.gif
+Indexed binary file: /gstats/2016-12.gif
+Indexed binary file: /gstats/2017-01.gif
+Indexed binary file: /gstats/2017-02.gif
+Indexed binary file: /gstats/2017-03.gif
+Indexed binary file: /gstats/2017-04.gif
+Indexed binary file: /gstats/2017-05.gif
+Indexed binary file: /gstats/2017-06.gif
+Indexed binary file: /gstats/2017-07.gif
+Indexed binary file: /gstats/2017-08.gif
+Indexed binary file: /gstats/2017-09.gif
+Indexed binary file: /gstats/2017-10.gif
+Indexed binary file: /gstats/2017-11.gif
+Indexed binary file: /gstats/2017-12.gif
+Indexed binary file: /gstats/2018-01.gif
+Indexed binary file: /gstats/2018-02.gif
+Indexed binary file: /gstats/2018-03.gif
+Indexed binary file: /gstats/2018-04.gif
+Indexed binary file: /gstats/2018-05.gif
+Indexed binary file: /gstats/2018-06.gif
+Indexed binary file: /gstats/2018-07.gif
+Indexed binary file: /gstats/2018-08.gif
+Indexed binary file: /gstats/2018-09.gif
+Indexed binary file: /gstats/2018-10.gif
+Indexed binary file: /gstats/2018-11.gif
+Indexed binary file: /gstats/2018-12.gif
+Indexed binary file: /gstats/2019-01.gif
+Indexed binary file: /gstats/2019-02.gif
+Indexed binary file: /gstats/2019-03.gif
+Indexed binary file: /gstats/2019-04.gif
+Indexed binary file: /gstats/2019-05.gif
+Indexed binary file: /gstats/2019-06.gif
+Indexed binary file: /gstats/2019-07.gif
+Indexed binary file: /gstats/2019-08.gif
+Indexed binary file: /gstats/2019-09.gif
+Indexed binary file: /gstats/2019-10.gif
+Indexed binary file: /gstats/2019-11.gif
+Indexed binary file: /gstats/2019-12.gif
+Indexed binary file: /gstats/2020-01.gif
+Indexed binary file: /gstats/2020-02.gif
+Indexed binary file: /gstats/2020-03.gif
+Indexed binary file: /gstats/2020-04.gif
+Indexed binary file: /gstats/2020-05.gif
+Indexed binary file: /gstats/2020-06.gif
+Indexed binary file: /gstats/2020-07.gif
+Indexed binary file: /gstats/2020-08.gif
+Indexed binary file: /gstats/2020-09.gif
+Indexed binary file: /gstats/2020-10.gif
+Indexed binary file: /gstats/2020-11.gif
+Indexed binary file: /gstats/2020-12.gif
+Indexed binary file: /gstats/2021-01.gif
+Indexed binary file: /gstats/2021-02.gif
+Indexed binary file: /gstats/2021-03.gif
+Indexed binary file: /gstats/2021-04.gif
+Indexed binary file: /gstats/2021-05.gif
+Indexed binary file: /gstats/2021-06.gif
+Indexed binary file: /gstats/2021-07.gif
+Indexed binary file: /gstats/2021-08.gif
+Indexed binary file: /gstats/2021-09.gif
+Indexed binary file: /gstats/2021-10.gif
+Indexed binary file: /gstats/2021-11.gif
+Indexed binary file: /gstats/2021-12.gif
+Indexed binary file: /gstats/2022-01.gif
+Indexed binary file: /gstats/2022-02.gif
+Indexed binary file: /gstats/2022-03.gif
+Indexed binary file: /gstats/2022-04.gif
+Indexed binary file: /gstats/2022-05.gif
+Indexed binary file: /gstats/2022-06.gif
+Indexed binary file: /gstats/2022-07.gif
+Indexed binary file: /gstats/2022-08.gif
+Indexed binary file: /gstats/2022-09.gif
+Indexed binary file: /gstats/2022-10.gif
+Indexed binary file: /gstats/2022-11.gif
+Indexed binary file: /gstats/2022-12.gif
+Indexed binary file: /gstats/2023-01.gif
+Indexed binary file: /gstats/2023-02.gif
+Indexed binary file: /gstats/2023-03.gif
+Indexed binary file: /gstats/2023-04.gif
+Indexed binary file: /gstats/2023-05.gif
+Indexed binary file: /gstats/2023-06.gif
+Indexed binary file: /gstats/2023-07.gif
+Indexed binary file: /gstats/2023-08.gif
+Indexed binary file: /gstats/2023-09.gif
+Indexed binary file: /gstats/2023-10.gif
+Indexed binary file: /gstats/2023-11.gif
+Indexed binary file: /gstats/2023-12.gif
+Indexed binary file: /gstats/2024-01.gif
+Indexed binary file: /gstats/2024-02.gif
+Indexed binary file: /gstats/2024-03.gif
+Request sent at 2024-04-18 19:19:55: /ffsl
+Indexed text file: /ffsl/ffsl.txt
+Request sent at 2024-04-18 19:19:55: /
+Request sent at 2024-04-18 19:19:56: /gopher/toybox
+Indexed text file: /gopher/toybox/gophermap
+Indexed directory: /gopher/toybox/stuff
+Indexed text file: /gopher/toybox/stuff/text.txt
+Indexed binary file: /gopher/toybox/stuff/floodgap.gif
+Indexed binary file: /gopher/toybox/../toybox.zip
+Request sent at 2024-04-18 19:19:57: /gopher/shorten
+Indexed external server: gopher.floodgap.com	70
+Request sent at 2024-04-18 19:19:58: /gopher/tech
+Indexed text file: /gopher/tech/rfc1436.txt
+Indexed text file: /gopher/tech/gopherplus.txt
+Indexed binary file: /gopher/tech/ask.tar.gz
+Request sent at 2024-04-18 19:19:59: /overbite/ss
+Indexed binary file: /overbite/ss/AndroidQ-Address bar and image support.png
+Indexed binary file: /overbite/ss/AndroidQ-Dark theme with button menu.png
+Indexed binary file: /overbite/ss/AndroidQ-Light theme with button menu.png
+Indexed binary file: /overbite/ss/AndroidQ-Material Design dialogue box UI.png
+Indexed binary file: /overbite/ss/FF3-A gopher menu as rendered by OverbiteFF.gif
+Indexed binary file: /overbite/ss/FF3-Inline view lets you see documents and images right from the menu.gif
+Indexed binary file: /overbite/ss/FF3-Searching Gopherspace with Veronica-2.gif
+Indexed binary file: /overbite/ss/FF3-Supported item types.gif
+Indexed directory: /overbite/ss/Screenshots_during_development
+Indexed directory: /overbite/ss/old
+Request sent at 2024-04-18 19:20:00: /overbite/install/android
+Indexed binary file: /overbite/files/OverbiteAndroid026.apk
+Indexed binary file: /overbite/files/OverbiteAndroid026src.zip
+Request sent at 2024-04-18 19:20:01: /overbite/install
+Indexed directory: /overbite/install/ff38
+Indexed directory: /overbite/install/ff4
+Indexed directory: /overbite/install/ff3
+Indexed directory: /overbite/install/ff2
+Indexed directory: /overbite/install/ch
+Request sent at 2024-04-18 19:20:01: /overbite/files
+Indexed binary file: /overbite/files/overbiteff.xpi
+Indexed directory: /overbite/files/old
+Request sent at 2024-04-18 19:20:02: /gopher/clients/win
+Indexed directory: /gopher/clients/
+Indexed directory: /users/papa
+Indexed text file: /gopher/clients/win/default.gbm
+Indexed binary file: /gopher/clients/win/hgopher2_3.zip
+Request sent at 2024-04-18 19:20:04: /gopher/clients/mac
+Indexed directory: /gopher/clients/mac/classilla
+Indexed binary file: /gopher/clients/mac/TurboGopher-2.0.3-flood.sit.hqx
+Indexed binary file: /gopher/clients/mac/free-ppp-262.hqx
+Indexed binary file: /gopher/clients/mac/TurboGopherVR_2.1a4.sea.hqx
+Indexed binary file: /gopher/clients/mac/gophervr.gif
+Indexed binary file: /gopher/clients/mac/ThreadManager2.1.sit.hqx
+Indexed binary file: /gopher/clients/mac/MacLynxb3.sit
+Indexed binary file: /gopher/clients/mac/MacLynxb3.src.sit
+Indexed text file: /gopher/clients/mac/maclynx-readme.txt
+Indexed binary file: /gopher/clients/mac/maclynx271b1.sit.hqx
+Indexed binary file: /gopher/clients/mac/maclynx271a5.src.zip
+Indexed binary file: /gopher/clients/mac/carl-machten-414.tar.gz
+Indexed binary file: /gopher/clients/mac/carl-rhapsody-56.tar.gz
+Request sent at 2024-04-18 19:20:05: /gopher/clients/src
+Indexed text file: /gopher/clients/src/gocamel.pl.txt
+Indexed text file: /gopher/clients/src/gopher-client-library-for-node.js
+Indexed binary file: /gopher/clients/src/gopher2_3.tar.gz
+Indexed text file: /gopher/clients/src/gopherlib.py
+Indexed binary file: /gopher/clients/src/kio_gopher-20040214.tar.bz2
+Indexed text file: /gopher/clients/src/moog-0.2.README
+Indexed binary file: /gopher/clients/src/moog-0.2.tar.Z
+Indexed binary file: /gopher/clients/src/mosaic27ck7.tar.gz
+Request sent at 2024-04-18 19:20:06: /gopher/clients/c64
+Request sent at 2024-04-18 19:20:07: /gopher/clients/vms
+Indexed binary file: /gopher/clients/vms/mosaic3_6-1.zip
+Indexed binary file: /gopher/clients/vms/mosaic4_0.zip
+Indexed binary file: /gopher/clients/vms/mosaic4_2.zip
+Request sent at 2024-04-18 19:20:09: /archive/alpha-micro/gopher
+Indexed text file: /archive/alpha-micro/gopher/files/gamble.hlp
+Indexed directory: /archive/alpha-micro/gopher/files
+Request sent at 2024-04-18 19:20:10: /gopher/clients/ie6
+Indexed binary file: /gopher/clients/ie6/iegopher.zip
+Request sent at 2024-04-18 19:20:10: /v2/help
+Indexed text file: /v2/help/robotstxt
+Indexed text file: /v2/help/search
+Indexed text file: /v2/help/noluck
+Indexed text file: /v2/help/acc
+Request sent at 2024-04-18 19:20:11: /world/last-hit
+Indexed external server: gopher.floodgap.com	70
+i  		error.host	-1
+iMost recently visited/confirmed servers listed first.		error.host	1
+iOr, see 		error.host	1
+1All the gopher servers (that we know of)	/world	gopher.floodgap.com	70
+i  		error.host	-1
+1me0w.net:70 (56147 selectors)		me0w.net	70
+Indexed external server: snake.ceddral.org	70
+Indexed external server: gopher.pglaf.org	70
+Indexed external server: 8bitnoob.duckdns.org	70
+Indexed external server: telnetgames.de	70
+Indexed external server: nihirash.net	70
+Indexed external server: gopher.club	70
+Indexed external server: tilde.pink	70
+Indexed external server: suckless.org	70
+Indexed external server: tilde.club	70
+Indexed external server: gopher.simple-cc.org	70
+Indexed external server: parazyd.org	70
+Indexed external server: taz.de	70
+Request sent at 2024-04-18 19:20:12: /world/search-hosts?com net info land org
+Indexed external server: ratthing.com	70
+Indexed external server: typed-hole.org	70
+Indexed external server: me0w.net	70
+Indexed external server: bitreich.org	70
+Indexed external server: 0x1bi.net	70
+Indexed external server: zzo38computer.org	70
+Indexed external server: forthworks.com	70
+Indexed external server: git.codemadness.org	70
+Indexed external server: sdf-eu.org	70
+Indexed external server: thebackupbox.net	70
+Indexed external server: z3bra.org	70
+Indexed external server: silentmessengers.org	70
+Indexed external server: josuah.net	70
+Indexed external server: khzae.net	70
+Indexed external server: yourtilde.com	70
+Indexed external server: yam655.com	70
+Indexed external server: ymodem.org	70
+Indexed external server: lumidify.org	70
+Indexed external server: files.dyne.org	70
+Indexed external server: sl0w.org	70
+Indexed external server: gopher.somnolescent.net	70
+Indexed external server: sdfeu.org	70
+Indexed external server: bbs.archaicbinary.net	70
+Indexed external server: gopher.ddns.net	70
+Indexed external server: ada.info-underground.net	70
+Indexed external server: forthworks.com	7004
+Indexed external server: andr01d.zapto.org	7070
+Indexed external server: xn--9bi.net	70
+Indexed external server: gopher.prismdragon.net	70
+Indexed external server: dataswamp.org	70
+Indexed external server: li120-221.members.linode.com	70
+Indexed external server: heavysquare.com	70
+Indexed external server: uberspace.net	70
+Indexed external server: g.nixers.net	70
+Indexed external server: perihelion.nj.us.umbrellix.net	70
+Indexed external server: gopher.srcf.net	70
+Indexed external server: mpcclub.info	70
+Indexed external server: gopher.oldfolio.org	70
+Indexed external server: jfm.carcosa.net	70
+Indexed external server: envs.net	70
+Indexed external server: e1e0.net	70
+Indexed external server: gopher.nappey.org	70
+Indexed external server: ascraeus.org	70
+Indexed external server: gopher.smolderingwizard.com	70
+Indexed external server: gopher.saugus.net	70
+Indexed external server: serf.jpmens.net	70
+Indexed external server: 20forbeers.com	70
+Indexed external server: downlinkomega.net	70
+Indexed external server: gopher.solobsd.org	70
+Indexed external server: katolaz.net	70
+Indexed external server: schinkel.bevuta.com	70
+Indexed external server: gopher.richardfalken.com	70
+Indexed external server: phlog.z3bra.org	70
+Indexed external server: boghop.net	70
+Indexed external server: atyh.net	70
+Indexed external server: gopher.grahamdowney.com	70
+Indexed external server: carcosa.net	70
+Indexed external server: bublina.eu.org	70
+Indexed external server: gopher.gophernicus.org	70
+Indexed external server: forthworks.com	7001
+Indexed external server: zylone.org	70
+Indexed external server: centralontarioremote.com	70
+Indexed external server: faroutscience.com	70
+Indexed external server: gopher.urbanhacker.net	70
+Indexed external server: gopher.veronet.org	70
+Indexed external server: r-36.net	70
+Indexed external server: quux.org	70
+Indexed external server: worldofsolitaire.com	70
+Indexed external server: atua.forthworks.com	70
+Indexed external server: codemadness.org	70
+Indexed external server: forthworks.com	7005
+Indexed external server: linkerror.com	70
+Indexed external server: 386server.info	70
+Indexed external server: alistairsserver.no-ip.org	70
+Indexed external server: boyiajas.freeshell.org	70
+Indexed external server: complete.org	70
+Indexed external server: droog.sdf-eu.org	70
+Indexed external server: gilgamesh.tplinkdns.com	70
+Indexed external server: gopher.srcf.ucam.org	70
+Indexed external server: gopher.tildeverse.org	70
+Indexed external server: gopherite.org	70
+Indexed external server: gopherproject.org	70
+Indexed external server: hyperreal.com	70
+Indexed external server: ln.anyone.eu.org	70
+Indexed external server: madon333.freeshell.org	70
+Indexed external server: maxh.freeshell.org	70
+Indexed external server: multics.org	70
+Indexed external server: netvip3r.sdf.org	70
+Indexed external server: pascalv.sdf.org	70
+Indexed external server: prismdragon.net	70
+Indexed external server: sdf.org	79
+Indexed external server: sdf1.org	70
+Indexed external server: simple-cc.org	70
+Indexed external server: sjc.sdf.org	70
+Indexed external server: sverige.sdf.org	70
+Indexed external server: tildeverse.org	70
+Indexed external server: www.gopherpedia.com	70
+Indexed external server: www.pongonova.org	70
+Indexed external server: www.quux.org	70
+Indexed external server: www.whitemesa.net	70
+Indexed external server: endangeredsoft.org	70
+Indexed external server: v6shell.org	70
+Request sent at 2024-04-18 19:20:13: /world/search-hosts?edu gov mil
+Request sent at 2024-04-18 19:20:14: /world/search-hosts?ca us gp
+Indexed external server: gopher.leveck.us	70
+Indexed external server: bbs.kd3.us	70
+Indexed external server: moo.ca	70
+Indexed external server: mozz.us	7003
+Indexed external server: quix.us	70
+Indexed external server: leveck.us	70
+Indexed external server: mozz.us	7005
+Indexed external server: redowl.ca	70
+Indexed external server: mozz.us	7006
+Indexed external server: fld.gp	70
+Indexed external server: gopher.visiblink.ca	70
+Indexed external server: telcodata.us	70
+Indexed external server: botswana.quix.us	70
+Indexed external server: gopher.redowl.ca	70
+Indexed external server: pest.quix.us	70
+Indexed external server: sepia.redowl.ca	70
+Indexed external server: theunderground.us	70
+Request sent at 2024-04-18 19:20:15: /world/search-hosts?ar co mx pe br
+Request sent at 2024-04-18 19:20:16: /world/search-hosts?at be ch cr cz de dk ee eu fi fr gr hr hu is it lt me nl es no pl pt ro ru se su ua uk
+Indexed external server: gopher.rbfh.de	70
+Indexed external server: gopher.viste.fr	70
+Indexed external server: codevoid.de	70
+Indexed external server: boomlin.de	70
+Indexed external server: theunixzoo.co.uk	70
+Indexed external server: tccr.it	70
+Indexed external server: vernunftzentrum.de	70
+Indexed external server: gopher.karel.tt.ee	70
+Indexed external server: gopher.leitzahl.de	70
+Indexed external server: darioniedermann.it	70
+Indexed external server: gopher.binary-kitchen.de	70
+Indexed external server: tawara.de	70
+Indexed external server: box.matto.nl	70
+Indexed external server: gopher.tamagothi.de	70
+Indexed external server: onna.be	70
+Indexed external server: gopher.first.ethz.ch	70
+Indexed external server: kollof.nl	70
+Indexed external server: bay.parazy.de	666
+Indexed external server: gopher.update.uu.se	70
+Indexed external server: zxnet.co.uk	70
+Indexed external server: mail2.automario.eu	70
+Indexed external server: bay.parazy.de	70
+Indexed external server: dabamos.de	70
+Indexed external server: desudoli.cz	70
+Indexed external server: gopherlog.i-logout.cz	70
+Indexed external server: karel.tt.ee	70
+Indexed external server: stat.wensley.org.uk	70
+Request sent at 2024-04-18 19:20:17: /world/search-hosts?au cn hk in io jp nz pw tk th tm tw cx za
+Indexed external server: freeway.apana.org.au	70
+Indexed external server: gopher.erb.pw	70
+Indexed external server: gyr.sen.cx	70
+Indexed external server: chate.io	70
+Indexed external server: sectordisk.pw	70
+Indexed external server: gopher.mills.io	70
+Indexed external server: erb.pw	70
+Indexed external server: gopher.sen.cx	70
+Indexed external server: johncave.co.nz	70
+Indexed external server: sen.cx	70
+Request sent at 2024-04-18 19:20:19: /world/search-hosts?ac
+Request sent at 2024-04-18 19:20:20: /world/search-hosts?black club life moe name ninja online productions solutions space technology tips town works zone party engineering codes xyz
+Indexed external server: xibalba.l33t.codes	44513
+Indexed external server: republic.circumlunar.space	70
+Indexed external server: tilde.town	70
+Indexed external server: gopher.fifth.space	70
+Indexed external server: zaibatsu.circumlunar.space	70
+Indexed external server: colorfield.space	70
+Indexed external server: rawtext.club	70
+Indexed external server: forth.works	9999
+Indexed external server: soviet.circumlunar.space	70
+Indexed external server: zlg.space	70
+Indexed external server: redcon.dimensionless.space	70
+Indexed external server: bombadillo.colorfield.space	70
+Indexed external server: amox.online	70
+Indexed external server: gopher.dluciv.name	70
+Indexed external server: gemini.circumlunar.space	70
+Indexed external server: r.circumlunar.space	70
+Indexed external server: consensus.circumlunar.space	70
+Indexed external server: dome.circumlunar.space	70
+Indexed external server: metanohi.name	70
+Indexed external server: fifth.space	70
+Indexed external server: kalayaan.xyz	79
+Request sent at 2024-04-18 19:20:22: /groundhog/us/forecast
+Indexed directory: /groundhog/us/forecast/al
+Indexed directory: /groundhog/us/forecast/ak
+Indexed directory: /groundhog/us/forecast/az
+Indexed directory: /groundhog/us/forecast/ar
+Indexed directory: /groundhog/us/forecast/ca
+Indexed directory: /groundhog/us/forecast/co
+Indexed directory: /groundhog/us/forecast/ct
+Indexed directory: /groundhog/us/forecast/de
+Indexed directory: /groundhog/us/forecast/dc
+Indexed directory: /groundhog/us/forecast/fl
+Indexed directory: /groundhog/us/forecast/ga
+Indexed directory: /groundhog/us/forecast/hi
+Indexed directory: /groundhog/us/forecast/id
+Indexed directory: /groundhog/us/forecast/il
+Indexed directory: /groundhog/us/forecast/in
+Indexed directory: /groundhog/us/forecast/ia
+Indexed directory: /groundhog/us/forecast/ks
+Indexed directory: /groundhog/us/forecast/ky
+Indexed directory: /groundhog/us/forecast/la
+Indexed directory: /groundhog/us/forecast/me
+Indexed directory: /groundhog/us/forecast/md
+Indexed directory: /groundhog/us/forecast/ma
+Indexed directory: /groundhog/us/forecast/mi
+Indexed directory: /groundhog/us/forecast/mn
+Indexed directory: /groundhog/us/forecast/ms
+Indexed directory: /groundhog/us/forecast/mo
+Indexed directory: /groundhog/us/forecast/mt
+Indexed directory: /groundhog/us/forecast/ne
+Indexed directory: /groundhog/us/forecast/nv
+Indexed directory: /groundhog/us/forecast/nh
+Indexed directory: /groundhog/us/forecast/nj
+Indexed directory: /groundhog/us/forecast/nm
+Indexed directory: /groundhog/us/forecast/ny
+Indexed directory: /groundhog/us/forecast/nc
+Indexed directory: /groundhog/us/forecast/nd
+Indexed directory: /groundhog/us/forecast/oh
+Indexed directory: /groundhog/us/forecast/ok
+Indexed directory: /groundhog/us/forecast/or
+Indexed directory: /groundhog/us/forecast/pa
+Indexed directory: /groundhog/us/forecast/pr
+Indexed directory: /groundhog/us/forecast/ri
+Indexed directory: /groundhog/us/forecast/sc
+Indexed directory: /groundhog/us/forecast/sd
+Indexed directory: /groundhog/us/forecast/tn
+Indexed directory: /groundhog/us/forecast/tx
+Indexed directory: /groundhog/us/forecast/ut
+Indexed directory: /groundhog/us/forecast/vt
+Indexed directory: /groundhog/us/forecast/vi
+Indexed directory: /groundhog/us/forecast/va
+Indexed directory: /groundhog/us/forecast/wa
+Indexed directory: /groundhog/us/forecast/wv
+Indexed directory: /groundhog/us/forecast/wi
+Indexed directory: /groundhog/us/forecast/wy
+Request sent at 2024-04-18 19:20:23: /groundhog/au/nforecast
+Indexed directory: /groundhog/au/nforecast/act
+Indexed directory: /groundhog/au/nforecast/n
+Indexed directory: /groundhog/au/nforecast/ni
+Indexed directory: /groundhog/au/nforecast/d
+Indexed directory: /groundhog/au/nforecast/q
+Indexed directory: /groundhog/au/nforecast/s
+Indexed directory: /groundhog/au/nforecast/t
+Indexed directory: /groundhog/au/nforecast/v
+Indexed directory: /groundhog/au/nforecast/w
+Indexed binary file: /URL:http://www.bom.gov.au/other/copyright.shtml
+Request sent at 2024-04-18 19:20:23: /groundhog/us/radar
+Indexed text file: /groundhog/us/radar/faq.txt
+Indexed binary file: /groundhog/us/radar/mapgen?KMXX
+Indexed binary file: /groundhog/us/radar/mapgen?KEOX
+Indexed binary file: /groundhog/us/radar/mapgen?KMOB
+Indexed binary file: /groundhog/us/radar/mapgen?KHTX
+Indexed binary file: /groundhog/us/radar/mapgen?KBMX
+Indexed binary file: /groundhog/us/radar/mapgen?PAHG
+Indexed binary file: /groundhog/us/radar/mapgen?PAIH
+Indexed binary file: /groundhog/us/radar/mapgen?KFSX
+Indexed binary file: /groundhog/us/radar/mapgen?KEMX
+Indexed binary file: /groundhog/us/radar/mapgen?KIWA
+Indexed binary file: /groundhog/us/radar/mapgen?KYUX
+Indexed binary file: /groundhog/us/radar/mapgen?KLZK
+Indexed binary file: /groundhog/us/radar/mapgen?KSRX
+Indexed binary file: /groundhog/us/radar/mapgen?KBBX
+Indexed binary file: /groundhog/us/radar/mapgen?KEYX
+Indexed binary file: /groundhog/us/radar/mapgen?KBHX
+Indexed binary file: /groundhog/us/radar/mapgen?KHNX
+Indexed binary file: /groundhog/us/radar/mapgen?KDAX
+Indexed binary file: /groundhog/us/radar/mapgen?KMUX
+Indexed binary file: /groundhog/us/radar/mapgen?KNKX
+Indexed binary file: /groundhog/us/radar/mapgen?KSOX
+Indexed binary file: /groundhog/us/radar/mapgen?KVTX
+Indexed binary file: /groundhog/us/radar/mapgen?KVBX
+Indexed binary file: /groundhog/us/radar/mapgen?KFTG
+Indexed binary file: /groundhog/us/radar/mapgen?KGJX
+Indexed binary file: /groundhog/us/radar/mapgen?KPUX
+Indexed binary file: /groundhog/us/radar/mapgen?KDOX
+Indexed binary file: /groundhog/us/radar/mapgen?KJAX
+Indexed binary file: /groundhog/us/radar/mapgen?KBYX
+Indexed binary file: /groundhog/us/radar/mapgen?KMLB
+Indexed binary file: /groundhog/us/radar/mapgen?KAMX
+Indexed binary file: /groundhog/us/radar/mapgen?KEVX
+Indexed binary file: /groundhog/us/radar/mapgen?KTBW
+Indexed binary file: /groundhog/us/radar/mapgen?KTLH
+Indexed binary file: /groundhog/us/radar/mapgen?KVAX
+Indexed binary file: /groundhog/us/radar/mapgen?KFFC
+Indexed binary file: /groundhog/us/radar/mapgen?KJGX
+Indexed binary file: /groundhog/us/radar/mapgen?PHKM
+Indexed binary file: /groundhog/us/radar/mapgen?PHMO
+Indexed binary file: /groundhog/us/radar/mapgen?PHWA
+Indexed binary file: /groundhog/us/radar/mapgen?PHKI
+Indexed binary file: /groundhog/us/radar/mapgen?KCBX
+Indexed binary file: /groundhog/us/radar/mapgen?KSFX
+Indexed binary file: /groundhog/us/radar/mapgen?KILX
+Indexed binary file: /groundhog/us/radar/mapgen?KLOT
+Indexed binary file: /groundhog/us/radar/mapgen?KIND
+Indexed binary file: /groundhog/us/radar/mapgen?KIWX
+Indexed binary file: /groundhog/us/radar/mapgen?KDMX
+Indexed binary file: /groundhog/us/radar/mapgen?KDVN
+Indexed binary file: /groundhog/us/radar/mapgen?KDDC
+Indexed binary file: /groundhog/us/radar/mapgen?KGLD
+Indexed binary file: /groundhog/us/radar/mapgen?KTWX
+Indexed binary file: /groundhog/us/radar/mapgen?KICT
+Indexed binary file: /groundhog/us/radar/mapgen?KLVX
+Indexed binary file: /groundhog/us/radar/mapgen?KHPX
+Indexed binary file: /groundhog/us/radar/mapgen?KJKL
+Indexed binary file: /groundhog/us/radar/mapgen?KPAH
+Indexed binary file: /groundhog/us/radar/mapgen?KPOE
+Indexed binary file: /groundhog/us/radar/mapgen?KLCH
+Indexed binary file: /groundhog/us/radar/mapgen?KSHV
+Indexed binary file: /groundhog/us/radar/mapgen?KLIX
+Indexed binary file: /groundhog/us/radar/mapgen?KCBW
+Indexed binary file: /groundhog/us/radar/mapgen?KGYX
+Indexed binary file: /groundhog/us/radar/mapgen?KBOX
+Indexed binary file: /groundhog/us/radar/mapgen?KAPX
+Indexed binary file: /groundhog/us/radar/mapgen?KGRR
+Indexed binary file: /groundhog/us/radar/mapgen?KMQT
+Indexed binary file: /groundhog/us/radar/mapgen?KDTX
+Indexed binary file: /groundhog/us/radar/mapgen?KMPX
+Indexed binary file: /groundhog/us/radar/mapgen?KDLH
+Indexed binary file: /groundhog/us/radar/mapgen?KGWX
+Indexed binary file: /groundhog/us/radar/mapgen?KDGX
+Indexed binary file: /groundhog/us/radar/mapgen?KEAX
+Indexed binary file: /groundhog/us/radar/mapgen?KSGF
+Indexed binary file: /groundhog/us/radar/mapgen?KLSX
+Indexed binary file: /groundhog/us/radar/mapgen?KBLX
+Indexed binary file: /groundhog/us/radar/mapgen?KGGW
+Indexed binary file: /groundhog/us/radar/mapgen?KTFX
+Indexed binary file: /groundhog/us/radar/mapgen?KMSX
+Indexed binary file: /groundhog/us/radar/mapgen?KUEX
+Indexed binary file: /groundhog/us/radar/mapgen?KLNX
+Indexed binary file: /groundhog/us/radar/mapgen?KOAX
+Indexed binary file: /groundhog/us/radar/mapgen?KLRX
+Indexed binary file: /groundhog/us/radar/mapgen?KESX
+Indexed binary file: /groundhog/us/radar/mapgen?KRGX
+Indexed binary file: /groundhog/us/radar/mapgen?KFDX
+Indexed binary file: /groundhog/us/radar/mapgen?KHDX
+Indexed binary file: /groundhog/us/radar/mapgen?KABX
+Indexed binary file: /groundhog/us/radar/mapgen?KBGM
+Indexed binary file: /groundhog/us/radar/mapgen?KOKX
+Indexed binary file: /groundhog/us/radar/mapgen?KBUF
+Indexed binary file: /groundhog/us/radar/mapgen?KENX
+Indexed binary file: /groundhog/us/radar/mapgen?KTYX
+Indexed binary file: /groundhog/us/radar/mapgen?KMHX
+Indexed binary file: /groundhog/us/radar/mapgen?KLTX
+Indexed binary file: /groundhog/us/radar/mapgen?KRAX
+Indexed binary file: /groundhog/us/radar/mapgen?KBIS
+Indexed binary file: /groundhog/us/radar/mapgen?KMVX
+Indexed binary file: /groundhog/us/radar/mapgen?KMBX
+Indexed binary file: /groundhog/us/radar/mapgen?KCLE
+Indexed binary file: /groundhog/us/radar/mapgen?KILN
+Indexed binary file: /groundhog/us/radar/mapgen?KFDR
+Indexed binary file: /groundhog/us/radar/mapgen?KINX
+Indexed binary file: /groundhog/us/radar/mapgen?KTLX
+Indexed binary file: /groundhog/us/radar/mapgen?KVNX
+Indexed binary file: /groundhog/us/radar/mapgen?KMAX
+Indexed binary file: /groundhog/us/radar/mapgen?KPDT
+Indexed binary file: /groundhog/us/radar/mapgen?KRTX
+Indexed binary file: /groundhog/us/radar/mapgen?KPBZ
+Indexed binary file: /groundhog/us/radar/mapgen?KCCX
+Indexed binary file: /groundhog/us/radar/mapgen?KJUA
+Indexed binary file: /groundhog/us/radar/mapgen?KCLX
+Indexed binary file: /groundhog/us/radar/mapgen?KCAE
+Indexed binary file: /groundhog/us/radar/mapgen?KGSP
+Indexed binary file: /groundhog/us/radar/mapgen?KABR
+Indexed binary file: /groundhog/us/radar/mapgen?KUDX
+Indexed binary file: /groundhog/us/radar/mapgen?KFSD
+Indexed binary file: /groundhog/us/radar/mapgen?KMRX
+Indexed binary file: /groundhog/us/radar/mapgen?KNQA
+Indexed binary file: /groundhog/us/radar/mapgen?KOHX
+Indexed binary file: /groundhog/us/radar/mapgen?KAMA
+Indexed binary file: /groundhog/us/radar/mapgen?KDFX
+Indexed binary file: /groundhog/us/radar/mapgen?KBRO
+Indexed binary file: /groundhog/us/radar/mapgen?KGRK
+Indexed binary file: /groundhog/us/radar/mapgen?KCRP
+Indexed binary file: /groundhog/us/radar/mapgen?KEPZ
+Indexed binary file: /groundhog/us/radar/mapgen?KHGX
+Indexed binary file: /groundhog/us/radar/mapgen?KLBB
+Indexed binary file: /groundhog/us/radar/mapgen?KMAF
+Indexed binary file: /groundhog/us/radar/mapgen?KDYX
+Indexed binary file: /groundhog/us/radar/mapgen?KEWX
+Indexed binary file: /groundhog/us/radar/mapgen?KSJT
+Indexed binary file: /groundhog/us/radar/mapgen?KFWS
+Indexed binary file: /groundhog/us/radar/mapgen?KICX
+Indexed binary file: /groundhog/us/radar/mapgen?KMTX
+Indexed binary file: /groundhog/us/radar/mapgen?KCXX
+Indexed binary file: /groundhog/us/radar/mapgen?KFCX
+Indexed binary file: /groundhog/us/radar/mapgen?KAKQ
+Indexed binary file: /groundhog/us/radar/mapgen?KATX
+Indexed binary file: /groundhog/us/radar/mapgen?KOTX
+Indexed binary file: /groundhog/us/radar/mapgen?KRLX
+Indexed binary file: /groundhog/us/radar/mapgen?KGRB
+Indexed binary file: /groundhog/us/radar/mapgen?KARX
+Indexed binary file: /groundhog/us/radar/mapgen?KMKX
+Indexed binary file: /groundhog/us/radar/mapgen?KCYS
+Indexed binary file: /groundhog/us/radar/mapgen?KRIW
+Request sent at 2024-04-18 19:20:25: /feeds/today
+Indexed text file: /feeds/democracynow/2024/Apr/17/0
+Indexed text file: /feeds/democracynow/2024/Apr/17/1
+Indexed text file: /feeds/democracynow/2024/Apr/17/2
+Indexed text file: /feeds/democracynow/2024/Apr/17/3
+Indexed text file: /feeds/democracynow/2024/Apr/17/4
+Indexed text file: /feeds/democracynow/2024/Apr/17/5
+Indexed text file: /feeds/democracynow/2024/Apr/17/6
+Indexed text file: /feeds/democracynow/2024/Apr/17/7
+Indexed text file: /feeds/democracynow/2024/Apr/17/8
+Indexed text file: /feeds/democracynow/2024/Apr/17/9
+Indexed text file: /feeds/democracynow/2024/Apr/17/10
+Indexed text file: /feeds/democracynow/2024/Apr/17/11
+Indexed text file: /feeds/democracynow/2024/Apr/17/12
+Indexed text file: /feeds/democracynow/2024/Apr/17/13
+Indexed text file: /feeds/democracynow/2024/Apr/17/14
+Indexed text file: /feeds/democracynow/2024/Apr/16/0
+Indexed text file: /feeds/democracynow/2024/Apr/16/1
+Indexed text file: /feeds/democracynow/2024/Apr/16/2
+Indexed text file: /feeds/democracynow/2024/Apr/16/3
+Indexed text file: /feeds/democracynow/2024/Apr/16/4
+Indexed text file: /feeds/democracynow/2024/Apr/16/5
+Indexed text file: /feeds/democracynow/2024/Apr/16/6
+Indexed text file: /feeds/democracynow/2024/Apr/16/7
+Indexed text file: /feeds/democracynow/2024/Apr/16/8
+Indexed text file: /feeds/democracynow/2024/Apr/16/9
+Indexed text file: /feeds/khn/2024/Apr/17/https---kffhealthnews.org--post_type=article--038-p=1836625
+Indexed text file: /feeds/khn/2024/Apr/17/https---kffhealthnews.org--post_type=article--038-p=1840862
+Indexed text file: /feeds/khn/2024/Apr/16/https---kffhealthnews.org--post_type=article--038-p=1839440
+Indexed text file: /feeds/khn/2024/Apr/16/https---kffhealthnews.org--post_type=article--038-p=1839447
+Indexed text file: /feeds/khn/2024/Apr/16/https---kffhealthnews.org--post_type=article--038-p=1839962
+Indexed text file: /feeds/khn/2024/Apr/16/https---kffhealthnews.org--post_type=article--038-p=1839927
+Indexed text file: /feeds/tidbits/2024/Apr/17/https---tidbits.com--p=66406
+Indexed text file: /feeds/tidbits/2024/Apr/17/https---tidbits.com--p=66413
+Indexed text file: /feeds/tidbits/2024/Apr/16/https---tidbits.com--p=66400
+Indexed text file: /feeds/voaheadlines/2024/Apr/17/https---www.voanews.com-a-ousted-myanmar-leader-suu-kyi-moved-from-prison-to-house-arrest--7573327.html
+Indexed text file: /feeds/voaheadlines/2024/Apr/17/https---www.voanews.com-a-us-navy-flies-aircraft-through-taiwan-strait-a-day-after-us-china-defense-talks-7573323.html

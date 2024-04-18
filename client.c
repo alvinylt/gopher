@@ -13,8 +13,8 @@
 #include <sys/time.h>
 
 /* Global constant: buffer size and limit for receiving server content */
-#define BUFFER_SIZE 4096  // String buffer size
-#define FILE_LIMIT 65536  // Size limit for downloading files
+#define BUFFER_SIZE 65536  // String buffer size
+#define FILE_LIMIT 65536   // Size limit for downloading files
 
 /* Global constants: file types and error types */
 #define DIRECTORY 0  // Directory
@@ -169,35 +169,48 @@ static ssize_t gopher_connect(ssize_t (*func)(char *), char *request) {
  */
 static ssize_t indexing(char *request) {
     // Buffer for strings read from the server
-    char buffer[BUFFER_SIZE];
-    ssize_t bytes_received = recv(fd, buffer, BUFFER_SIZE, 0);
+    char buffer[BUFFER_SIZE + 1];
+    // Number of bytes received through recv()
+    ssize_t bytes_received = 0;
+    // Total number of bytes received from the server so far
+    ssize_t total_recv = 0;
 
-    // Handle failure in receiving server's response
-    if (bytes_received == -1) {
-        if (errno == EWOULDBLOCK || errno == EAGAIN) {
-            fprintf(stderr, "Error: Server response timeout\n");
-            entry *new_item = create_new_entry(TIMEOUT, request);
-            add_item(new_item);
+    // Read the server's response to the buffer
+    do {
+        bytes_received = recv(fd, buffer + total_recv, BUFFER_SIZE - total_recv, 0);
+
+        // Handle failure in receiving server's response
+        if (bytes_received == -1) {
+            if (errno == EWOULDBLOCK || errno == EAGAIN) {
+                fprintf(stderr, "Error: Server response timeout\n");
+                entry *new_item = create_new_entry(TIMEOUT, request);
+                add_item(new_item);
+            }
+            else fprintf(stderr, "Error: Unable to receive server response\n");
         }
-        else fprintf(stderr, "Error: Unable to receive server response\n");
-    }
+
+        total_recv += bytes_received;
+
+        if (total_recv >= BUFFER_SIZE) {
+            break;
+        }
+
+    } while (bytes_received > 0);
+    buffer[total_recv] = '\0';
 
     // Handle an empty string response from the server
-    if (bytes_received == 0) {
+    if (total_recv == 0) {
         fprintf(stdout, "Empty response from the server\n");
         return 0;
     }
-
+    
     // Read the directory index from the server line by line
+    char *line = buffer;
     do {
-        buffer[bytes_received] = '\0';
-        char *line = buffer;
-        do {
-            char *next_line = find_next_line(line);
-            index_line(line, request);
-            line = next_line;
-        } while (line != NULL);
-    } while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0);
+        char *next_line = find_next_line(line);
+        index_line(line, request);
+        line = next_line;
+    } while (line != NULL);
     
     return 0;
 }
