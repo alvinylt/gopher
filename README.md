@@ -190,7 +190,7 @@ might send it with multiple packets. In `indexing()`, for example, a while loop
 is used to read the response from the server and write it to the buffer until
 the server disconnects.
 
-We set `BUFFER_SIZE` is 65536 bytes as this is reasonable size limit for most
+We set `BUFFER_SIZE` is 65536 bytes as this is a reasonable size limit for most
 directory indices on a Gopher server. It can be adjusted if the user of this
 program has specific needs.
 
