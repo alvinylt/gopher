@@ -14,7 +14,7 @@
 
 /* Global constant: buffer size and limit for receiving server content */
 #define BUFFER_SIZE 65536  // String buffer size
-#define FILE_LIMIT 65536   // Size limit for downloading files
+#define FILE_LIMIT 131072  // Size limit for downloading files
 
 /* Global constants: file types and error types */
 #define DIRECTORY 0  // Directory
@@ -45,6 +45,7 @@ static ssize_t print_response(char *request);
 static void add_item(entry *new_item);
 static void evaluate(void);
 static void cleanup(void);
+static void list_full_path(int item_type);
 static void test_external_servers(entry *item);
 
 /* Global variables: values used across all functions */
@@ -624,6 +625,12 @@ static void evaluate(void) {
                     size_of_smallest_text_file, size_of_largest_text_file,
                     size_of_smallest_binary_file, size_of_largest_binary_file);
 
+    fprintf(stdout, "\nList of text files (full path):\n");
+    list_full_path(TEXT);
+
+    fprintf(stdout, "\nList of binary files (full path):\n");
+    list_full_path(BINARY);
+
     // Test and print the connectivity to external servers
     fprintf(stdout, "\nConnectivity to external servers:\n");
     c = list;
@@ -656,6 +663,21 @@ static void evaluate(void) {
     }
     if (!issues_exists)
         fprintf(stdout, "No reference with issue/error found\n");
+}
+
+/**
+ * Print the full pathnames of all items of a specify type.
+ * 
+ * @param item_type type of item
+ */
+static void list_full_path(int item_type) {
+    entry *c = list;
+    while (c != NULL) {
+        if (c->item_type == item_type) {
+            fprintf(stdout, "%s\n", c->record);
+        }
+        c = c->next;
+    }
 }
 
 /**

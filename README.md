@@ -243,7 +243,7 @@ not be flooded with infinite/unacceptable network traffic, of which malicious
 parties may take advantage. Files exceeding the size limit are not considered
 in the statistics (*e.g.*, sizes of largest files) evaluated by `evaluate()`.
 
-Currently, `FILE_LIMIT` is set as 65536 bytes, considering that most files on
+Currently, `FILE_LIMIT` is set as 2^17 (131,072) bytes, considering that most files on
 `comp3310.ddns.net` do not exceed this limit. In realistic situations, users
 of this client should know the size scale of files that the target server
 hosts. This global constant can be adjusted accordingly. Files exceeding the
@@ -253,7 +253,7 @@ file limit are logged and printed before the client program execution ends.
 
 The client program is tested with the class server and a local Motsognir server.
 The terminal outputs are included for reference:
-- [Class server, 65536-byte file size limit](assets/output1.txt)
+- [Class server, (2^17)-byte file size limit](assets/output1.txt)
 - [Local Motsognir server, no file size limit](assets/output2.txt)
 
 The program is also tested with `gopher.floodgap.com` at port 70. The first 1024
@@ -263,6 +263,12 @@ lines of terminal output are included in
 Wireshark is used for monitoring the network traffic. The initial request is
 detected as "Request: [Directory List]". There are occasional retransmissions
 of TCP packets and spurious acknowledgement (ACK) signals.
+
+In the screenshot below, the first three rows show the establishment of the TCP
+connection. The fourth row is the Gopher request for the root directory index.
+The sixth and eighth rows correspond to the response from the server, delivered
+with two packets. For each TCP packet received, the client sends an ACK signal
+to the server.
 
 ![Wireshark](assets/wireshark.png)
 
