@@ -245,6 +245,8 @@ The terminal outputs are included for reference:
 - [Class server, 65536-byte file size limit](assets/output1.txt)
 - [Local Motsognir server, no file size limit](assets/output2.txt)
 
+The program is also tested with `gopher.floodgap.com` at port 70.
+
 Wireshark is used for monitoring the network traffic. The initial request is
 detected as "Request: [Directory List]". There are occasional retransmissions
 of TCP packets and spurious acknowledgement (ACK) signals.
@@ -264,18 +266,20 @@ of TCP packets and spurious acknowledgement (ACK) signals.
    https://stackoverflow.com/a/2597774
 5. dgookin. (July 2020). The `gettimeofday()` Function. *C For Dummies Blog*.
    https://c-for-dummies.com/blog/?p=4236
-6. Frédéric Hamidi. (October 2010). What does `EAGAIN` mean?. *Stack Overflow*.
+6. dhanshreekulkarni21. (March 2023). `strcat()` in C. *GeeksforGeeks*.
+   https://www.geeksforgeeks.org/strcat-in-c/
+7. Frédéric Hamidi. (October 2010). What does `EAGAIN` mean?. *Stack Overflow*.
    https://stackoverflow.com/a/4058377
-7. Foobar. (Oct 2018). Client in C++, use `gethostbyname` or `getaddrinfo`.
+8. Foobar. (Oct 2018). Client in C++, use `gethostbyname` or `getaddrinfo`.
    *Stack Overflow*. https://stackoverflow.com/q/52727565
-8. IEEE and The Open Group. (2003). `setsockopt`. *Linux man page*.
+9. IEEE and The Open Group. (2003). `setsockopt`. *Linux man page*.
    https://linux.die.net/man/3/setsockopt
-9.  Milan. (Mar 2011). How to convert string to IP address and vice versa.
+10.  Milan. (Mar 2011). How to convert string to IP address and vice versa.
    *Stack Overflow*. https://stackoverflow.com/a/5328184
-10. Tomek Szpakowicz. (December 2009). When to use static keyword before global
+11. Tomek Szpakowicz. (December 2009). When to use static keyword before global
     variables?. *Stack Overflow*.
     https://stackoverflow.com/a/1856642
-11. Wikipedia contributors. Gopher (protocol). *Wikipedia*.
+12. Wikipedia contributors. Gopher (protocol). *Wikipedia*.
     https://en.wikipedia.org/wiki/Gopher_(protocol)
 
-Last update: 2024-04-11
+Last update: 2024-04-18
