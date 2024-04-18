@@ -694,6 +694,11 @@ static void test_external_servers(entry *item) {
         memcpy(&ext_server_addr.sin_addr.s_addr,
                 ext_server->h_addr_list[0], ext_server->h_length);
         
+        // No need to test if the current server is referenced
+        if (ext_server_addr.sin_addr.s_addr == server_addr.sin_addr.s_addr
+                && atoi(ext_port) == port)
+        return;
+        
         // Attempt the connection
         connect(ext_fd, (struct sockaddr *)&ext_server_addr, sizeof(ext_server_addr));
 

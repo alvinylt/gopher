@@ -10,6 +10,11 @@ handling inbound responses as gracefully as possible.
 
 ## Initialisation
 
+The C programming language is used because of its extensive use in native Linux
+programs and its efficiency relative to alternatives (*e.g.*, Python, Java). A
+standard Linux installation should be able to execute the program; no additional
+packages are required.
+
 The program is intended for Linux machines with GCC installed. The standard
 C library is sufficient for compilation. Use the command `make` to compile the
 program with the [source code](client.c). Simply execute the command
@@ -111,6 +116,10 @@ called to find the following information:
 5. Number of invalid references (each unique invalid request is counted once)
 6. List of external server references (hostname and port) and their connectivity
 7. List of references causing issues/errors
+
+Note that if the server ends its response with `.\r\n` as per the protocol
+standard, the three characters are included in the size counts. This helps
+with determining whether the server is replying with proper responses.
 
 The helper function `test_external_servers()` checks the connectivity to
 external servers by attempting to establish a connection. A server is
