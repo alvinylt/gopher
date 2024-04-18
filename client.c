@@ -191,55 +191,12 @@ static ssize_t indexing(char *request) {
     // Read the directory index from the server line by line
     do {
         buffer[bytes_received] = '\0';
-        char *remaining_data = NULL;
         char *line = buffer;
         do {
             char *next_line = find_next_line(line);
-            if (next_line != NULL) {
-                index_line(line, request);
-                line = next_line;
-            }
-            else {
-                remaining_data = strdup(line);
-                break;
-            }
+            index_line(line, request);
+            line = next_line;
         } while (line != NULL);
-
-        // Receive more data the next line is cut off
-        if (remaining_data != NULL) {
-            // Adjust buffer pointer and size to receive data after the incomplete line
-            char *new_buffer = buffer + strlen(buffer);
-            int rem_size = BUFFER_SIZE - strlen(buffer) - 1;
-            
-            // Receive more data to complete the line
-            int additional_bytes_received = recv(fd, new_buffer, rem_size, 0);
-            if (additional_bytes_received <= 0) {
-                // Handle error or end of data
-                free(remaining_data);
-                break;
-            }
-            
-            new_buffer[additional_bytes_received] = '\0';
-            remaining_data = realloc(remaining_data, strlen(remaining_data) +
-                    additional_bytes_received + 1);
-            strcat(remaining_data, new_buffer);
-            
-            // Process the complete line
-            char *line = remaining_data;
-            do {
-                char *next_line = find_next_line(line);
-                if (next_line != NULL) {
-                    index_line(line, request);
-                    line = next_line;
-                } else {
-                    // Incomplete line received, save it for the next iteration
-                    strcpy(remaining_data, line);
-                    break;
-                }
-            } while (line != NULL);
-            
-            free(remaining_data);
-        }
     } while ((bytes_received = recv(fd, buffer, BUFFER_SIZE, 0)) > 0);
     
     return 0;
