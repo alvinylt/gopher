@@ -1,7 +1,5 @@
 # Gopher Indexing Client
 
-**Alvin Tang** (**u7447218**)
-
 This Internet Gopher client written in the C programming language indexes
 directories and files. It is implemented in accordance with
 [RFC 1436](https://www.rfc-editor.org/rfc/rfc1436). The overall design is to
@@ -300,5 +298,7 @@ to the server.
     https://stackoverflow.com/a/1856642
 12. Wikipedia contributors. Gopher (protocol). *Wikipedia*.
     https://en.wikipedia.org/wiki/Gopher_(protocol)
+
+Author: Alvin Tang <dev@alvinylt.net>
 
 Last update: 2024-04-18
